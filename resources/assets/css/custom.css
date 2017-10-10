@@ -1,0 +1,26 @@
+#mTreeDanhMuc{
+    overflow-x: scroll;
+}
+
+@media (min-width: 993px) {
+    .m-footer--push.m-aside-left--enabled:not(.m-footer--fixed) .m-aside-right, .m-footer--push.m-aside-left--enabled:not(.m-footer--fixed) .m-wrapper{
+        margin-bottom: 150px !important;
+    }
+    footer{
+        margin-top: -150px !important;
+        height: 150px !important;
+    }
+}
+footer{
+    font-family: "Roboto";
+    color: #0a8cf0;
+}
+footer img{
+    width: 150px;
+}
+footer h3{
+    margin: 20px 0;
+}
+footer h4{
+    margin: 10px 0;
+}
