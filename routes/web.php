@@ -18,11 +18,17 @@ Route::get('/', 'HomeController@index')->name('home');
 Route::middleware(['auth'])->group(function (){
     Route::get('/tai-lieu/{id}', 'DocumentController@dsDanhMucTheoTo');
 
+    Route::get('/thu-vien-hinh-anh/', 'GalleryController@getAllGallery');
+
     Route::get('themDanhMuc', 'DocumentController@themMoiDanhMuc');
     Route::post('themDanhMuc', 'DocumentController@themMoiDanhMuc');
 
     Route::post('danh-sach-tai-lieu', 'DocumentController@dsTaiLieuTheoDanhMuc');
     Route::get('danh-sach-tai-lieu', 'DocumentController@dsTaiLieuTheoDanhMuc');
+
+    Route::get('tra-cuu', 'DocumentController@fnTraCuuForm');
+    Route::post('tra-cuu-tai-lieu', 'DocumentController@fnTraCuu');
+    Route::get('tra-cuu-tai-lieu', 'DocumentController@fnTraCuu');
 
     Route::get('/tai-lieu/{id}/danh-muc/{id-danh-muc}', 'DocumentController@dsTaiLieuTheoDanhMucTo');
 
@@ -30,4 +36,10 @@ Route::middleware(['auth'])->group(function (){
 
     Route::post('/uploadTaiLieu', 'DocumentController@uploadTaiLieu');
     Route::get('uploadTaiLieu', 'DocumentController@uploadTaiLieu');
+
+    Route::post('/cap-nhat-mo-ta-tai-lieu', 'DocumentController@capNhatMoTaTaiLieu');
+    Route::get('cap-nhat-mo-ta-tai-lieu', 'DocumentController@capNhatMoTaTaiLieu');
+
+    Route::post('/thu-vien-hinh', 'GalleryController@getThuVienHinh');
+    Route::get('/thu-vien-hinh', 'GalleryController@getThuVienHinh');
 });

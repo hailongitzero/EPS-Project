@@ -64,6 +64,7 @@ jQuery(document).ready(function () {
 
         data.append('maDanhMuc', $('#maDanhMucTaiLieu').val());
         data.append('tenTaiLieu', $('#tenTaiLieu').val());
+        data.append('moTaTaiLieu', $('#moTaTaiLieu').val())
         data.append('file', myFile.files[0]);
         data.append('_token', $('meta[name="csrf-token"]').attr('content'));
         data.append('header', $('meta[name="csrf-token"]').attr('content'));
@@ -85,9 +86,34 @@ jQuery(document).ready(function () {
 
         return false;
     });
+    $('.m-datatable__table').on('click', 'tr td .saveDocument', function () {
+        var data = new FormData();
 
+        var maTaiLieu = $(this).attr('data-content');
+        var moTaTaiLieu = $(this).closest('tr').find('.moTaTaiLieu').val();
 
+        data.append('maTaiLieu', maTaiLieu);
+        data.append('moTaTaiLieu', moTaTaiLieu);
+        data.append('_token', $('meta[name="csrf-token"]').attr('content'));
+        data.append('header', $('meta[name="csrf-token"]').attr('content'));
+        $.ajax({
+            type: 'POST',
+            url: '/cap-nhat-mo-ta-tai-lieu',
+            data: data,
+            processData: false,  // tell jQuery not to process the data
+            contentType: false,  // tell jQuery not to set contentType
+            dataType: 'json',
+            success: function (response) {
+                alert(response.Content);
+                // location.reload();
+            },
+            error: function (response) {
+                alert("Lỗi hệ thống, vui lòng thử lại.");
+            }
+        });
 
+        return false;
+    });
 });
 
 var DropzoneDemo = function() {

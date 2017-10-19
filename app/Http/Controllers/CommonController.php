@@ -32,4 +32,8 @@ class CommonController extends Controller
         return $newKey;
 
     }
+
+    public function getMenuData(){
+        return MdTruSo::with('phongBan.toCongTac')->get();
+    }
 }

@@ -10,9 +10,9 @@
         <div class="col-md-2">
             <img src="/resources/assets/images/logo/eps-logo1.png" alt="">
         </div>
-        <div class="col-md-10">
-            <h3>CÔNG TY DỊCH VỤ SỬA CHỮA CÁC NHÀ MÁY ĐIỆN</h3>
-            <h4>Địa Chỉ: 332 Độc Lập (QL51), TT Phú Mỹ, huyện Tân Thành, tỉnh Bà Rịa - Vũng Tàu</h4>
+        <div class="col-md-6">
+            <h4>CÔNG TY DỊCH VỤ SỬA CHỮA CÁC NHÀ MÁY ĐIỆN</h4>
+            <h6>Địa Chỉ: 332 Độc Lập (QL51), TT Phú Mỹ, huyện Tân Thành, tỉnh Bà Rịa - Vũng Tàu</h6>
             <div class="row">
                 <div class="col-md-3">
                     <p>Điện Thoại</p>
@@ -27,6 +27,11 @@
                     <p>Web</p>
                 </div>
             </div>
+        </div>
+        <div class="col-md-4">
+            <h6>- Liên kết khác</h6>
+            <h6>- Trang home nội bộ</h6>
+            <h6>- Trang khảo sát</h6>
         </div>
     </div>
 </footer>

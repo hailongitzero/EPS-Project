@@ -1,3 +1,12 @@
+html{
+    font-family: 'Roboto' !important;
+}
+body{
+    font-family: 'Roboto' !important;
+}
+.m-brand__logo-wrapper img{
+    width: 150px;
+}
 #mTreeDanhMuc{
     overflow-x: scroll;
 }
@@ -10,6 +19,21 @@
         margin-top: -150px !important;
         height: 150px !important;
     }
+}
+.m-aside-left{
+    box-shadow: 0 1px 15px 1px rgba(113, 106, 202, .1);
+}
+.m-menu__item:hover{
+    color: #0a8cf0 !important;
+}
+.m-menu__item a:hover{
+    color: #0a8cf0 !important;
+}
+.m-menu__item a i:hover{
+    color: #0a8cf0 !important;
+}
+.m-menu__item a span:hover{
+    color: #0a8cf0 !important;
 }
 footer{
     font-family: "Roboto";

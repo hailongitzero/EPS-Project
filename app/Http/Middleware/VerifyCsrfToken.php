@@ -14,5 +14,9 @@ class VerifyCsrfToken extends BaseVerifier
     protected $except = [
         'danh-sach-tai-lieu/*',
         'danh-sach-tai-lieu',
+        'tra-cuu-tai-lieu/*',
+        'tra-cuu-tai-lieu',
+        'thu-vien-hinh/*',
+        'thu-vien-hinh',
     ];
 }

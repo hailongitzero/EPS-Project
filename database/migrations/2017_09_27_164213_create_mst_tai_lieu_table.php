@@ -16,6 +16,7 @@ class CreateMstTaiLieuTable extends Migration
         Schema::create('mst_tai_lieu', function (Blueprint $table){
             $table->string('ma_tai_lieu', 10);
             $table->string('ten_tai_lieu')->unique();
+            $table->string('mo_ta_tai_lieu');
             $table->string('ma_danh_muc', 6);
             $table->string('dinh_dang');
             $table->integer('dung_luong');

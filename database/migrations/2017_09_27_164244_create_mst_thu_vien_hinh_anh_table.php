@@ -16,7 +16,8 @@ class CreateMstThuVienHinhAnhTable extends Migration
         Schema::create('mst_thu_vien_hinh_anh', function (Blueprint $table){
             $table->string('ma_thu_vien', 6);
             $table->string('ten_thu_vien');
-            $table->boolean('trang_thai');
+            $table->boolean('trang_thai')->default(1);
+            $table->boolean('slider')->default(0);
             $table->dateTime('ngay_tao')->useCurrent();
             $table->dateTime('ngay_cap_nhat')->useCurrent();
             $table->string('nguoi_tao');

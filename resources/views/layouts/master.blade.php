@@ -21,19 +21,9 @@
             }
         });
     </script>
-    <!--end::Web font -->
-    <!--begin::Base Styles -->
-    {{--<link href="/resources/assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />--}}
-    {{--<link href="/resources/assets/datatables/datatables.min.css" rel="stylesheet" type="text/css" />--}}
-    {{--<link href="/resources/assets/datatables/plugins/bootstrap/datatables.bootstrap.css" rel="stylesheet" type="text/css" />--}}
+
     <link href="/resources/assets/css/vendors.bundle.css" rel="stylesheet" type="text/css" />
-    {{--<link href="/resources/assets/css/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css" />--}}
-
-
-    {{--<link href="/resources/assets/jstree/dist/themes/default/style.min.css" rel="stylesheet" type="text/css" />--}}
-    {{--<link href="/resources/assets/css/components.min.css" rel="stylesheet" type="text/css" />--}}
     <link href="/resources/assets/css/style.bundle.css" rel="stylesheet" type="text/css" />
-    {{--<link href="/resources/assets/css/plugins.min.css" rel="stylesheet" type="text/css" />--}}
     <link href="/resources/assets/css/custom.css" rel="stylesheet" type="text/css" />
 
     <!--end::Base Styles -->
@@ -41,21 +31,17 @@
 </head>
 <!-- end::Head -->
 <!-- end::Body -->
-<body class="m-page--fluid m--skin- m-content--skin-light2 m-header--fixed m-header--fixed-mobile m-aside-left--enabled m-aside-left--skin-dark m-aside-left--offcanvas m-footer--push m-aside--offcanvas-default"  >
+<body class="m-page--fluid m--skin- m-content--skin-light2 m-header--fixed m-header--fixed-mobile m-aside-left--enabled m-aside-left--skin-dark m-aside-left--offcanvas m-footer--push m-aside--offcanvas-default m-brand--minimize m-aside-left--minimize"  >
 @section('dashboard-content')
 @show
 <!-- begin::Quick Nav -->
 <!--begin::Base Scripts -->
 <script src="/resources/assets/js/vendors.bundle.js" type="text/javascript"></script>
 <script src="/resources/assets/js/scripts.bundle.js" type="text/javascript"></script>
-<!--end::Base Scripts -->
-<!--begin::Page Snippets -->
-{{--<script src="/resources/assets/datatables/datatables.min.js" type="text/javascript"></script>--}}
-{{--<script src="/resources/assets/datatables/data-ajax.js" type="text/javascript"></script>--}}
-{{--<script src="/resources/assets/datatables/plugins/bootstrap/datatables.bootstrap.js" type="text/javascript"></script>--}}
+
 <script src="/resources/assets/js/custom/jstree.js" type="text/javascript"></script>
 <script src="/resources/assets/js/dashboard.js" type="text/javascript"></script>
-
+<script src="/resources/assets/js/custom/datatable.js" type="text/javascript"></script>
 <script src="/resources/assets/js/custom/custom.js" type="text/javascript"></script>
 <!--end::Page Snippets -->
 </body>
