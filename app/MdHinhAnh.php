@@ -10,5 +10,6 @@ class MdHinhAnh extends Model
     protected $primaryKey = 'ma_hinh_anh';
     public $incrementing = false;
     const CREATED_AT = 'ngay_dang';
+    public $timestamps = false;
 
 }

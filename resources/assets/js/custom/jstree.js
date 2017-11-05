@@ -13,10 +13,8 @@ var Treeview = function() {
                     $('#tbTitleSec').text(noteText);
                     $('#maDanhMucTaiLieu').val(maDanhMuc);
                     $('#tbTaiLieuTitle').text(noteText);
-                    // $("#mTbDocument").setDataSourceParam('maDanhMuc', maDanhMuc), tb.load();
-                    // DatatableRemoteAjax.bind('maDanhMuc', maDanhMuc);
+                    $('#mdAddDocumentTitle').text(' - ' + noteText);
                 }
-                // DatatableRemoteAjax.init("http://localhost/danh-sach-tai-lieu/" + maDanhMuc);
             }).jstree({
                 core: {
                     themes: {
@@ -35,7 +33,19 @@ var Treeview = function() {
             })
         },
         t = function() {
-            $("#m_tree_2").jstree({
+            $("#mTreeDanhMucMoRong").on('changed.jstree', function (e, data) {
+                var tb = $("#mTbDocumentExt");
+                var nodeId = $('#mTreeDanhMucMoRong').jstree().get_selected("id")[0].id;
+                var noteText = $('#mTreeDanhMucMoRong').jstree().get_selected("id")[0].text;
+                var maDanhMuc = $('#'+nodeId).find('a').attr('data-content');
+                var level = $('#'+nodeId).attr('aria-level');
+                if( level > 1){
+                    $('#tbTitleSec').text(noteText);
+                    $('#maDanhMucTaiLieu').val(maDanhMuc);
+                    $('#tbTaiLieuTitle').text(noteText);
+                    $('#mdAddDocumentTitle').text(' - ' + noteText);
+                }
+            }).jstree({
                 core: {
                     themes: {
                         responsive: !1
@@ -43,16 +53,13 @@ var Treeview = function() {
                 },
                 types: {
                     default: {
-                        icon: "fa fa-folder m--font-warning"
+                        icon: "fa fa-folder"
                     },
                     file: {
-                        icon: "fa fa-file  m--font-warning"
+                        icon: "fa fa-file"
                     }
                 },
                 plugins: ["types"]
-            }), $("#m_tree_2").on("select_node.jstree", function(e, t) {
-                var n = $("#" + t.selected).find("a");
-                if ("#" != n.attr("href") && "javascript:;" != n.attr("href") && "" != n.attr("href")) return "_blank" == n.attr("target") && (n.attr("href").target = "_blank"), document.location.href = n.attr("href"), !1
             })
         },
         n = function() {

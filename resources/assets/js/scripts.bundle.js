@@ -1270,8 +1270,8 @@ $(document).ready(function() {
             },
             translate: {
                 records: {
-                    processing: "Please wait...",
-                    noRecords: "No records found"
+                    processing: "Vui lòng đợi...",
+                    noRecords: "Không tìm thấy dữ liệu"
                 },
                 toolbar: {
                     pagination: {
@@ -1283,9 +1283,9 @@ $(document).ready(function() {
                                 last: "Last",
                                 more: "More pages",
                                 input: "Page number",
-                                select: "Select page size"
+                                select: ""
                             },
-                            info: "Displaying {{start}} - {{end}} of {{total}} records"
+                            info: "Hiển thị {{start}} - {{end}} của {{total}} bản ghi"
                         }
                     }
                 }

@@ -9,6 +9,7 @@ body{
 }
 #mTreeDanhMuc{
     overflow-x: scroll;
+    padding-bottom: 20px;
 }
 
 @media (min-width: 993px) {
@@ -19,6 +20,9 @@ body{
         margin-top: -150px !important;
         height: 150px !important;
     }
+}
+.m-datatable__body{
+    min-height: 200px;
 }
 .m-aside-left{
     box-shadow: 0 1px 15px 1px rgba(113, 106, 202, .1);
@@ -47,4 +51,10 @@ footer h3{
 }
 footer h4{
     margin: 10px 0;
+}
+.carousel-indicators{
+    text-align: center;
+}
+.carousel-indicators img{
+    width: 60px;
 }

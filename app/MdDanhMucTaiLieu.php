@@ -19,4 +19,7 @@ class MdDanhMucTaiLieu extends Model
     public function toCongTac(){
         return $this->hasOne('App\MdToCongTac', 'ma_to_cong_tac', 'ma_to_cong_tac');
     }
+    public function taiLieuMoRong(){
+        return $this->hasOne('App\MdTaiLieuMoRong', 'ma_tai_lieu_mo_rong', 'ma_tai_lieu_mo_rong');
+    }
 }

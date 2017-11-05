@@ -18,4 +18,7 @@ class MdThuVienHinhAnh extends Model
     public function nguoiDang(){
         return $this->hasOne('App\User', 'ma_nhan_vien', 'nguoi_tao');
     }
+    public function nguoiCapNhat(){
+        return $this->hasOne('App\User', 'ma_nhan_vien', 'nguoi_cap_nhat');
+    }
 }

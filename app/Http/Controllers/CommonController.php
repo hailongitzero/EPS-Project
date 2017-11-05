@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\MdDanhMucMoRong;
 use Illuminate\Http\Request;
 use App\MdTruSo;
 use Illuminate\Support\Facades\Auth;
@@ -34,6 +35,10 @@ class CommonController extends Controller
     }
 
     public function getMenuData(){
-        return MdTruSo::with('phongBan.toCongTac')->get();
+        $menuData = array(
+            'menuPhongBan' => MdTruSo::with('phongBan.toCongTac')->where('trang_thai', true)->get(),
+            'menuMoRong' => MdDanhMucMoRong::with('taiLieuMoRong')->where('trang_thai', true)->get()
+        );
+        return $menuData;
     }
 }

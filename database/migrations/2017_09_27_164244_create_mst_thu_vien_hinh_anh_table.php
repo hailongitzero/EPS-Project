@@ -21,7 +21,7 @@ class CreateMstThuVienHinhAnhTable extends Migration
             $table->dateTime('ngay_tao')->useCurrent();
             $table->dateTime('ngay_cap_nhat')->useCurrent();
             $table->string('nguoi_tao');
-            $table->string('nguoi_cap_nhat');
+            $table->string('nguoi_cap_nhat')->nullable();
 
             $table->primary('ma_thu_vien');
         });

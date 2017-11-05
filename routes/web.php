@@ -18,6 +18,8 @@ Route::get('/', 'HomeController@index')->name('home');
 Route::middleware(['auth'])->group(function (){
     Route::get('/tai-lieu/{id}', 'DocumentController@dsDanhMucTheoTo');
 
+    Route::get('/tai-lieu-mat/{id}', 'DocumentController@dsDanhMucMoRong');
+
     Route::get('/thu-vien-hinh-anh/', 'GalleryController@getAllGallery');
 
     Route::get('themDanhMuc', 'DocumentController@themMoiDanhMuc');
@@ -42,4 +44,18 @@ Route::middleware(['auth'])->group(function (){
 
     Route::post('/thu-vien-hinh', 'GalleryController@getThuVienHinh');
     Route::get('/thu-vien-hinh', 'GalleryController@getThuVienHinh');
+
+    Route::post('/themGallery', 'GalleryController@themMoiGallery');
+    Route::get('/themGallery', 'GalleryController@themMoiGallery');
+
+    Route::post('/themGalleryImages', 'GalleryController@themMoiGalleryImages');
+    Route::get('/themGalleryImages', 'GalleryController@themMoiGalleryImages');
+
+    Route::post('/deleteGallery', 'GalleryController@updateGalleryStatus');
+    Route::get('/deleteGallery', 'GalleryController@updateGalleryStatus');
+
+//    Route::post('/deleteGallery', 'GalleryController@downloadImageZip');
+    Route::get('/download-gallery/{id}', 'GalleryController@downloadImageZip');
+
+    Route::get('/slide-hinh/{id}', 'GalleryController@showImageGallery');
 });

@@ -17,7 +17,7 @@ class HomeController extends CommonController
      */
     public function index()
     {
-        $menuData = MdTruSo::with('phongBan.toCongTac')->get();
+        $menuData = $this->getMenuData();
         $layoutData = array(
             'menuData' => $menuData
         );

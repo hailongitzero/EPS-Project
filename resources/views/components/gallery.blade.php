@@ -10,7 +10,7 @@
     <div class="d-flex align-items-center">
         <div class="mr-auto">
             <h3 class="m-subheader__title m-subheader__title--separator">
-                Tra Cứu Tài Liệu
+                Thư Viện Hình
             </h3>
             <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
                 <li class="m-nav__item m-nav__item--home">
@@ -54,6 +54,17 @@
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="col-xl-4 order-1 order-xl-2 m--align-right">
+                                <a href="#" class="btn btn-primary m-btn m-btn--custom m-btn--icon m-btn--air m-btn--pill" data-toggle="modal" data-target="#mdThemMoiGallery">
+                                    <span>
+                                        <i class="fa fa-upload"></i>
+                                        <span>
+                                            Tạo Mới
+                                        </span>
+                                    </span>
+                                </a>
+                                <div class="m-separator m-separator--dashed d-xl-none"></div>
                             </div>
                         </div>
                     </div>
@@ -107,6 +118,66 @@
                     <span class="carousel-control-next-icon" aria-hidden="true"></span>
                     <span class="sr-only">Next</span>
                 </a>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!--END MODAL-->
+<!-- BEGIN MODAL-->
+<div class="modal fade bs-modal-lg" id="mdThemMoiGallery" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title"> Thêm mới thư viện hình </h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <input type="text" id="tenGallery" class="form-control" placeholder="Nhập tên thư viện hình ảnh">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn m-btn--pill btn-secondary" data-dismiss="modal">Hủy</button>
+                <button type="button" id="btnThemMoiGallery" class="btn m-btn--pill btn-primary">Thêm Mới</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!--END MODAL-->
+<!-- BEGIN MODAL-->
+<div class="modal fade bs-modal-lg" id="mdThemMoiHinhAnh" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title"> Thêm hình ảnh - <span></span></h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="m-dropzone dropzone m-dropzone--primary" action="i#" id="add-gallery-image">
+                            <input type="hidden" id="galleryId" name="galleryId" value="">
+                            <div class="m-dropzone__msg dz-message needsclick">
+                                <h3 class="m-dropzone__msg-title">
+                                    Kéo thả hình ảnh hoặc click để upload hình
+                                </h3>
+                                <span class="m-dropzone__msg-desc">
+														Tối đa 10 files và dung lượng mỗi file không quá 10 mb
+													</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn m-btn--pill btn-secondary" data-dismiss="modal">Hủy</button>
+                <button type="button" id="btnUploadImg" class="btn m-btn--pill btn-primary">Thêm Mới</button>
             </div>
         </div>
         <!-- /.modal-content -->
