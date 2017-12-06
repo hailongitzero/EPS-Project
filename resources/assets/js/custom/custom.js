@@ -79,6 +79,10 @@ jQuery(document).ready(function () {
             alert("Bạn chưa nhập tên file!");
             return false;
         }
+        if ($('#moTaTaiLieu').val() == ''){
+            alert("Bạn chưa nhập tên file!");
+            return false;
+        }
         if($('#maDanhMucTaiLieu').val() == ''){
             alert("Bạn chưa chọn danh mục tài liệu!!");
             return false;
@@ -110,6 +114,7 @@ jQuery(document).ready(function () {
         return false;
     });
     $('.m-datatable__table').on('click', 'tr td .saveDocument', function () {
+        $(this).closest('tr').find('.dropdown, .dropdown-menu').removeClass('show');
         var inp = $(this).closest('tr').find('.moTaTaiLieu');
         if ($(this).closest('tr').find('.moTaTaiLieu').is(':disabled')){
             alert("Chưa cập nhật thông tin");
@@ -143,8 +148,38 @@ jQuery(document).ready(function () {
         return false;
     });
 
+    $('.m-datatable__table').on('click', 'tr td .deleteDocument', function () {
+        var cfm = confirm('Bạn chắc chắn muốn xóa tài liệu này?');
+        if (cfm == false) return false;
+        var data = new FormData();
+
+        var maTaiLieu = $(this).attr('data-content');
+
+        data.append('maTaiLieu', maTaiLieu);
+        data.append('_token', $('meta[name="csrf-token"]').attr('content'));
+        data.append('header', $('meta[name="csrf-token"]').attr('content'));
+        $.ajax({
+            type: 'POST',
+            url: '/xoa-tai-lieu',
+            data: data,
+            processData: false,  // tell jQuery not to process the data
+            contentType: false,  // tell jQuery not to set contentType
+            dataType: 'json',
+            success: function (response) {
+                alert(response.Content);
+                location.reload();
+            },
+            error: function (response) {
+                alert("Lỗi hệ thống, vui lòng thử lại.");
+            }
+        });
+
+        return false;
+    });
+
     $('.m-datatable__table').on('click', 'tr td .editDocument', function () {
-        $(this).closest('tr').find('.moTaTaiLieu').enable();
+        $(this).closest('tr').find('.dropdown, .dropdown-menu').removeClass('show');
+        $(this).closest('tr').find('.moTaTaiLieu').enable().focus();
         return false;
     });
     
@@ -244,6 +279,27 @@ jQuery(document).ready(function () {
         });
         return false;
     });
+
+    $('#logout').on('click', function () {
+        var data = new FormData();
+        data.append('_token', $('meta[name="csrf-token"]').attr('content'));
+        data.append('header', $('meta[name="csrf-token"]').attr('content'));
+        $.ajax({
+            type: 'POST',
+            url: '/logout',
+            data: data,
+            processData: false,  // tell jQuery not to process the data
+            contentType: false,  // tell jQuery not to set contentType
+            dataType: 'json',
+            success: function (response) {
+                window.location.reload();
+            },
+            error: function (response) {
+                window.location.reload();
+            }
+        });
+        return false;
+    })
 });
 
 var DropzoneDemo = function() {

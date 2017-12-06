@@ -20,4 +20,11 @@ class MdTruSo extends Model
             'ma_phong_ban', 'ma_phong_ban', 'ma_tru_so'
         );
     }
+
+    public function toCongTacAuth(){
+        return $this->hasManyThrough(
+            'App\MdPhanQuyen', 'App\MdToCongTac', 'App\MdPhongBan',
+            'ma_nhom_quyen', 'ma_to_cong_tac', 'ma_phong_ban', 'ma_phong_ban', 'ma_tru_so'
+        );
+    }
 }

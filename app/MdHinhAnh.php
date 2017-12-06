@@ -12,4 +12,7 @@ class MdHinhAnh extends Model
     const CREATED_AT = 'ngay_dang';
     public $timestamps = false;
 
+    public function slider(){
+        return $this->belongsTo('App\MdThuVienHinhAnh', 'ma_thu_vien', 'ma_thu_vien');
+    }
 }

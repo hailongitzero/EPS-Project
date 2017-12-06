@@ -20,8 +20,8 @@ class CreateMstThuVienHinhAnhTable extends Migration
             $table->boolean('slider')->default(0);
             $table->dateTime('ngay_tao')->useCurrent();
             $table->dateTime('ngay_cap_nhat')->useCurrent();
-            $table->string('nguoi_tao');
-            $table->string('nguoi_cap_nhat')->nullable();
+            $table->string('nguoi_tao', 20);
+            $table->string('nguoi_cap_nhat', 20)->nullable();
 
             $table->primary('ma_thu_vien');
         });

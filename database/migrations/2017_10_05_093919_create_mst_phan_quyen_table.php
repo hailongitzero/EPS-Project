@@ -15,11 +15,11 @@ class CreateMstPhanQuyenTable extends Migration
     {
         Schema::create('mst_phan_quyen', function (Blueprint $table){
             $table->increments('ma_phan_quyen');
-            $table->string('ma_nhan_vien');
-            $table->string('ma_nhom_quyen', 4);
+            $table->string('ma_nhan_vien', 20);
+            $table->string('ma_nhom_quyen', 10);
             $table->boolean('trang_thai')->default(1);
-            $table->string('nguoi_tao');
-            $table->dateTime('ngay_tao');
+            $table->string('nguoi_tao', 20);
+            $table->dateTime('ngay_tao', 20);
             $table->string('nguoi_cap_nhat');
             $table->dateTime('ngay_cap_nhat');
         });

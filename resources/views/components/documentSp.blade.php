@@ -65,10 +65,10 @@
                                         {{ $dm->ten_tai_lieu_mo_rong }}
                                         @if( isset($dm->danhMucTaiLieu))
                                             <ul>
-                                                @foreach( $dm->danhMucTaiLieu as $tl)
-                                                    <li>
-                                                        <a href="#" class="linkDanhMucTaiLieuMoRong" data-content="{{ $tl->ma_danh_muc }}">
-                                                            {{ $tl->ten_danh_muc }}
+                                                @foreach( $dm->danhMucTaiLieu as $key=>$value)
+                                                    <li data-jstree='{ "selected" : {{$key == 0 ? 'true' : ''}} }'>
+                                                        <a href="#" class="linkDanhMucTaiLieuMoRong" data-content="{{ $value->ma_danh_muc }}">
+                                                            {{ $value->ten_danh_muc }}
                                                         </a>
                                                     </li>
                                                 @endforeach

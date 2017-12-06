@@ -13,9 +13,8 @@ var DatatableRemoteAjax = function() {
                             method: 'GET',
                             params: {
                                 // custom headers
-                                headers: $('meta[name="csrf-token"]').attr('content'),
-                                _token: $('meta[name="csrf-token"]').attr('content'),
-                                token: $('meta[name="csrf-token"]').attr('content'),
+                                // headers: $('meta[name="csrf-token"]').attr('content'),
+                                // _token: $('meta[name="csrf-token"]').attr('content'),
                                 query: {
                                 }
                             }
@@ -114,11 +113,11 @@ var DatatableRemoteAjax = function() {
                     sortable: !1,
                     overflow: "visible",
                     template: function(t) {
-                        return '\t\t\t\t\t\t<div class="dropdown ' + (t.getDatatable().getPageSize() - t.getIndex() <= 4 ? "dropup" : "") + '">\t\t\t\t\t\t\t<a href="#" class="btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" data-toggle="dropdown"><i class="la la-ellipsis-h"></i></a>\t\t\t\t\t\t  \t<div class="dropdown-menu dropdown-menu-right">\t\t\t\t\t\t    \t<a class="dropdown-item" href="'+window.location.origin+ '/downloadTaiLieu/' + t.ma_tai_lieu +'"><i class="fa fa-arrow-circle-o-down"></i> Tải Về</a>\t\t\t\t\t\t    \t<a class="dropdown-item" href="'+window.location.origin+ '/resources/' + t.lien_ket +'" target="_blank"><i class="fa fa-eye"></i> Xem Trước</a>\t\t\t\t\t\t    \t<a class="editDocument dropdown-item" href="#"><i class="fa fa-edit"></i> Chỉnh Sửa</a>\t\t\t\t\t\t    \t<a class="saveDocument dropdown-item" href="#" data-content="'+ t.ma_tai_lieu +'"><i class="fa fa-save"></i> Cập Nhật</a>\t\t\t\t\t\t    \t</div>\t\t\t\t\t\t</div>\t\t\t\t\t'
+                        return '\t\t\t\t\t\t<div class="dropdown ' + (t.getDatatable().getPageSize() - t.getIndex() <= 4 ? "dropup" : "") + '">\t\t\t\t\t\t\t<a href="#" class="btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" data-toggle="dropdown"><i class="la la-ellipsis-h"></i></a>\t\t\t\t\t\t  \t<div class="dropdown-menu dropdown-menu-right">\t\t\t\t\t\t    \t<a class="dropdown-item" href="'+window.location.origin+ '/downloadTaiLieu/' + t.ma_tai_lieu +'"><i class="fa fa-arrow-circle-o-down"></i> Tải Về</a>\t\t\t\t\t\t    \t<a class="dropdown-item" href="'+window.location.origin+ '/resources/' + t.lien_ket +'" target="_blank"><i class="fa fa-eye"></i> Xem Trước</a>\t\t\t\t\t\t    \t<a class="editDocument dropdown-item" href="#"><i class="fa fa-edit"></i> Chỉnh Sửa</a>\t\t\t\t\t\t    \t<a class="saveDocument dropdown-item" href="#" data-content="'+ t.ma_tai_lieu +'"><i class="fa fa-save"></i> Cập Nhật</a>\t\t\t\t\t\t    \t<a class="deleteDocument dropdown-item" href="#" data-content="'+ t.ma_tai_lieu +'"><i class="fa fa-trash"></i> Xóa</a>\t\t\t\t\t\t    \t</div>\t\t\t\t\t\t</div>\t\t\t\t\t'
                     }
                 }]
             }),
-            f = t.setDataSourceParam('maDanhMuc', ''),
+            // f = t.setDataSourceParam('maDanhMuc', ''),
             e = t.getDataSourceQuery();
         $("#m_form_search").on("keyup", function(e) {
             var a = t.getDataSourceQuery();
@@ -140,6 +139,7 @@ var DatatableRemoteAjax = function() {
             if( level > 1){
                 t.setDataSourceParam('maDanhMuc', maDanhMuc);
                 t.load();
+                t.setDataSourceParam('maDanhMuc', '');
             }
         })
     };
@@ -399,7 +399,6 @@ var dtDocumentExtend = function() {
                                 // custom headers
                                 headers: $('meta[name="csrf-token"]').attr('content'),
                                 _token: $('meta[name="csrf-token"]').attr('content'),
-                                token: $('meta[name="csrf-token"]').attr('content'),
                                 query: {
                                 }
                             }
@@ -498,11 +497,10 @@ var dtDocumentExtend = function() {
                     sortable: !1,
                     overflow: "visible",
                     template: function(t) {
-                        return '\t\t\t\t\t\t<div class="dropdown ' + (t.getDatatable().getPageSize() - t.getIndex() <= 4 ? "dropup" : "") + '">\t\t\t\t\t\t\t<a href="#" class="btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" data-toggle="dropdown"><i class="la la-ellipsis-h"></i></a>\t\t\t\t\t\t  \t<div class="dropdown-menu dropdown-menu-right">\t\t\t\t\t\t    \t<a class="dropdown-item" href="'+window.location.origin+ '/downloadTaiLieu/' + t.ma_tai_lieu +'"><i class="fa fa-arrow-circle-o-down"></i> Tải Về</a>\t\t\t\t\t\t    \t<a class="dropdown-item" href="'+window.location.origin+ '/resources/' + t.lien_ket +'" target="_blank"><i class="fa fa-eye"></i> Xem Trước</a>\t\t\t\t\t\t    \t<a class="editDocument dropdown-item" href="#"><i class="fa fa-edit"></i> Chỉnh Sửa</a>\t\t\t\t\t\t    \t<a class="saveDocument dropdown-item" href="#" data-content="'+ t.ma_tai_lieu +'"><i class="fa fa-save"></i> Cập Nhật</a>\t\t\t\t\t\t    \t</div>\t\t\t\t\t\t</div>\t\t\t\t\t'
+                        return '\t\t\t\t\t\t<div class="dropdown ' + (t.getDatatable().getPageSize() - t.getIndex() <= 4 ? "dropup" : "") + '">\t\t\t\t\t\t\t<a href="#" class="btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" data-toggle="dropdown"><i class="la la-ellipsis-h"></i></a>\t\t\t\t\t\t  \t<div class="dropdown-menu dropdown-menu-right">\t\t\t\t\t\t    \t<a class="dropdown-item" href="'+window.location.origin+ '/downloadTaiLieu/' + t.ma_tai_lieu +'"><i class="fa fa-arrow-circle-o-down"></i> Tải Về</a>\t\t\t\t\t\t    \t<a class="dropdown-item" href="'+window.location.origin+ '/resources/' + t.lien_ket +'" target="_blank"><i class="fa fa-eye"></i> Xem Trước</a>\t\t\t\t\t\t    \t<a class="editDocument dropdown-item" href="#"><i class="fa fa-edit"></i> Chỉnh Sửa</a>\t\t\t\t\t\t    \t<a class="saveDocument dropdown-item" href="#" data-content="'+ t.ma_tai_lieu +'"><i class="fa fa-save"></i> Cập Nhật</a>\t\t\t\t\t\t    \t<a class="deleteDocument dropdown-item" href="#" data-content="'+ t.ma_tai_lieu +'"><i class="fa fa-trash"></i> Xóa</a>\t\t\t\t\t\t    \t</div>\t\t\t\t\t\t</div>\t\t\t\t\t'
                     }
                 }]
             }),
-            f = t.setDataSourceParam('maDanhMuc', ''),
             e = t.getDataSourceQuery();
         $("#m_form_search").on("keyup", function(e) {
             var a = t.getDataSourceQuery();
@@ -515,27 +513,30 @@ var dtDocumentExtend = function() {
             var e = t.getDataSourceQuery();
             e.Type = $(this).val().toLowerCase(), t.setDataSourceQuery(e), t.load()
         }).val(void 0 !== e.Type ? e.Type : ""), $("#m_form_status, #m_form_type").selectpicker(),
-            $("#mTreeDanhMucMoRong").on('changed.jstree', function (e, data) {
-                var tb = $("#mTbDocumentExt");
-                var nodeId = $('#mTreeDanhMucMoRong').jstree().get_selected("id")[0].id;
-                var noteText = $('#mTreeDanhMucMoRong').jstree().get_selected("id")[0].text;
-                var maDanhMuc = $('#'+nodeId).find('a').attr('data-content');
-                var level = $('#'+nodeId).attr('aria-level');
-                if( level > 1){
-                    t.setDataSourceParam('maDanhMuc', maDanhMuc);
-                    t.load();
-                }
-            })
+        $("#mTreeDanhMucMoRong").on('changed.jstree', function (e, data) {
+            var tb = $("#mTbDocumentExt");
+            var nodeId = $('#mTreeDanhMucMoRong').jstree().get_selected("id")[0].id;
+            var noteText = $('#mTreeDanhMucMoRong').jstree().get_selected("id")[0].text;
+            var maDanhMuc = $('#'+nodeId).find('a').attr('data-content');
+            var level = $('#'+nodeId).attr('aria-level');
+            if( level > 1){
+                t.setDataSourceParam('maDanhMuc', maDanhMuc);
+                t.load();
+                t.setDataSourceParam('maDanhMuc', '');
+            }
+        });
+
     };
     return {
         init: function() {
-            t()
+            t();
         },
     }
 }();
 
 jQuery(document).ready(function() {
     if ($("#mTbDocument").length > 0){
+
         DatatableRemoteAjax.init();
     }
 

@@ -17,4 +17,11 @@ class MdPhongBan extends Model
     public function toCongTac(){
         return $this->hasMany('App\MdToCongTac', 'ma_phong_ban', 'ma_phong_ban');
     }
+
+    public function toCongTacAuth(){
+        return $this->hasManyThrough(
+            'App\MdPhanQuyen', 'App\MdToCongTac',
+            'ma_to_cong_tac', 'ma_nhom_quyen', 'ma_phong_ban'
+        );
+    }
 }

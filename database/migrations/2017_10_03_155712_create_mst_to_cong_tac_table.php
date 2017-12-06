@@ -19,7 +19,7 @@ class CreateMstToCongTacTable extends Migration
             $table->string('ma_phong_ban', 7);
             $table->string('thu_muc');
             $table->boolean('trang_thai');
-            $table->string('nguoi_tao');
+            $table->string('nguoi_tao', 20);
             $table->dateTime('ngay_tao')->useCurrent();
             $table->dateTime('ngay_cap_nhat')->useCurrent();
 

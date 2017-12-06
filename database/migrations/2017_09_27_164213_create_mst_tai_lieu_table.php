@@ -21,7 +21,7 @@ class CreateMstTaiLieuTable extends Migration
             $table->string('dinh_dang');
             $table->integer('dung_luong');
             $table->string('lien_ket');
-            $table->string('nguoi_dang');
+            $table->string('nguoi_dang', 20);
             $table->integer('luot_tai')->default(0);
             $table->boolean('trang_thai')->default(1);
             $table->dateTime('ngay_tao')->useCurrent();

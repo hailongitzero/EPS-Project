@@ -18,9 +18,9 @@ class CreateMstNhomQuyenTable extends Migration
             $table->string('ten_nhom_quyen');
             $table->string('ma_danh_muc', 6);
             $table->boolean('trang_thai')->default(1);
-            $table->string('nguoi_tao');
+            $table->string('nguoi_tao', 20);
             $table->dateTime('ngay_tao');
-            $table->string('nguoi_cap_nhat');
+            $table->string('nguoi_cap_nhat', 20);
             $table->dateTime('ngay_cap_nhat');
 
             $table->primary('ma_nhom_quyen');

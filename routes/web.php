@@ -39,6 +39,9 @@ Route::middleware(['auth'])->group(function (){
     Route::post('/uploadTaiLieu', 'DocumentController@uploadTaiLieu');
     Route::get('uploadTaiLieu', 'DocumentController@uploadTaiLieu');
 
+    Route::post('/xoa-tai-lieu', 'DocumentController@capNhatTrangThaiTaiLieu');
+    Route::get('xoa-tai-lieu', 'DocumentController@capNhatTrangThaiTaiLieu');
+
     Route::post('/cap-nhat-mo-ta-tai-lieu', 'DocumentController@capNhatMoTaTaiLieu');
     Route::get('cap-nhat-mo-ta-tai-lieu', 'DocumentController@capNhatMoTaTaiLieu');
 

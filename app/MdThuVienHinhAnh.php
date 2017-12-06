@@ -13,7 +13,7 @@ class MdThuVienHinhAnh extends Model
     const UPDATED_AT = 'ngay_cap_nhat';
 
     public function hinhAnh(){
-        return $this->hasMany('App\MdHinhAnh', 'ma_thu_vien');
+        return $this->hasMany('App\MdHinhAnh', 'ma_thu_vien', 'ma_thu_vien');
     }
     public function nguoiDang(){
         return $this->hasOne('App\User', 'ma_nhan_vien', 'nguoi_tao');

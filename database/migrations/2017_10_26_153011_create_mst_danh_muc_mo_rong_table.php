@@ -15,9 +15,9 @@ class CreateMstDanhMucMoRongTable extends Migration
     {
         Schema::create('mst_danh_muc_mo_rong', function (Blueprint $table){
             $table->string('ma_danh_muc_mo_rong', 6);
-            $table->string('ten_danh_muc_mo_rong');
+            $table->string('ten_danh_muc_mo_rong')->unique();
             $table->boolean('trang_thai')->default(1);
-            $table->string('nguoi_tao');
+            $table->string('nguoi_tao', 20);
             $table->dateTime('ngay_tao')->useCurrent();
             $table->dateTime('ngay_cap_nhat')->useCurrent();
 

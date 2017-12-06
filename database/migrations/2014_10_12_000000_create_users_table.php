@@ -15,7 +15,7 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('ma_nhan_vien', 10)->unique();
+            $table->string('ma_nhan_vien', 20)->unique();
             $table->string('ho_ten');
             $table->string('email')->unique();
             $table->string('username')->unique();
@@ -25,6 +25,7 @@ class CreateUsersTable extends Migration
             $table->boolean('is_admin')->default(0);
             $table->string('dia_chi');
             $table->date('ngay_sinh');
+            $table->string('avatar')->nullable();
             $table->boolean('trang_thai')->default(1);
             $table->dateTime('ngay_tao')->useCurrent();
             $table->dateTime('ngay_cap_nhat')->useCurrent();

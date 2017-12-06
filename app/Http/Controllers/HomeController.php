@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\MdTruSo;
 use App\MdPhongBan;
 use App\MdToCongTac;
+use App\MdHinhAnh;
+use App\MdThuVienHinhAnh;
 
 class HomeController extends CommonController
 {
@@ -18,10 +20,14 @@ class HomeController extends CommonController
     public function index()
     {
         $menuData = $this->getMenuData();
+        $userInfo = $this->getUserInfo();
+        $slider = MdThuVienHinhAnh::with('hinhAnh')->where('slider', 1)->get();
         $layoutData = array(
-            'menuData' => $menuData
+            'menuData' => $menuData,
+            'userInfo' => $userInfo,
+            'slider' => $slider,
         );
-//        dd($menuData);
+//        dd($userInfo);
         return view('index', $layoutData);
     }
 }

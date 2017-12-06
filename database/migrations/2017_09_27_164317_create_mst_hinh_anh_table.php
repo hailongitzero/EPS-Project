@@ -20,7 +20,7 @@ class CreateMstHinhAnhTable extends Migration
             $table->string('lien_ket');
             $table->string('dinh_dang', 10);
             $table->integer('luot_tai')->default(0);
-            $table->string('nguoi_dang');
+            $table->string('nguoi_dang', 20);
             $table->date('ngay_dang')->useCurrent();
         });
     }

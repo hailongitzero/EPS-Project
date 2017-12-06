@@ -8,6 +8,7 @@ use Composer\Package\Archiver\ZipArchiver;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use League\Flysystem\Exception;
 use ZipArchive;
 
 class GalleryController extends CommonController
@@ -15,12 +16,14 @@ class GalleryController extends CommonController
     public function getAllGallery(){
         if (Auth::check()) {
             $menuData = $this->getMenuData();
+            $userInfo = $this->getUserInfo();
             $galleryList = MdThuVienHinhAnh::with('hinhAnh')->where('trang_thai')->get();
             $contentData = array(
                 'galleryList' => $galleryList,
             );
             $layoutData = array(
                 'menuData' => $menuData,
+                'userInfo' => $userInfo,
                 'contentData' => $contentData,
             );
 //        dd($taiLieu);
@@ -28,8 +31,10 @@ class GalleryController extends CommonController
             return view('gallery', $layoutData);
         }else{
             $menuData = $this->getMenuData();
+            $userInfo = $this->getUserInfo();
             $layoutData = array(
-                'menuData' => $menuData
+                'menuData' => $menuData,
+                'userInfo' => $userInfo,
             );
 //        dd($menuData);
             return view('index', $layoutData);
@@ -145,25 +150,34 @@ class GalleryController extends CommonController
                     // do something here if addFile succeeded, otherwise this statement is unnecessary and can be ignored.
                     continue;
                 } else {
-                    throw new Exception("file `{$file}` could not be added to the zip file: " . $archive->getStatusString());
+//                    throw new Exception("file `{$file}` could not be added to the zip file: " . $archive->getStatusString());
+                    return response('<script> alert("Không thể tạo được file zip"); window.history.back()</script>', 200);
                 }
             }
 
             // close the archive.
-            if ($archive->close()) {
-                // archive is now downloadable ...
-                return response()->download($archiveFile, basename($archiveFile))->deleteFileAfterSend(true);
-            } else {
-                throw new Exception("could not close zip file: " . $archive->getStatusString());
+            try{
+                if ($archive->close()) {
+                    // archive is now downloadable ...
+                    return response()->download($archiveFile, basename($archiveFile))->deleteFileAfterSend(true);
+                } else {
+//                throw new Exception("could not close zip file: " . $archive->getStatusString());
+                    return response('<script> alert("Không thể tạo được file zip"); window.history.back()</script>', 200);
+                }
+            }catch (\Exception $e){
+                return response('<script> alert("File không tồn tại."); window.history.back()</script>', 200);
             }
+
         } else {
-            throw new Exception("zip file could not be created: " . $archive->getStatusString());
+//            throw new Exception("zip file could not be created: " . $archive->getStatusString());
+            return response('<script> alert("Không thể tạo được file zip"); window.history.back()</script>', 200);
         }
     }
 
     public function showImageGallery($maThuVien){
         if (Auth::check()) {
             $menuData = $this->getMenuData();
+            $userInfo = $this->getUserInfo();
             $imageGallery = MdHinhAnh::where('ma_thu_vien', $maThuVien)->get();
 //            $gallery = MdThuVienHinhAnh::where('trang_thai', 1)->where('ma_thu_vien', $maThuVien)->get();
             $gallery = MdThuVienHinhAnh::where('trang_thai', 1)->find($maThuVien);
@@ -173,6 +187,7 @@ class GalleryController extends CommonController
             );
             $layoutData = array(
                 'menuData' => $menuData,
+                'userInfo' => $userInfo,
                 'contentData' => $contentData,
             );
 //        dd($contentData);
@@ -180,8 +195,10 @@ class GalleryController extends CommonController
             return view('gallerySlide', $layoutData);
         }else{
             $menuData = $this->getMenuData();
+            $userInfo = $this->getUserInfo();
             $layoutData = array(
-                'menuData' => $menuData
+                'menuData' => $menuData,
+                'userInfo' => $userInfo,
             );
             return view('index', $layoutData);
         }
