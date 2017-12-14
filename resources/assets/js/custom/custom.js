@@ -300,6 +300,316 @@ jQuery(document).ready(function () {
         });
         return false;
     })
+
+    $('#loaiPhanQuyen').on('change', function () {
+        if ($('#loaiPhanQuyen option:selected').val() == 1){
+            if ($('.phan-quyen-to').hasClass('hide')){
+                $('.phan-quyen-to').removeClass('hide');
+            }
+            if (!$('.phan-quyen-chung').hasClass('hide')){
+                $('.phan-quyen-chung').addClass('hide');
+            }
+        }else if ($('#loaiPhanQuyen option:selected').val() == 2){
+            if ($('.phan-quyen-chung').hasClass('hide')){
+                $('.phan-quyen-chung').removeClass('hide');
+            }
+            if (!$('.phan-quyen-to').hasClass('hide')){
+                $('.phan-quyen-to').addClass('hide');
+            }
+        }
+        else {
+            if (!$('.phan-quyen-to').hasClass('hide')){
+                $('.phan-quyen-to').addClass('hide');
+            }
+            if (!$('.phan-quyen-chung').hasClass('hide')){
+                $('.phan-quyen-chung').addClass('hide');
+            }
+        }
+    });
+    $('#kqTimKiemNhanVien').on('change',function () {
+        $('#dsQuyenNhanVien').empty();
+        $('#tenNhanVienPQ').val($('#kqTimKiemNhanVien option:selected').text());
+        var maNhanVien = $('#kqTimKiemNhanVien option:selected').val();
+        var data = new FormData();
+        data.append('_token', $('meta[name="csrf-token"]').attr('content'));
+        data.append('header', $('meta[name="csrf-token"]').attr('content'));
+        data.append('maNhanVien', maNhanVien);
+        $.ajax({
+            type: 'POST',
+            url: '/tim-phan-quyen-nhan-vien',
+            data: data,
+            processData: false,  // tell jQuery not to process the data
+            contentType: false,  // tell jQuery not to set contentType
+            dataType: 'json',
+            success: function (response) {
+                // console.log(response['rslTo']);
+                $.each(response['rslTo'], function (i, res) {
+                    $('#dsQuyenNhanVien').append($('<option>', {
+                        value: res['ma_to_cong_tac'],
+                        text : 'Tổ - ' + res['ten_to_cong_tac']
+                    }));
+                });
+                $.each(response['rslDM'], function (i, res) {
+                    $('#dsQuyenNhanVien').append($('<option>', {
+                        value: res['ma_tai_lieu_mo_rong'],
+                        text : 'Tài Liệu - ' + res['ten_tai_lieu_mo_rong']
+                    }));
+                });
+            },
+            error: function (response) {
+            }
+        });
+        return false;
+    });
+
+    $('#btnXoaQuyen').on('click', function () {
+        $('#dsQuyenNhanVien option:selected').remove();
+    })
+    
+    $('#searchPhanQuyen').on('click', function () {
+        $('#kqTimKiemNhanVien').empty();
+        var tenNhanVien = $('#tenNhanVien').val();
+        var tenDangNhap = $('#tenDangNhap').val();
+        var data = new FormData();
+        data.append('_token', $('meta[name="csrf-token"]').attr('content'));
+        data.append('header', $('meta[name="csrf-token"]').attr('content'));
+        data.append('tenNhanVien', tenNhanVien);
+        data.append('tenDangNhap', tenDangNhap);
+        $.ajax({
+            type: 'POST',
+            url: '/tim-nhan-vien-phan-quyen',
+            data: data,
+            processData: false,  // tell jQuery not to process the data
+            contentType: false,  // tell jQuery not to set contentType
+            dataType: 'json',
+            success: function (response) {
+                // for (var i = 0; i < response.length; i++){
+                //     console.log(response[i]['ma_nhan_vien']);
+                // }
+                $.each(response, function (i, res) {
+                    $('#kqTimKiemNhanVien').append($('<option>', {
+                        value: res['ma_nhan_vien'],
+                        text : res['ho_ten']
+                    }));
+                });
+            },
+            error: function (response) {
+            }
+        });
+        return false;
+    });
+
+    $('#loaiPhanQuyen').on('change',function () {
+        var data = new FormData();
+        data.append('_token', $('meta[name="csrf-token"]').attr('content'));
+        data.append('header', $('meta[name="csrf-token"]').attr('content'));
+        if ($('#loaiPhanQuyen option:selected').val() == 1){
+            $('#cbxTruSo').empty();
+            $.ajax({
+                type: 'POST',
+                url: '/get-ds-tru-so',
+                data: data,
+                processData: false,  // tell jQuery not to process the data
+                contentType: false,  // tell jQuery not to set contentType
+                dataType: 'json',
+                success: function (response) {
+                    $('#cbxTruSo').append($('<option>', {
+                        value: '0',
+                        text :'-----Chọn-----'
+                    }));
+                    $.each(response, function (i, res) {
+                        $('#cbxTruSo').append($('<option>', {
+                            value: res['ma_tru_so'],
+                            text : res['ten_tru_so']
+                        }));
+                    });
+                },
+                error: function (response) {
+                }
+            });
+            return false;
+        }else if ($('#loaiPhanQuyen option:selected').val() == 2){
+            $('#cbxDanhMucMoRong').empty();
+            $.ajax({
+                type: 'POST',
+                url: '/get-ds-danh-muc',
+                data: data,
+                processData: false,  // tell jQuery not to process the data
+                contentType: false,  // tell jQuery not to set contentType
+                dataType: 'json',
+                success: function (response) {
+                    $('#cbxDanhMucMoRong').append($('<option>', {
+                        value: '0',
+                        text :'-----Chọn-----'
+                    }));
+                    $.each(response, function (i, res) {
+                        $('#cbxDanhMucMoRong').append($('<option>', {
+                            value: res['ma_danh_muc_mo_rong'],
+                            text : res['ten_danh_muc_mo_rong']
+                        }));
+                    });
+                },
+                error: function (response) {
+                }
+            });
+        }
+    });
+
+    $('#cbxTruSo').on('change', function () {
+        $('#cbxPhongBan').empty();
+        var maTruSo = $('#cbxTruSo option:selected').val();
+        var data = new FormData();
+        data.append('_token', $('meta[name="csrf-token"]').attr('content'));
+        data.append('header', $('meta[name="csrf-token"]').attr('content'));
+        data.append('maTruSo', maTruSo);
+        $.ajax({
+            type: 'POST',
+            url: '/get-ds-phong-ban',
+            data: data,
+            processData: false,  // tell jQuery not to process the data
+            contentType: false,  // tell jQuery not to set contentType
+            dataType: 'json',
+            success: function (response) {
+                $('#cbxPhongBan').append($('<option>', {
+                    value: '0',
+                    text :'-----Chọn-----'
+                }));
+                $.each(response, function (i, res) {
+                    $('#cbxPhongBan').append($('<option>', {
+                        value: res['ma_phong_ban'],
+                        text : res['ten_phong_ban']
+                    }));
+                });
+            },
+            error: function (response) {
+            }
+        });
+    });
+
+    $('#cbxPhongBan').on('change', function () {
+        $('#cbxToCongTac').empty();
+        var maPhongBan = $('#cbxPhongBan option:selected').val();
+        var data = new FormData();
+        data.append('_token', $('meta[name="csrf-token"]').attr('content'));
+        data.append('header', $('meta[name="csrf-token"]').attr('content'));
+        data.append('maPhongBan', maPhongBan);
+        $.ajax({
+            type: 'POST',
+            url: '/get-ds-to-cong-tac',
+            data: data,
+            processData: false,  // tell jQuery not to process the data
+            contentType: false,  // tell jQuery not to set contentType
+            dataType: 'json',
+            success: function (response) {
+                $.each(response, function (i, res) {
+                    $('#cbxToCongTac').append($('<option>', {
+                        value: res['ma_to_cong_tac'],
+                        text : res['ten_to_cong_tac']
+                    }));
+                });
+            },
+            error: function (response) {
+            }
+        });
+    });
+
+    $('#cbxDanhMucMoRong').on('change', function () {
+        $('#cbxTaiLieuMoRong').empty();
+        var maDanhMuc = $('#cbxDanhMucMoRong option:selected').val();
+        var data = new FormData();
+        data.append('_token', $('meta[name="csrf-token"]').attr('content'));
+        data.append('header', $('meta[name="csrf-token"]').attr('content'));
+        data.append('maDanhMuc', maDanhMuc);
+        $.ajax({
+            type: 'POST',
+            url: '/get-ds-tai-lieu-mo-rong',
+            data: data,
+            processData: false,  // tell jQuery not to process the data
+            contentType: false,  // tell jQuery not to set contentType
+            dataType: 'json',
+            success: function (response) {
+                $.each(response, function (i, res) {
+                    $('#cbxTaiLieuMoRong').append($('<option>', {
+                        value: res['ma_tai_lieu_mo_rong'],
+                        text : res['ten_tai_lieu_mo_rong']
+                    }));
+                });
+            },
+            error: function (response) {
+            }
+        });
+    });
+    
+    $('#btnAddDSPhanQuyen').on('click', function () {
+        var maPhanQuyen = '';
+        var tenPhanQuyen = '';
+        var status = true;
+        if ($('#loaiPhanQuyen option:selected').val() == 1){
+            maPhanQuyen = $('#cbxToCongTac option:selected').val();
+            tenPhanQuyen = 'Tổ - ' + $('#cbxToCongTac option:selected').text();
+        }else if ($('#loaiPhanQuyen option:selected').val() == 2){
+            maPhanQuyen = $('#cbxTaiLieuMoRong option:selected').val();
+            tenPhanQuyen = 'Tài Liệu - ' + $('#cbxTaiLieuMoRong option:selected').text();
+        }else {
+            alert("Vui lòng chọn loại phân quyền.")
+            return;
+        }
+
+        $('#dsQuyenNhanVien option').each(function () {
+            if ($(this).val() == maPhanQuyen){
+                alert('Quyền này đã tồn tại.');
+                status = false;
+                return false;
+            }
+        });
+        if (status == true){
+            $('#dsQuyenNhanVien').append($('<option>', {
+                value: maPhanQuyen,
+                text : tenPhanQuyen
+            }));
+        }
+    });
+    
+    $('#btnUpdateAuth').on('click', function () {
+        var jsonVar = {};
+        var arrPQ = [];
+        var data = new FormData();
+        var maNhanVien = $('#kqTimKiemNhanVien option:selected').val();
+
+        jsonVar['maNhanVien'] = maNhanVien;
+
+        if ( maNhanVien == undefined || maNhanVien ==''){
+            alert('Vui lòng chọn nhân viên cần phân quyền');
+            return;
+        }
+        $('#dsQuyenNhanVien option').each(function () {
+            arrPQ.push($(this).val());
+        });
+        jsonVar['dsPhanQuyen'] = arrPQ;
+
+        data.append('_token', $('meta[name="csrf-token"]').attr('content'));
+        data.append('header', $('meta[name="csrf-token"]').attr('content'));
+        data.append('dsPhanQuyen', arrPQ);
+        data.append('maNhanVien', maNhanVien);
+
+        $.ajax({
+            type: 'POST',
+            url: '/cap-nhat-phan-quyen-user',
+            data: data,
+            processData: false,  // tell jQuery not to process the data
+            contentType: false,  // tell jQuery not to set contentType
+            dataType: 'json',
+            success: function (response) {
+                alert(response.Content);
+                return;
+            },
+            error: function (response) {
+                alert('Cập nhật phân quyền lỗi');
+                return;
+            }
+        });
+        return false;
+    });
 });
 
 var DropzoneDemo = function() {

@@ -196,20 +196,29 @@ class DocumentController extends CommonController
 
         return view('tracuu', $layoutData);
     }
+
     public function fnTraCuu(Request $request){
+        if (Auth::check()){
+            $username = Auth::user()->ma_nhan_vien;
+            $sql = 'select *, user.ho_ten as nguoi_dang from mst_tai_lieu tl, users user WHERE 1 = 1 and tl.nguoi_dang = user.ma_nhan_vien AND tl.trang_thai = 1';
+            if (!Auth::user()->is_admin){
+                $sql .= ' AND tl.ma_danh_muc IN (SELECT ma_nhom_quyen FROM mst_phan_quyen where ma_nhan_vien = "'.$username.'" and trang_thai = 1)';
+            }
+            if (isset($request->request->all()['datatable']['tenNhanVien']['generalSearch'])){
+                $sql .= " and tl.nguoi_dang in (select ma_nhan_vien from users where ho_ten like  '%". $request->request->all()['datatable']['tenNhanVien']['generalSearch'] ."%')";
+            }
+            if (isset($request->request->all()['datatable']['tenTaiLieu']['generalSearch'])){
+                $sql .= " and tl.ten_tai_lieu like  '%". $request->request->all()['datatable']['tenTaiLieu']['generalSearch'] ."%'";
+            }
+            $searchResult = json_encode(DB::select(DB::raw($sql)));
+            $result ='{ "meta": { "page": 1, "pages": 1, "perpage": -1, "total": '. count($searchResult) .', "sort": "asc", "field": "ma_tai_lieu" }, "data":';
+            $result .= $searchResult . '}';
 
-        $sql = 'select *, user.ho_ten as nguoi_dang from mst_tai_lieu tl, users user WHERE 1 = 1 and tl.nguoi_dang = user.ma_nhan_vien AND tl.trang_thai = 1';
-        if (isset($request->request->all()['datatable']['tenNhanVien']['generalSearch'])){
-            $sql .= " and tl.nguoi_dang in (select ma_nhan_vien from users where ho_ten like  '%". $request->request->all()['datatable']['tenNhanVien']['generalSearch'] ."%')";
+//            dd($sql);
+            return response($result, 200)->header('Content-Type', 'application/json');
+        }else{
+            return response('<script> alert("Bạn chưa đăng nhập."); window.history.back()</script>', 200);
         }
-        if (isset($request->request->all()['datatable']['tenTaiLieu']['generalSearch'])){
-            $sql .= " and tl.ten_tai_lieu like  '%". $request->request->all()['datatable']['tenTaiLieu']['generalSearch'] ."%'";
-        }
-        $searchResult = json_encode(DB::select(DB::raw($sql)));
-        $result ='{ "meta": { "page": 1, "pages": 1, "perpage": -1, "total": '. count($searchResult) .', "sort": "asc", "field": "ma_tai_lieu" }, "data":';
-        $result .= $searchResult . '}';
-
-        return response($result, 200)->header('Content-Type', 'application/json');
     }
 
     public function capNhatMoTaTaiLieu(Request $request)

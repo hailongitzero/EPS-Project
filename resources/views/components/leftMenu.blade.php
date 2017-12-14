@@ -38,6 +38,20 @@
                 <span class="m-menu__link-text">Tra Cứu</span>
             </a>
         </li>
+        @if( \Illuminate\Support\Facades\Auth::user()->is_admin)
+            <li class="m-menu__item" aria-haspopup="true">
+                <a  href="{{ url('phan-quyen') }}" class="m-menu__link m-menu__toggle">
+                    <i class="m-menu__link-icon flaticon-user-ok"></i>
+                    <span class="m-menu__link-text">Phân Quyền</span>
+                </a>
+            </li>
+            <li class="m-menu__item" aria-haspopup="true">
+                <a  href="{{ url('quan-ly-danh-muc') }}" class="m-menu__link m-menu__toggle">
+                    <i class="m-menu__link-icon flaticon-list-2"></i>
+                    <span class="m-menu__link-text">Quản Lý Danh Mục</span>
+                </a>
+            </li>
+        @endif
         <li class="m-menu__item m-menu__item--submenu" aria-haspopup="true"  data-menu-submenu-toggle="hover">
             <a  href="#" class="m-menu__link m-menu__toggle">
                 <i class="m-menu__link-icon flaticon-layers"></i>

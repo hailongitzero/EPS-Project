@@ -16,6 +16,7 @@ Auth::routes();
 Route::get('/', 'HomeController@index')->name('home');
 
 Route::middleware(['auth'])->group(function (){
+    Route::get('/phan-quyen', 'AdminController@loadPhanQuyen');
     Route::get('/tai-lieu/{id}', 'DocumentController@dsDanhMucTheoTo');
 
     Route::get('/tai-lieu-mat/{id}', 'DocumentController@dsDanhMucMoRong');
@@ -61,4 +62,29 @@ Route::middleware(['auth'])->group(function (){
     Route::get('/download-gallery/{id}', 'GalleryController@downloadImageZip');
 
     Route::get('/slide-hinh/{id}', 'GalleryController@showImageGallery');
+
+    //Route phan quyen
+    Route::post('/tim-nhan-vien-phan-quyen', 'AdminController@getUserPhanQuyen');
+    Route::get('/tim-nhan-vien-phan-quyen', 'AdminController@getUserPhanQuyen');
+
+    Route::post('/tim-phan-quyen-nhan-vien', 'AdminController@getAuthListOfUser');
+    Route::get('/tim-phan-quyen-nhan-vien', 'AdminController@getAuthListOfUser');
+
+    Route::post('/get-ds-tru-so', 'AdminController@getDsTruSo');
+    Route::get('/get-ds-tru-so', 'AdminController@getDsTruSo');
+
+    Route::post('/get-ds-danh-muc', 'AdminController@getDsDanhMuc');
+    Route::get('/get-ds-danh-muc', 'AdminController@getDsDanhMuc');
+
+    Route::post('/get-ds-tai-lieu-mo-rong', 'AdminController@getDsTaiLieuMoRong');
+    Route::get('/get-ds-tai-lieu-mo-rong', 'AdminController@getDsTaiLieuMoRong');
+
+    Route::post('/get-ds-phong-ban', 'AdminController@getDsPhongBan');
+    Route::get('/get-ds-phong-ban', 'AdminController@getDsPhongBan');
+
+    Route::post('/get-ds-to-cong-tac', 'AdminController@getDsToCongTac');
+    Route::get('/get-ds-to-cong-tac', 'AdminController@getDsToCongTac');
+
+    Route::post('/cap-nhat-phan-quyen-user', 'AdminController@updateUserAuthority');
+    Route::get('/cap-nhat-phan-quyen-user', 'AdminController@updateUserAuthority');
 });

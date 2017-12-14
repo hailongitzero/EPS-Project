@@ -61,3 +61,6 @@ footer h4{
 .carousel-inner{
     max-height: 600px;
 }
+.hide{
+    display: none;
+}
