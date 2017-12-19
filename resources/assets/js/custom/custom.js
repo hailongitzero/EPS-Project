@@ -85,6 +85,7 @@ jQuery(document).ready(function () {
         }
         if($('#maDanhMucTaiLieu').val() == ''){
             alert("Bạn chưa chọn danh mục tài liệu!!");
+            $('#mdThemMoiTaiLieu').modal('toggle');
             return false;
         }
         var fileName = myFile.files[0].name;
@@ -326,6 +327,36 @@ jQuery(document).ready(function () {
             }
         }
     });
+
+    $('#cbxSrchTruSo').on('change', function () {
+        var maTruSo = $('#cbxSrchTruSo option:selected').val();
+        var data = new FormData();
+        data.append('_token', $('meta[name="csrf-token"]').attr('content'));
+        data.append('header', $('meta[name="csrf-token"]').attr('content'));
+        data.append('maTruSo', maTruSo);
+        $.ajax({
+            type: 'POST',
+            url: '/get-ds-phong-ban',
+            data: data,
+            processData: false,  // tell jQuery not to process the data
+            contentType: false,  // tell jQuery not to set contentType
+            dataType: 'json',
+            success: function (response) {
+                $('#cbxSrchPhongBan').append($('<option>', {
+                    value: '',
+                    text :'-----Chọn-----'
+                }));
+                $.each(response, function (i, res) {
+                    $('#cbxSrchPhongBan').append($('<option>', {
+                        value: res['ma_phong_ban'],
+                        text : res['ten_phong_ban']
+                    }));
+                });
+            },
+            error: function (response) {
+            }
+        });
+    });
     $('#kqTimKiemNhanVien').on('change',function () {
         $('#dsQuyenNhanVien').empty();
         $('#tenNhanVienPQ').val($('#kqTimKiemNhanVien option:selected').text());
@@ -363,6 +394,8 @@ jQuery(document).ready(function () {
     });
 
     $('#btnXoaQuyen').on('click', function () {
+        var status = confirm('Bạn chắc chắn muốn xóa quyền này?');
+        if (status == true)
         $('#dsQuyenNhanVien option:selected').remove();
     })
     
@@ -370,11 +403,13 @@ jQuery(document).ready(function () {
         $('#kqTimKiemNhanVien').empty();
         var tenNhanVien = $('#tenNhanVien').val();
         var tenDangNhap = $('#tenDangNhap').val();
+        var maPhongBan = $('#cbxSrchPhongBan option:selected').val();
         var data = new FormData();
         data.append('_token', $('meta[name="csrf-token"]').attr('content'));
         data.append('header', $('meta[name="csrf-token"]').attr('content'));
         data.append('tenNhanVien', tenNhanVien);
         data.append('tenDangNhap', tenDangNhap);
+        data.append('maPhongBan', maPhongBan);
         $.ajax({
             type: 'POST',
             url: '/tim-nhan-vien-phan-quyen',
@@ -389,7 +424,7 @@ jQuery(document).ready(function () {
                 $.each(response, function (i, res) {
                     $('#kqTimKiemNhanVien').append($('<option>', {
                         value: res['ma_nhan_vien'],
-                        text : res['ho_ten']
+                        text : res['ma_nhan_vien'] + " - " + res['ho_ten']
                     }));
                 });
             },
@@ -399,6 +434,20 @@ jQuery(document).ready(function () {
         return false;
     });
 
+    $('#btnMdThemPhanQuyen').on('click', function () {
+        $('#loaiPhanQuyen').val(0);
+        if (!$('.phan-quyen-to').hasClass('hide')){
+            $('.phan-quyen-to').addClass('hide');
+        }
+        if (!$('.phan-quyen-chung').hasClass('hide')){
+            $('.phan-quyen-chung').addClass('hide');
+        }
+        $('#cbxTruSo').empty();
+        $('#cbxPhongBan').empty();
+        $('#cbxToCongTac').empty();
+        $('#cbxDanhMucMoRong').empty();
+        $('#cbxTaiLieuMoRong').empty();
+    });
     $('#loaiPhanQuyen').on('change',function () {
         var data = new FormData();
         data.append('_token', $('meta[name="csrf-token"]').attr('content'));
@@ -545,28 +594,50 @@ jQuery(document).ready(function () {
         var tenPhanQuyen = '';
         var status = true;
         if ($('#loaiPhanQuyen option:selected').val() == 1){
-            maPhanQuyen = $('#cbxToCongTac option:selected').val();
-            tenPhanQuyen = 'Tổ - ' + $('#cbxToCongTac option:selected').text();
+            $('#cbxToCongTac option:selected').each(function () {
+                maPhanQuyen = $(this).val();
+                tenPhanQuyen = 'Tổ - ' + $(this).text();
+                status = true;
+                //kiem tra xem da ton tai hay chua
+                $('#dsQuyenNhanVien option').each(function () {
+                    console.log($(this).val() == maPhanQuyen);
+                    if ($(this).val() == maPhanQuyen){
+                        alert('Quyền ' + tenPhanQuyen +' đã tồn tại.');
+                        status = false;
+                    }
+                });
+                //neu chua ton tai thi status = true
+                if (status == true){
+                    $('#dsQuyenNhanVien').append($('<option>', {
+                        value: maPhanQuyen,
+                        text : tenPhanQuyen
+                    }));
+                }
+            });
         }else if ($('#loaiPhanQuyen option:selected').val() == 2){
-            maPhanQuyen = $('#cbxTaiLieuMoRong option:selected').val();
-            tenPhanQuyen = 'Tài Liệu - ' + $('#cbxTaiLieuMoRong option:selected').text();
+            $('#cbxTaiLieuMoRong option:selected').each(function () {
+                maPhanQuyen = $(this).val();
+                tenPhanQuyen = 'Tài Liệu - ' + $(this).text();
+                status = true;
+                //kiem tra xem da ton tai hay chua
+                $('#dsQuyenNhanVien option').each(function () {
+                    console.log($(this).val() == maPhanQuyen);
+                    if ($(this).val() == maPhanQuyen){
+                        alert('Quyền ' + tenPhanQuyen +' đã tồn tại.');
+                        status = false;
+                    }
+                });
+                //neu chua ton tai thi status = true
+                if (status == true){
+                    $('#dsQuyenNhanVien').append($('<option>', {
+                        value: maPhanQuyen,
+                        text : tenPhanQuyen
+                    }));
+                }
+            });
         }else {
             alert("Vui lòng chọn loại phân quyền.")
             return;
-        }
-
-        $('#dsQuyenNhanVien option').each(function () {
-            if ($(this).val() == maPhanQuyen){
-                alert('Quyền này đã tồn tại.');
-                status = false;
-                return false;
-            }
-        });
-        if (status == true){
-            $('#dsQuyenNhanVien').append($('<option>', {
-                value: maPhanQuyen,
-                text : tenPhanQuyen
-            }));
         }
     });
     

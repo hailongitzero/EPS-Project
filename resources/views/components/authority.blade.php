@@ -26,17 +26,53 @@
                 <!--begin::Form-->
                 <form class="m-form m-form--fit m-form--label-align-right">
                     <div class="m-portlet__body">
-                        <div class="form-group m-form__group">
-                            <label for="tenNhanVien">
-                                Tên Nhân Viên
-                            </label>
-                            <input type="text" class="form-control m-input" id="tenNhanVien" placeholder="Tên Nhân Viên">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group m-form__group">
+                                    <label for="tenNhanVien">
+                                        Tên Nhân Viên
+                                    </label>
+                                    <input type="text" class="form-control m-input" id="tenNhanVien" placeholder="Tên Nhân Viên">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group m-form__group">
+                                    <label for="tenDangNhap">
+                                        Tên Đăng Nhập
+                                    </label>
+                                    <input type="text" class="form-control m-input" id="tenDangNhap" placeholder="Tên Đăng Nhập">
+                                </div>
+                            </div>
                         </div>
-                        <div class="form-group m-form__group">
-                            <label for="tenDangNhap">
-                                Tên Đăng Nhập
-                            </label>
-                            <input type="text" class="form-control m-input" id="tenDangNhap" placeholder="Tên Đăng Nhập">
+                        <div class="row mb-5">
+                            <div class="col-md-6">
+                                <div class="form-group m-form__group">
+                                    <label for="cbxSrchTruSo">
+                                        Trụ sở
+                                    </label>
+                                    <select class="form-control m-input m-input--air" id="cbxSrchTruSo">
+                                        <option value="" selected>
+                                            -----Chọn-----
+                                        </option>
+                                        @if( isset($dsTruSo))
+                                            @foreach($dsTruSo as $ts)
+                                                <option value="{{ $ts->ma_tru_so }}">
+                                                    {{ $ts->ten_tru_so }}
+                                                </option>
+                                            @endforeach
+                                        @endif
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group m-form__group">
+                                    <label for="cbxSrchPhongBan">
+                                        Phòng Ban
+                                    </label>
+                                    <select class="form-control m-input m-input--air" id="cbxSrchPhongBan">
+                                    </select>
+                                </div>
+                            </div>
                         </div>
                         <div class="m-portlet__foot m-portlet__foot--fit">
                             <div class="m-form__actions">
@@ -97,7 +133,7 @@
                                 <button type="button" class="btn btn-danger" id="btnXoaQuyen">
                                     Xóa Quyền
                                 </button>
-                                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#mdThemPhanQuyen">
+                                <button type="button" id="btnMdThemPhanQuyen" class="btn btn-success" data-toggle="modal" data-target="#mdThemPhanQuyen">
                                     Phân Quyền
                                 </button>
                                 <button type="reset" class="btn btn-primary" id="btnUpdateAuth">
@@ -184,7 +220,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn m-btn--pill btn-secondary" data-dismiss="modal">Hủy</button>
+                <button type="button" class="btn m-btn--pill btn-secondary" data-dismiss="modal">Đóng Lại</button>
                 <button type="button" id="btnAddDSPhanQuyen" class="btn m-btn--pill btn-accent sbold">Thêm Quyền</button>
             </div>
         </div>

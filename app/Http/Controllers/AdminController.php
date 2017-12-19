@@ -27,6 +27,7 @@ class AdminController extends CommonController
 
         $bodyInfo = array();
         $layoutData = array(
+            'dsTruSo' => MdTruSo::get(),
             'menuData' => $menuData,
             'userInfo' => $userInfo,
         );
@@ -36,7 +37,8 @@ class AdminController extends CommonController
     public function getUserPhanQuyen(Request $request){
         $tenNhanVien = $request->tenNhanVien;
         $tenDangNhap = $request->tenDangNhap;
-        $user = User::where('ma_nhan_vien', 'like', '%'.$tenDangNhap.'%')->where('ho_ten', 'like', '%'.$tenNhanVien.'%')->get();
+        $maPhongBan = $request->maPhongBan;
+        $user = User::where('ma_nhan_vien', 'like', '%'.$tenDangNhap.'%')->where('ho_ten', 'like', '%'.$tenNhanVien.'%')->where('ma_phong_ban', $maPhongBan)->get();
 
 //        dd($user->toJson());
         return response($user->toJson(), 200)->header('Content-Type', 'application/json');

@@ -37,7 +37,7 @@
             <!-- END: Left Aside -->
             <div class="m-grid__item m-grid__item--fluid m-wrapper">
                 {{--@include('components.subHeader')--}}
-                @include('components.authority')
+                @include('components.authority', $dsTruSo)
             </div>
         </div>
         <!-- end:: Body -->
