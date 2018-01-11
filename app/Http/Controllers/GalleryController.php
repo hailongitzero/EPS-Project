@@ -59,7 +59,7 @@ class GalleryController extends CommonController
             try {
                 $danhMuc = new MdThuVienHinhAnh();
                 $maxKey = MdThuVienHinhAnh::max('ma_thu_vien');
-                $maDanhMuc = $this->createPrimaryKey($maxKey, 'TA');
+                $maDanhMuc = $this->createPrimaryKey($maxKey, 'TA', 6);
                 $tenDanhMuc = $request->tenGallery;
                 if (MdThuVienHinhAnh::where('ten_thu_vien', $tenDanhMuc)->count() > 0){
                     return response()->json(['info' => 'fail', 'Content' => 'Tên thư viện đã tồn tại!'], 200);
@@ -93,7 +93,7 @@ class GalleryController extends CommonController
 
             for ($i = 0; $i < $fileCnt; $i++){
                 $maxKey = MdHinhAnh::max('ma_hinh_anh');
-                $maHinhAnh = $this->createPrimaryKey($maxKey, 'H');
+                $maHinhAnh = $this->createPrimaryKey($maxKey, 'H', 9);
                 $fileID = 'file_'.$i;
                 $file = $request->file('file_'.$i);
                 $extension =  $file->clientExtension();

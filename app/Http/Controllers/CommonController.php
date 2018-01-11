@@ -22,12 +22,12 @@ class CommonController extends Controller
         $this->middleware('auth');
     }
 
-    public function createPrimaryKey($oldKey, $prefix){
+    public function createPrimaryKey($oldKey, $prefix, $length){
         $prefixLength = strlen($prefix);
-        $keyNum = substr($oldKey, $prefixLength, (strlen($oldKey)-$prefixLength));
+        $keyNum = substr($oldKey, $prefixLength, ($length-$prefixLength));
         $newNum = (int)$keyNum + 1;
         $newKey = $prefix;
-        $zero = strlen($keyNum) - strlen($newNum);
+        $zero = $length - $prefixLength - strlen($newNum);
         for ($i = 0; $i < $zero; $i++){
             $newKey .= '0';
         }
@@ -41,8 +41,12 @@ class CommonController extends Controller
         if (Auth::check()) {
             if (Auth::user()->is_admin == 1){
                 $menuData = array(
-                    'menuPhongBan' => MdTruSo::with('phongBan.toCongTac')->where('trang_thai', true)->get(),
-                    'menuMoRong' => MdDanhMucMoRong::with('taiLieuMoRong')->where('trang_thai', true)->get()
+                    'menuPhongBan' => MdTruSo::with(['phongBan.toCongTac'=>function($query){
+                        $query->where('trang_thai', 1);
+                    }])->where('trang_thai', true)->get(),
+                    'menuMoRong' => MdDanhMucMoRong::with(['taiLieuMoRong'=>function($query){
+                        $query->where('trang_thai', 1);
+                    }])->where('trang_thai', true)->get()
                 );
             }else{
                 $menuData = array(

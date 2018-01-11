@@ -112,22 +112,22 @@
                                         <div class="m-input-icon m-input-icon--left">
                                             <input type="text" class="form-control m-input" placeholder="Tên Tài Liệu" id="m_form_search">
                                             <span class="m-input-icon__icon m-input-icon__icon--left">
-                                                                    <span>
-                                                                        <i class="la la-search"></i>
-                                                                    </span>
-                                                                </span>
+                                                <span>
+                                                    <i class="la la-search"></i>
+                                                </span>
+                                            </span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-xl-4 order-1 order-xl-2 m--align-right">
-                                <a href="#" class="btn btn-primary m-btn m-btn--custom m-btn--icon m-btn--air m-btn--pill" data-toggle="modal" data-target="#mdThemMoiTaiLieu">
-                                                        <span>
-                                                            <i class="fa fa-upload"></i>
-                                                            <span>
-                                                                Tải Lên
-                                                            </span>
-                                                        </span>
+                                <a id="uploadTaiLieu" href="#" class="btn btn-primary m-btn m-btn--custom m-btn--icon m-btn--air m-btn--pill" data-toggle="modal" data-target="#mdThemMoiTaiLieu">
+                                    <span>
+                                        <i class="fa fa-upload"></i>
+                                        <span>
+                                            Tải Lên
+                                        </span>
+                                    </span>
                                 </a>
                                 <div class="m-separator m-separator--dashed d-xl-none"></div>
                             </div>

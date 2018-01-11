@@ -9,6 +9,8 @@ class MdPhongBan extends Model
     protected $table = 'mst_phong_ban';
     protected $primaryKey = 'ma_phong_ban';
     public $incrementing = false;
+    const CREATED_AT = 'ngay_tao';
+    const UPDATED_AT = 'ngay_cap_nhat';
 
     public function truSo(){
         return $this->belongsTo('App\MdTruSo', 'ma_tru_so', 'ma_tru_so');

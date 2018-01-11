@@ -329,6 +329,7 @@ jQuery(document).ready(function () {
     });
 
     $('#cbxSrchTruSo').on('change', function () {
+        $('#cbxSrchPhongBan').empty();
         var maTruSo = $('#cbxSrchTruSo option:selected').val();
         var data = new FormData();
         data.append('_token', $('meta[name="csrf-token"]').attr('content'));
@@ -357,6 +358,68 @@ jQuery(document).ready(function () {
             }
         });
     });
+
+    $('#cbxDsTruSo').on('change', function () {
+        $('#cbxDsPhongBan').empty();
+        var maTruSo = $('#cbxDsTruSo option:selected').val();
+        var data = new FormData();
+        data.append('_token', $('meta[name="csrf-token"]').attr('content'));
+        data.append('header', $('meta[name="csrf-token"]').attr('content'));
+        data.append('maTruSo', maTruSo);
+        $.ajax({
+            type: 'POST',
+            url: '/get-ds-phong-ban',
+            data: data,
+            processData: false,  // tell jQuery not to process the data
+            contentType: false,  // tell jQuery not to set contentType
+            dataType: 'json',
+            success: function (response) {
+                $.each(response, function (i, res) {
+                    $('#cbxDsPhongBan').append($('<option>', {
+                        value: res['ma_phong_ban'],
+                        text : res['ten_phong_ban']
+                    }));
+                });
+            },
+            error: function (response) {
+            }
+        });
+    });
+
+    $('#cbxDsPhongBan').on('change', function () {
+        $('#tenPhongBanUpd').val($('#cbxDsPhongBan option:selected').text());
+        $('#maPhongBanUpd').val($('#cbxDsPhongBan option:selected').val());
+        $('#cbxDsTo').empty();
+        var maPhongBan = $('#cbxDsPhongBan option:selected').val();
+        var data = new FormData();
+        data.append('_token', $('meta[name="csrf-token"]').attr('content'));
+        data.append('header', $('meta[name="csrf-token"]').attr('content'));
+        data.append('maPhongBan', maPhongBan);
+        $.ajax({
+            type: 'POST',
+            url: '/get-ds-to-cong-tac',
+            data: data,
+            processData: false,  // tell jQuery not to process the data
+            contentType: false,  // tell jQuery not to set contentType
+            dataType: 'json',
+            success: function (response) {
+                $.each(response, function (i, res) {
+                    $('#cbxDsTo').append($('<option>', {
+                        value: res['ma_to_cong_tac'],
+                        text : res['ten_to_cong_tac']
+                    }));
+                });
+            },
+            error: function (response) {
+            }
+        });
+    });
+
+    $('#cbxDsTo').on('change', function () {
+        $('#tenToCongTacUpd').val($('#cbxDsTo option:selected').text());
+        $('#maToCongTacUpd').val($('#cbxDsTo option:selected').val());
+    });
+
     $('#kqTimKiemNhanVien').on('change',function () {
         $('#dsQuyenNhanVien').empty();
         $('#tenNhanVienPQ').val($('#kqTimKiemNhanVien option:selected').text());
@@ -403,7 +466,10 @@ jQuery(document).ready(function () {
         $('#kqTimKiemNhanVien').empty();
         var tenNhanVien = $('#tenNhanVien').val();
         var tenDangNhap = $('#tenDangNhap').val();
-        var maPhongBan = $('#cbxSrchPhongBan option:selected').val();
+        var maPhongBan = '';
+        if ($('#cbxSrchPhongBan option:selected').val() != undefined){
+            maPhongBan = $('#cbxSrchPhongBan option:selected').val();
+        }
         var data = new FormData();
         data.append('_token', $('meta[name="csrf-token"]').attr('content'));
         data.append('header', $('meta[name="csrf-token"]').attr('content'));
@@ -681,6 +747,584 @@ jQuery(document).ready(function () {
         });
         return false;
     });
+
+    $('#cbxDanhMucChung').on('change', function () {
+        $('#cbxDsDanhMucTaiLieu').empty();
+        var maDanhMuc = $('#cbxDanhMucChung option:selected').val();
+        var data = new FormData();
+        data.append('_token', $('meta[name="csrf-token"]').attr('content'));
+        data.append('header', $('meta[name="csrf-token"]').attr('content'));
+        data.append('maDanhMuc', maDanhMuc);
+        $.ajax({
+            type: 'POST',
+            url: '/get-ds-tai-lieu-mo-rong',
+            data: data,
+            processData: false,  // tell jQuery not to process the data
+            contentType: false,  // tell jQuery not to set contentType
+            dataType: 'json',
+            success: function (response) {
+                $.each(response, function (i, res) {
+                    $('#cbxDsDanhMucTaiLieu').append($('<option>', {
+                        value: res['ma_tai_lieu_mo_rong'],
+                        text : res['ten_tai_lieu_mo_rong']
+                    }));
+                });
+            },
+            error: function (response) {
+            }
+        });
+    });
+
+    $('#cbxDsDanhMucTaiLieu').on('change', function () {
+        $('#tenDMTaiLieuUpd').val($('#cbxDsDanhMucTaiLieu option:selected').text());
+        $('#maDMTaiLieuUpd').val($('#cbxDsDanhMucTaiLieu option:selected').val());
+    });
+
+    //them phong ban
+    $('#btnThemPhongBan').on('click', function () {
+        var cfm = confirm('Bạn chắc chắn muốn thêm phòng ban này?');
+        if (cfm == false) return false;
+
+        var maTruSo = $('#cbxDsTruSo').val();
+        var tenPhongBan = $('#tenPhongBanAdd').val();
+
+        if ( maTruSo == undefined || maTruSo ==''){
+            alert('Bạn chưa nhập tên phòng ban.');
+            $('#cbxDsTruSo').focus();
+            return;
+        }
+        if ( tenPhongBan == undefined || tenPhongBan ==''){
+            alert('Bạn chưa chọn trụ sở.');
+            $('#tenPhongBanAdd').focus();
+            return;
+        }
+
+        var data = new FormData();
+        data.append('_token', $('meta[name="csrf-token"]').attr('content'));
+        data.append('header', $('meta[name="csrf-token"]').attr('content'));
+        data.append('maTruSo', maTruSo);
+        data.append('tenPhongBan', tenPhongBan);
+
+        $.ajax({
+            type: 'POST',
+            url: '/them-moi-phong-ban',
+            data: data,
+            processData: false,  // tell jQuery not to process the data
+            contentType: false,  // tell jQuery not to set contentType
+            dataType: 'json',
+            success: function (response) {
+                alert(response.Content);
+
+                $('#cbxDsPhongBan').empty();
+                $('#tenPhongBanAdd').val('');
+                var maTruSo = $('#cbxDsTruSo option:selected').val();
+                var data = new FormData();
+                data.append('_token', $('meta[name="csrf-token"]').attr('content'));
+                data.append('header', $('meta[name="csrf-token"]').attr('content'));
+                data.append('maTruSo', maTruSo);
+                $.ajax({
+                    type: 'POST',
+                    url: '/get-ds-phong-ban',
+                    data: data,
+                    processData: false,  // tell jQuery not to process the data
+                    contentType: false,  // tell jQuery not to set contentType
+                    dataType: 'json',
+                    success: function (response) {
+                        $.each(response, function (i, res) {
+                            $('#cbxDsPhongBan').append($('<option>', {
+                                value: res['ma_phong_ban'],
+                                text : res['ten_phong_ban']
+                            }));
+                        });
+                    },
+                    error: function (response) {
+                    }
+                });
+                return;
+            },
+            error: function (response) {
+                alert('Thêm mới danh mục lỗi');
+                return;
+            }
+        });
+        return false;
+    });
+
+    $('#btnCapNhatPhongBan').on('click', function () {
+        var cfm = confirm('Bạn chắc chắn muốn cập nhật phòng ban này?');
+        if (cfm == false) return false;
+
+        var maPhongBan = $('#cbxDsPhongBan option:selected').val();
+        var tenPhongBan = $('#tenPhongBanUpd').val();
+        var maTruSo = $('#cbxDsTruSo').val();
+
+        if ( maPhongBan == undefined || maPhongBan ==''){
+            alert('Bạn chưa chọn phòng ban.');
+            $('#cbxDsPhongBan').focus();
+            return;
+        }
+        if ( tenPhongBan == undefined || tenPhongBan ==''){
+            alert('Bạn chưa nhập tên phòng ban.');
+            $('#tenPhongBanUpd').focus();
+            return;
+        }
+
+        var data = new FormData();
+        data.append('_token', $('meta[name="csrf-token"]').attr('content'));
+        data.append('header', $('meta[name="csrf-token"]').attr('content'));
+        data.append('maPhongBan', maPhongBan);
+        data.append('tenPhongBan', tenPhongBan);
+        data.append('maTruSo', maTruSo);
+
+        $.ajax({
+            type: 'POST',
+            url: '/cap-nhat-phong-ban',
+            data: data,
+            processData: false,  // tell jQuery not to process the data
+            contentType: false,  // tell jQuery not to set contentType
+            dataType: 'json',
+            success: function (response) {
+                alert(response.Content);
+
+                $('#cbxDsPhongBan').empty();
+                $('#tenPhongBanUpd').val('');
+                var maTruSo = $('#cbxDsTruSo option:selected').val();
+                var data = new FormData();
+                data.append('_token', $('meta[name="csrf-token"]').attr('content'));
+                data.append('header', $('meta[name="csrf-token"]').attr('content'));
+                data.append('maTruSo', maTruSo);
+                $.ajax({
+                    type: 'POST',
+                    url: '/get-ds-phong-ban',
+                    data: data,
+                    processData: false,  // tell jQuery not to process the data
+                    contentType: false,  // tell jQuery not to set contentType
+                    dataType: 'json',
+                    success: function (response) {
+                        $.each(response, function (i, res) {
+                            $('#cbxDsPhongBan').append($('<option>', {
+                                value: res['ma_phong_ban'],
+                                text : res['ten_phong_ban']
+                            }));
+                        });
+                    },
+                    error: function (response) {
+                    }
+                });
+                return;
+            },
+            error: function (response) {
+                alert('Thêm mới danh mục lỗi');
+                return;
+            }
+        });
+        return false;
+    });
+
+    $('#btnThemTo').on('click', function () {
+        var cfm = confirm('Bạn chắc chắn muốn thêm tổ công tác này?');
+        if (cfm == false) return false;
+
+        var maPhongBan = $('#cbxDsPhongBan option:selected').val();
+        var tenTo = $('#tenToCongTacAdd').val();
+
+        if ( maPhongBan == undefined || maPhongBan ==''){
+            alert('Bạn chưa chọn phòng ban.');
+            $('#cbxDsPhongBan').focus();
+            return;
+        }
+        if ( tenTo == undefined || tenTo ==''){
+            alert('Bạn chưa nhập tên tổ.');
+            $('#tenToCongTacAdd').focus();
+            return;
+        }
+
+        var data = new FormData();
+        data.append('_token', $('meta[name="csrf-token"]').attr('content'));
+        data.append('header', $('meta[name="csrf-token"]').attr('content'));
+        data.append('maPhongBan', maPhongBan);
+        data.append('tenTo', tenTo);
+
+        $.ajax({
+            type: 'POST',
+            url: '/them-moi-to',
+            data: data,
+            processData: false,  // tell jQuery not to process the data
+            contentType: false,  // tell jQuery not to set contentType
+            dataType: 'json',
+            success: function (response) {
+                alert(response.Content);
+
+                $('#cbxDsTo').empty();
+                $('#tenToCongTacAdd').val('');
+                var maPhongBan = $('#cbxDsPhongBan option:selected').val();
+                var data = new FormData();
+                data.append('_token', $('meta[name="csrf-token"]').attr('content'));
+                data.append('header', $('meta[name="csrf-token"]').attr('content'));
+                data.append('maPhongBan', maPhongBan);
+                $.ajax({
+                    type: 'POST',
+                    url: '/get-ds-to-cong-tac',
+                    data: data,
+                    processData: false,  // tell jQuery not to process the data
+                    contentType: false,  // tell jQuery not to set contentType
+                    dataType: 'json',
+                    success: function (response) {
+                        $.each(response, function (i, res) {
+                            $('#cbxDsTo').append($('<option>', {
+                                value: res['ma_to_cong_tac'],
+                                text : res['ten_to_cong_tac']
+                            }));
+                        });
+                    },
+                    error: function (response) {
+                    }
+                });
+                return;
+            },
+            error: function (response) {
+                alert('Thêm mới danh mục lỗi');
+                return;
+            }
+        });
+        return false;
+    });
+
+    $('#btnCapNhatTo').on('click', function () {
+        var cfm = confirm('Bạn chắc chắn muốn cập nhật tổ công tác này?');
+        if (cfm == false) return false;
+
+        var maTo = $('#cbxDsTo option:selected').val();
+        var tenTo = $('#tenToCongTacUpd').val();
+        var maPhongBan = $('#cbxDsPhongBan option:selected').val();
+
+        if ( maTo == undefined || maTo ==''){
+            alert('Bạn chưa chọn tổ.');
+            $('#cbxDsTo').focus();
+            return;
+        }
+        if ( tenTo == undefined || tenTo ==''){
+            alert('Bạn chưa nhập tên tổ.');
+            $('#tenToCongTacUpd').focus();
+            return;
+        }
+
+        var data = new FormData();
+        data.append('_token', $('meta[name="csrf-token"]').attr('content'));
+        data.append('header', $('meta[name="csrf-token"]').attr('content'));
+        data.append('maTo', maTo);
+        data.append('tenTo', tenTo);
+        data.append('maPhongBan', maPhongBan);
+
+        $.ajax({
+            type: 'POST',
+            url: '/cap-nhat-to',
+            data: data,
+            processData: false,  // tell jQuery not to process the data
+            contentType: false,  // tell jQuery not to set contentType
+            dataType: 'json',
+            success: function (response) {
+                alert(response.Content);
+
+                $('#cbxDsTo').empty();
+                $('#tenToCongTacUpd').val('');
+                var maPhongBan = $('#cbxDsPhongBan option:selected').val();
+                var data = new FormData();
+                data.append('_token', $('meta[name="csrf-token"]').attr('content'));
+                data.append('header', $('meta[name="csrf-token"]').attr('content'));
+                data.append('maPhongBan', maPhongBan);
+                $.ajax({
+                    type: 'POST',
+                    url: '/get-ds-to-cong-tac',
+                    data: data,
+                    processData: false,  // tell jQuery not to process the data
+                    contentType: false,  // tell jQuery not to set contentType
+                    dataType: 'json',
+                    success: function (response) {
+                        $.each(response, function (i, res) {
+                            $('#cbxDsTo').append($('<option>', {
+                                value: res['ma_to_cong_tac'],
+                                text : res['ten_to_cong_tac']
+                            }));
+                        });
+                    },
+                    error: function (response) {
+                    }
+                });
+                return;
+            },
+            error: function (response) {
+                alert('Thêm mới danh mục lỗi');
+                return;
+            }
+        });
+        return false;
+    });
+
+    $('#btnXoaTo').on('click', function () {
+        var cfm = confirm('Bạn chắc chắn muốn xóa tổ công tác này?');
+        if (cfm == false) return false;
+
+        var maTo = $('#cbxDsTo option:selected').val();
+        var status = 0;
+
+        if ( maTo == undefined || maTo ==''){
+            alert('Bạn chưa chọn tổ.');
+            $('#cbxDsTo').focus();
+            return;
+        }
+
+        var data = new FormData();
+        data.append('_token', $('meta[name="csrf-token"]').attr('content'));
+        data.append('header', $('meta[name="csrf-token"]').attr('content'));
+        data.append('maTo', maTo);
+        data.append('status', status);
+
+        $.ajax({
+            type: 'POST',
+            url: '/cap-nhat-to',
+            data: data,
+            processData: false,  // tell jQuery not to process the data
+            contentType: false,  // tell jQuery not to set contentType
+            dataType: 'json',
+            success: function (response) {
+                alert(response.Content);
+
+                $('#cbxDsTo').empty();
+                $('#tenToCongTacUpd').val('');
+                var maPhongBan = $('#cbxDsPhongBan option:selected').val();
+                var data = new FormData();
+                data.append('_token', $('meta[name="csrf-token"]').attr('content'));
+                data.append('header', $('meta[name="csrf-token"]').attr('content'));
+                data.append('maPhongBan', maPhongBan);
+                $.ajax({
+                    type: 'POST',
+                    url: '/get-ds-to-cong-tac',
+                    data: data,
+                    processData: false,  // tell jQuery not to process the data
+                    contentType: false,  // tell jQuery not to set contentType
+                    dataType: 'json',
+                    success: function (response) {
+                        $.each(response, function (i, res) {
+                            $('#cbxDsTo').append($('<option>', {
+                                value: res['ma_to_cong_tac'],
+                                text : res['ten_to_cong_tac']
+                            }));
+                        });
+                    },
+                    error: function (response) {
+                    }
+                });
+                return;
+            },
+            error: function (response) {
+                alert('Thêm mới danh mục lỗi');
+                return;
+            }
+        });
+        return false;
+    });
+
+    $('#btnThemDanhMuc').on('click', function () {
+        var cfm = confirm('Bạn chắc chắn muốn thêm danh mục tài liệu này?');
+        if (cfm == false) return false;
+
+        var tenDanhMucTaiLieu = $('#tenDMTaiLieuAdd').val();
+        var maDanhMuc = $('#cbxDanhMucChung').val();
+        var data = new FormData();
+        if ( tenDanhMucTaiLieu == undefined || tenDanhMucTaiLieu ==''){
+            alert('Bạn chưa nhập tên danh mục tài liệu.');
+            $('#tenDMTaiLieuAdd').focus();
+            return;
+        }
+        if ( maDanhMuc == undefined || maDanhMuc ==''){
+            alert('Bạn chưa chọn danh mục.');
+            $('#cbxDanhMucChung').focus();
+            return;
+        }
+
+        data.append('_token', $('meta[name="csrf-token"]').attr('content'));
+        data.append('header', $('meta[name="csrf-token"]').attr('content'));
+        data.append('maDanhMuc', maDanhMuc);
+        data.append('tenDanhMucTaiLieu', tenDanhMucTaiLieu);
+
+        $.ajax({
+            type: 'POST',
+            url: '/them-moi-danh-muc-tai-lieu-mo-rong',
+            data: data,
+            processData: false,  // tell jQuery not to process the data
+            contentType: false,  // tell jQuery not to set contentType
+            dataType: 'json',
+            success: function (response) {
+                alert(response.Content);
+
+                $('#cbxDsDanhMucTaiLieu').empty();
+                $('#tenDMTaiLieuAdd').val('');
+                var maDanhMuc = $('#cbxDanhMucChung option:selected').val();
+                var data = new FormData();
+                data.append('_token', $('meta[name="csrf-token"]').attr('content'));
+                data.append('header', $('meta[name="csrf-token"]').attr('content'));
+                data.append('maDanhMuc', maDanhMuc);
+                $.ajax({
+                    type: 'POST',
+                    url: '/get-ds-tai-lieu-mo-rong',
+                    data: data,
+                    processData: false,  // tell jQuery not to process the data
+                    contentType: false,  // tell jQuery not to set contentType
+                    dataType: 'json',
+                    success: function (response) {
+                        $.each(response, function (i, res) {
+                            $('#cbxDsDanhMucTaiLieu').append($('<option>', {
+                                value: res['ma_tai_lieu_mo_rong'],
+                                text : res['ten_tai_lieu_mo_rong']
+                            }));
+                        });
+                    },
+                    error: function (response) {
+                    }
+                });
+                return;
+            },
+            error: function (response) {
+                alert('Thêm mới danh mục lỗi');
+                return;
+            }
+        });
+        return false;
+    });
+
+    $('#btnCapNhatDanhMuc').on('click', function () {
+        var cfm = confirm('Bạn chắc chắn muốn cập nhật danh mục tài liệu này?');
+        if (cfm == false) return false;
+
+        var maDanhMuc = $('#cbxDsDanhMucTaiLieu option:selected').val();
+        var tenDanhMuc = $('#tenDMTaiLieuUpd').val();
+
+        if ( maDanhMuc == undefined || maDanhMuc ==''){
+            alert('Bạn chưa chọn danh mục tài liệu.');
+            $('#cbxDsDanhMucTaiLieu').focus();
+            return;
+        }
+        if ( tenDanhMuc == undefined || tenDanhMuc ==''){
+            alert('Bạn chưa nhập tên danh mục.');
+            $('#tenDMTaiLieuUpd').focus();
+            return;
+        }
+
+        var data = new FormData();
+        data.append('_token', $('meta[name="csrf-token"]').attr('content'));
+        data.append('header', $('meta[name="csrf-token"]').attr('content'));
+        data.append('maDanhMuc', maDanhMuc);
+        data.append('tenDanhMuc', tenDanhMuc);
+
+        $.ajax({
+            type: 'POST',
+            url: '/cap-nhat-danh-muc-tai-lieu-mo-rong',
+            data: data,
+            processData: false,  // tell jQuery not to process the data
+            contentType: false,  // tell jQuery not to set contentType
+            dataType: 'json',
+            success: function (response) {
+                alert(response.Content);
+
+                $('#cbxDsDanhMucTaiLieu').empty();
+                $('#tenDMTaiLieuUpd').val('');
+                var maDanhMuc = $('#cbxDanhMucChung option:selected').val();
+                var data = new FormData();
+                data.append('_token', $('meta[name="csrf-token"]').attr('content'));
+                data.append('header', $('meta[name="csrf-token"]').attr('content'));
+                data.append('maDanhMuc', maDanhMuc);
+                $.ajax({
+                    type: 'POST',
+                    url: '/get-ds-tai-lieu-mo-rong',
+                    data: data,
+                    processData: false,  // tell jQuery not to process the data
+                    contentType: false,  // tell jQuery not to set contentType
+                    dataType: 'json',
+                    success: function (response) {
+                        $.each(response, function (i, res) {
+                            $('#cbxDsDanhMucTaiLieu').append($('<option>', {
+                                value: res['ma_tai_lieu_mo_rong'],
+                                text : res['ten_tai_lieu_mo_rong']
+                            }));
+                        });
+                    },
+                    error: function (response) {
+                    }
+                });
+                return;
+            },
+            error: function (response) {
+                alert('Thêm mới danh mục lỗi');
+                return;
+            }
+        });
+        return false;
+    });
+
+    $('#btnXoaDanhMuc').on('click', function () {
+        var cfm = confirm('Bạn chắc chắn muốn xóa danh mục tài liệu này?');
+        if (cfm == false) return false;
+
+        var maDanhMuc = $('#cbxDsDanhMucTaiLieu option:selected').val();
+        var status = 0;
+
+        if ( maDanhMuc == undefined || maDanhMuc ==''){
+            alert('Bạn chưa chọn danh mục tài liệu.');
+            $('#cbxDsDanhMucTaiLieu').focus();
+            return;
+        }
+
+        var data = new FormData();
+        data.append('_token', $('meta[name="csrf-token"]').attr('content'));
+        data.append('header', $('meta[name="csrf-token"]').attr('content'));
+        data.append('maDanhMuc', maDanhMuc);
+        data.append('status', status);
+
+        $.ajax({
+            type: 'POST',
+            url: '/cap-nhat-danh-muc-tai-lieu-mo-rong',
+            data: data,
+            processData: false,  // tell jQuery not to process the data
+            contentType: false,  // tell jQuery not to set contentType
+            dataType: 'json',
+            success: function (response) {
+                alert(response.Content);
+
+                $('#cbxDsDanhMucTaiLieu').empty();
+                $('#tenDMTaiLieuUpd').val('');
+                var maDanhMuc = $('#cbxDanhMucChung option:selected').val();
+                var data = new FormData();
+                data.append('_token', $('meta[name="csrf-token"]').attr('content'));
+                data.append('header', $('meta[name="csrf-token"]').attr('content'));
+                data.append('maDanhMuc', maDanhMuc);
+                $.ajax({
+                    type: 'POST',
+                    url: '/get-ds-tai-lieu-mo-rong',
+                    data: data,
+                    processData: false,  // tell jQuery not to process the data
+                    contentType: false,  // tell jQuery not to set contentType
+                    dataType: 'json',
+                    success: function (response) {
+                        $.each(response, function (i, res) {
+                            $('#cbxDsDanhMucTaiLieu').append($('<option>', {
+                                value: res['ma_tai_lieu_mo_rong'],
+                                text : res['ten_tai_lieu_mo_rong']
+                            }));
+                        });
+                    },
+                    error: function (response) {
+                    }
+                });
+                return;
+            },
+            error: function (response) {
+                alert('Thêm mới danh mục lỗi');
+                return;
+            }
+        });
+        return false;
+    });
 });
 
 var DropzoneDemo = function() {
@@ -696,6 +1340,9 @@ var DropzoneDemo = function() {
                     this.addFile(file);
                 });
                 this.on("error", function(file){if (!file.accepted) this.removeFile(file);});
+                this.on("complete", function(file) {
+                    myDropzone.removeAllFiles(file);
+                });
             },
             acceptedFiles: ".xls,.xlsx,.doc,.docx,.pdf,.ppt,.pptx",
         }
@@ -722,6 +1369,9 @@ var DropzoneImage = function() {
                     this.addFile(file);
                 });
                 this.on("error", function(file){if (!file.accepted) this.removeFile(file);});
+                this.on("complete", function(file) {
+                    myDropzone.removeAllFiles(file);
+                });
             },
             acceptedFiles: "image/*",
         }

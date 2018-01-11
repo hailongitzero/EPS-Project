@@ -9,6 +9,8 @@ class MdToCongTac extends Model
     protected $table = 'mst_to_cong_tac';
     protected $primaryKey = 'ma_to_cong_tac';
     public $incrementing = false;
+    const CREATED_AT = 'ngay_tao';
+    const UPDATED_AT = 'ngay_cap_nhat';
 
     public function taiLieu(){
         return $this->hasManyThrough(

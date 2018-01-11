@@ -120,7 +120,7 @@
                                 </div>
                             </div>
                             <div class="col-xl-4 order-1 order-xl-2 m--align-right">
-                                <a href="#" class="btn btn-primary m-btn m-btn--custom m-btn--icon m-btn--air m-btn--pill" data-toggle="modal" data-target="#mdThemMoiTaiLieu">
+                                <a id="uploadTaiLieu"  href="#" class="btn btn-primary m-btn m-btn--custom m-btn--icon m-btn--air m-btn--pill" data-toggle="modal" data-target="#mdThemMoiTaiLieu">
                                     <span>
                                         <i class="fa fa-upload"></i>
                                         <span>

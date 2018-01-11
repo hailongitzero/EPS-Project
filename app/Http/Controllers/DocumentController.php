@@ -48,7 +48,7 @@ class DocumentController extends CommonController
                 }
                 $danhMuc = new MdDanhMucTaiLieu();
                 $maxKey = MdDanhMucTaiLieu::max('ma_danh_muc');
-                $maDanhMuc = $this->createPrimaryKey($maxKey, 'DM');
+                $maDanhMuc = $this->createPrimaryKey($maxKey, 'DM', 6);
                 $danhMuc->ma_danh_muc = $maDanhMuc;
                 if (isset($request->tenDanhMuc)) {
                     $danhMuc->ten_danh_muc = $request->tenDanhMuc;
@@ -128,7 +128,7 @@ class DocumentController extends CommonController
             $userId = Auth::user()->ma_nhan_vien;
             $path = 'resources/documents/';
             $maxKey = MdTaiLieu::max('ma_tai_lieu');
-            $maTaiLieu = $this->createPrimaryKey($maxKey, 'TL');
+            $maTaiLieu = $this->createPrimaryKey($maxKey, 'TL', 10);
             $tenTaiLieu = $request->tenTaiLieu;
             $maDanhMuc = $request->maDanhMuc;
             $moTaTaiLieu = $request->moTaTaiLieu;

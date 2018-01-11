@@ -87,4 +87,25 @@ Route::middleware(['auth'])->group(function (){
 
     Route::post('/cap-nhat-phan-quyen-user', 'AdminController@updateUserAuthority');
     Route::get('/cap-nhat-phan-quyen-user', 'AdminController@updateUserAuthority');
+
+    Route::get('/quan-ly-danh-muc', 'AdminController@gategoryManager');
+
+    Route::post('/them-moi-danh-muc-tai-lieu-mo-rong', 'AdminController@addNewExtDocumentCategory');
+    Route::get('/them-moi-danh-muc-tai-lieu-mo-rong', 'AdminController@addNewExtDocumentCategory');
+
+    Route::post('/cap-nhat-danh-muc-tai-lieu-mo-rong', 'AdminController@updateExtDocumentCategory');
+    Route::get('/cap-nhat-danh-muc-tai-lieu-mo-rong', 'AdminController@updateExtDocumentCategory');
+
+    Route::post('/cap-nhat-phong-ban', 'AdminController@updateDepartment');
+    Route::get('/cap-nhat-phong-ban', 'AdminController@updateDepartment');
+
+    Route::post('/them-moi-phong-ban', 'AdminController@addDepartment');
+    Route::get('/them-moi-phong-ban', 'AdminController@addDepartment');
+
+    Route::post('/cap-nhat-to', 'AdminController@updateToCT');
+    Route::get('/cap-nhat-to', 'AdminController@updateToCT');
+
+    Route::post('/them-moi-to', 'AdminController@addToCT');
+    Route::get('/them-moi-to', 'AdminController@addToCT');
+
 });
