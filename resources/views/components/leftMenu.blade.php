@@ -1,9 +1,6 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: HaiLong
- * Date: 10/3/2017
- * Time: 11:30 PM
+
  */
 //dd($menuData)
 ?>
@@ -16,7 +13,7 @@
     <ul class="m-menu__nav  m-menu__nav--dropdown-submenu-arrow ">
         <li class="m-menu__item  m-menu__item--active" aria-haspopup="true" >
             <a  href="{{ url('') }}" class="m-menu__link ">
-                <i class="m-menu__link-icon flaticon-line-graph"></i>
+                <i class="m-menu__link-icon flaticon-line-graph" style="color: #e32526"></i>
                 <span class="m-menu__link-title">
                 <span class="m-menu__link-wrap">
                     <span class="m-menu__link-text">
@@ -34,47 +31,53 @@
         </li>
         <li class="m-menu__item" aria-haspopup="true">
             <a  href="{{ url('tra-cuu') }}" class="m-menu__link m-menu__toggle">
-                <i class="m-menu__link-icon flaticon-search"></i>
+                <i class="m-menu__link-icon flaticon-search" style="color: #e32526"></i>
                 <span class="m-menu__link-text">Tra Cứu</span>
             </a>
         </li>
         @if( \Illuminate\Support\Facades\Auth::user()->is_admin)
             <li class="m-menu__item" aria-haspopup="true">
                 <a  href="{{ url('phan-quyen') }}" class="m-menu__link m-menu__toggle">
-                    <i class="m-menu__link-icon flaticon-user-ok"></i>
+                    <i class="m-menu__link-icon flaticon-user-ok" style="color: #e32526"></i>
                     <span class="m-menu__link-text">Phân Quyền</span>
                 </a>
             </li>
             <li class="m-menu__item" aria-haspopup="true">
                 <a  href="{{ url('quan-ly-danh-muc') }}" class="m-menu__link m-menu__toggle">
-                    <i class="m-menu__link-icon flaticon-list-2"></i>
+                    <i class="m-menu__link-icon flaticon-list-2" style="color: #e32526"></i>
                     <span class="m-menu__link-text">Quản Lý Danh Mục</span>
+                </a>
+            </li>
+            <li class="m-menu__item" aria-haspopup="true">
+                <a  href="{{ url('quan-ly-nguoi-dung') }}" class="m-menu__link m-menu__toggle">
+                    <i class="m-menu__link-icon flaticon-user" style="color: #e32526"></i>
+                    <span class="m-menu__link-text">Quản Lý Người Dùng</span>
                 </a>
             </li>
         @endif
         <li class="m-menu__item m-menu__item--submenu" aria-haspopup="true"  data-menu-submenu-toggle="hover">
             <a  href="#" class="m-menu__link m-menu__toggle">
-                <i class="m-menu__link-icon flaticon-layers"></i>
-                <span class="m-menu__link-text">vản bản - tài liệu mẫu</span>
+                <i class="m-menu__link-icon flaticon-layers" style="color: #e32526"></i>
+                <span class="m-menu__link-text">Văn bản - Tài liệu mẫu</span>
                 <i class="m-menu__ver-arrow la la-angle-right"></i>
             </a>
             <div class="m-menu__submenu">
                 <span class="m-menu__arrow"></span>
                 <ul class="m-menu__subnav">
-                    <li class="m-menu__item  m-menu__item--parent" aria-haspopup="true" >
+                    <li class="m-menu__item  m-menu__item--parent" style="color: #e32526" aria-haspopup="true" >
                         <a  href="javascript:void(0)" class="m-menu__link ">
-                            <span class="m-menu__link-text">vản bản - tài liệu mẫu</span>
+                            <span class="m-menu__link-text">Văn bản - Tài liệu mẫu</span>
                         </a>
                     </li>
                     @if(isset($menuPhongBan))
                         @foreach($menuPhongBan as $menu)
                             <li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true"  data-menu-submenu-toggle="hover">
                                 <a  href="javascript:void(0)" class="m-menu__link m-menu__toggle">
-                                    <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                                    <i class="m-menu__link-bullet m-menu__link-bullet--dot" style="color: #e32526">
                                         <span></span>
                                     </i>
                                     <span class="m-menu__link-text">{{ $menu->ten_tru_so }}</span>
-                                    <i class="m-menu__ver-arrow la la-angle-right"></i>
+                                    <i class="m-menu__ver-arrow la la-angle-right" style="color: #e32526"></i>
                                 </a>
                                 <div class="m-menu__submenu">
                                     <span class="m-menu__arrow"></span>
@@ -83,7 +86,7 @@
                                             @foreach($menu->phongBan as $phong)
                                                 <li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true"  data-menu-submenu-toggle="hover">
                                                     <a  href="javascript:void(0)" class="m-menu__link m-menu__toggle">
-                                                        <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                                                        <i class="m-menu__link-bullet m-menu__link-bullet--dot" style="color: #e32526">
                                                             <span></span>
                                                         </i>
                                                         <span class="m-menu__link-text">{{ $phong->ten_phong_ban }}</span>
@@ -94,9 +97,9 @@
                                                         <ul class="m-menu__subnav">
                                                             @if( isset($phong->toCongTac) )
                                                                 @foreach($phong->toCongTac as $to)
-                                                                    <li class="m-menu__item " aria-haspopup="true" >
+                                                                    <li class="m-menu__item " style="color: #e32526" aria-haspopup="true" >
                                                                         <a  href="{{ url('tai-lieu/'.$to->ma_to_cong_tac) }}" class="m-menu__link ">
-                                                                            <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                                                                            <i class="m-menu__link-bullet m-menu__link-bullet--dot" style="color: #e32526">
                                                                                 <span></span>
                                                                             </i>
                                                                             <span class="m-menu__link-text">{{ $to->ten_to_cong_tac }}</span>
@@ -121,14 +124,14 @@
             @foreach($menuMoRong as $mr)
                 <li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true"  data-menu-submenu-toggle="hover">
                     <a  href="#" class="m-menu__link m-menu__toggle">
-                        <i class="m-menu__link-icon flaticon-layers"></i>
+                        <i class="m-menu__link-icon flaticon-layers" style="color: #e32526"></i>
                         <span class="m-menu__link-text">{{ $mr->ten_danh_muc_mo_rong }}</span>
                         <i class="m-menu__ver-arrow la la-angle-right"></i>
                     </a>
                     <div class="m-menu__submenu">
                         <span class="m-menu__arrow"></span>
                         <ul class="m-menu__subnav">
-                            <li class="m-menu__item  m-menu__item--parent" aria-haspopup="true" >
+                            <li class="m-menu__item  m-menu__item--parent" style="color: #e32526" aria-haspopup="true" >
                                 <a  href="html.html#" class="m-menu__link ">
                                     <span class="m-menu__link-text">{{ $mr->ten_danh_muc_mo_rong }}</span>
                                 </a>
@@ -137,7 +140,7 @@
                                 @foreach($mr->taiLieuMoRong as $tl)
                                     <li class="m-menu__item " aria-haspopup="true" >
                                         <a  href="{{ url('tai-lieu-mat/'.$tl->ma_tai_lieu_mo_rong) }}" class="m-menu__link ">
-                                            <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                                            <i class="m-menu__link-bullet m-menu__link-bullet--dot" style="color: #e32526">
                                                 <span></span>
                                             </i>
                                             <span class="m-menu__link-text">{{$tl->ten_tai_lieu_mo_rong}}</span>
@@ -152,7 +155,7 @@
         @endif
         <li class="m-menu__item" aria-haspopup="true">
             <a  href="{{ url('thu-vien-hinh-anh') }}" class="m-menu__link m-menu__toggle">
-                <i class="m-menu__link-icon flaticon-imac"></i>
+                <i class="m-menu__link-icon flaticon-imac" style="color: #e32526"></i>
                 <span class="m-menu__link-text">Hình Ảnh</span>
             </a>
         </li>

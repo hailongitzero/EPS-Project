@@ -1,9 +1,6 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: HaiLong
- * Date: 10/6/2017
- * Time: 8:31 AM
+
  */
 ?>
 <!-- BEGIN: Subheader -->
@@ -167,7 +164,7 @@
                         <input type="hidden" id="maDanhMucTaiLieu" value="">
                     </div>
                     <div class="col-lg-12 mt-3">
-                        <textarea class="form-control m-input" id="moTaTaiLieu" rows="3"></textarea>
+                        <textarea class="form-control m-input" id="moTaTaiLieu" placeholder="Nhập mô tả công việc theo từng bước thực hiện" rows="3"></textarea>
                     </div>
                 </div>
             </div>

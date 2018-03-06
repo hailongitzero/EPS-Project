@@ -1,9 +1,6 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: HaiLong
- * Date: 12/7/2017
- * Time: 11:59 PM
+
  */
 
 namespace App\Http\Controllers;
@@ -14,10 +11,13 @@ use App\MdPhongBan;
 use App\MdTaiLieuMoRong;
 use App\MdToCongTac;
 use App\MdTruSo;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\User;
 use DB;
 use Illuminate\Support\Facades\Auth;
+use App\MdThuVienHinhAnh;
+use Illuminate\Support\Facades\Redirect;
 
 class AdminController extends CommonController
 {
@@ -38,7 +38,7 @@ class AdminController extends CommonController
         $tenNhanVien = $request->tenNhanVien;
         $tenDangNhap = $request->tenDangNhap;
         $maPhongBan = $request->maPhongBan;
-        if (count($maPhongBan) > 0){
+        if (isset($maPhongBan)){
             $user = User::where('ma_nhan_vien', 'like', '%'.$tenDangNhap.'%')->where('ho_ten', 'like', '%'.$tenNhanVien.'%')->where('ma_phong_ban', $maPhongBan)->get();
         }else{
             $user = User::where('ma_nhan_vien', 'like', '%'.$tenDangNhap.'%')->where('ho_ten', 'like', '%'.$tenNhanVien.'%')->get();
@@ -106,7 +106,7 @@ class AdminController extends CommonController
         return response()->json(['info' => 'success', 'Content' => 'Cập nhật phân quyền thành công'], 200);
     }
 
-    public function gategoryManager(){
+    public function categoryManager(){
         $menuData = $this->getMenuData();
         $userInfo = $this->getUserInfo();
 
@@ -274,6 +274,135 @@ class AdminController extends CommonController
                 return response()->json(['info' => 'success', 'Content' => 'Cập nhật thành công'], 200);
             } catch (QueryException $e) {
                 return response()->json(['info' => 'fail', 'Content' => 'Thêm mới không thành công. Lỗi hệ thống.'], 200);
+            }
+        }else{
+            return response()->json(['info' => 'fail', 'Content' => 'Bạn chưa đăng nhập'], 200);
+        }
+    }
+
+    public function userInformation(){
+        if (Auth::check()){
+            $menuData = $this->getMenuData();
+            $userInfo = $this->getUserInfo();
+            $userData = User::with('phongBan', 'toCongTac')->where('ma_nhan_vien', Auth::user()->ma_nhan_vien)->get();
+            $userRole = MdPhanQuyen::with('pqTo', 'pqDanhMuc')->where('trang_thai', 1)->where('ma_nhan_vien', Auth::user()->ma_nhan_vien)->get();
+
+            $layoutData = array(
+                'dsTruSo' => MdTruSo::get(),
+                'dsDanhMuc' => MdDanhMucMoRong::get(),
+                'menuData' => $menuData,
+                'userInfo' => $userInfo,
+                'userData' => $userData,
+                'userRole' => $userRole,
+            );
+            return view('userInfo', $layoutData);
+        }else{
+            return Redirect::back();
+        }
+    }
+
+    public function updateUserInformation(Request $request){
+        if (Auth::check()) {
+            $userId = Auth::user()->ma_nhan_vien;
+            try {
+                User::where('ma_nhan_vien', $userId)
+                ->update([
+//                    'ho_ten' => $request->hoTen,
+                    'dia_chi' => $request->diaChi,
+                    'dien_thoai' => $request->soDienThoai,
+                    'ngay_sinh' => $request->ngaySinh,
+                    'ngay_cap_nhat' => Carbon::now(),
+                ]);
+                return response()->json(['info' => 'success', 'Content' => 'Cập nhật thành công'], 200);
+            } catch (QueryException $e) {
+                return response()->json(['info' => 'fail', 'Content' => 'Cập nhật không thành công. Lỗi hệ thống.'], 200);
+            }
+        }else{
+            return response()->json(['info' => 'fail', 'Content' => 'Bạn chưa đăng nhập'], 200);
+        }
+    }
+
+    public function userUploadList(){
+        if (Auth::check()) {
+            $menuData = $this->getMenuData();
+            $userInfo = $this->getUserInfo();
+            $layoutData = array(
+                'dsTruSo' => MdTruSo::get(),
+                'dsDanhMuc' => MdDanhMucMoRong::get(),
+                'menuData' => $menuData,
+                'userInfo' => $userInfo,
+            );
+            return view('userUpload', $layoutData);
+        }else{
+            return Redirect::back();
+        }
+    }
+
+    public function getUserUploadFiles( Request $request){
+        if (Auth::check()){
+            $username = Auth::user()->ma_nhan_vien;
+            $sql = 'select *, user.ho_ten as nguoi_dang from mst_tai_lieu tl, users user WHERE 1 = 1 AND tl.nguoi_dang = user.ma_nhan_vien AND tl.nguoi_dang = "'.Auth::user()->ma_nhan_vien.'" AND tl.trang_thai = 1';
+//            if (!Auth::user()->is_admin){
+//                $sql .= ' AND tl.ma_danh_muc IN (SELECT ma_nhom_quyen FROM mst_phan_quyen where ma_nhan_vien = "'.$username.'" and trang_thai = 1)';
+//            }
+            if (isset($request->request->all()['datatable']['tenTaiLieu']['generalSearch'])){
+                $sql .= " and tl.ten_tai_lieu like  '%". $request->request->all()['datatable']['tenTaiLieu']['generalSearch'] ."%'";
+            }
+            $searchResult = json_encode(DB::select(DB::raw($sql)));
+            $result ='{ "meta": { "page": 1, "pages": 1, "perpage": -1, "total": '. count((array)$searchResult) .', "sort": "asc", "field": "ma_tai_lieu" }, "data":';
+            $result .= $searchResult . '}';
+
+//            dd($sql);
+            return response($result, 200)->header('Content-Type', 'application/json');
+        }else{
+            return response('<script> alert("Bạn chưa đăng nhập."); window.history.back()</script>', 200);
+        }
+    }
+
+    public function userManagement(){
+        if (Auth::check()) {
+            $menuData = $this->getMenuData();
+            $userInfo = $this->getUserInfo();
+
+            $layoutData = array(
+                'dsTruSo' => MdTruSo::get(),
+                'menuData' => $menuData,
+                'userInfo' => $userInfo,
+            );
+            return view('userManagement', $layoutData);
+        }else{
+            return Redirect::back();
+        }
+    }
+
+    public function getUserProfile(Request $request){
+        $maNhanVien = $request->maNhanVien;
+        $userInfo = User::with('phongBan', 'toCongTac')->where('ma_nhan_vien', $maNhanVien)->get();
+        $result = array(
+            'userInfo' => $userInfo,
+        );
+        return response($result, 200)->header('Content-Type', 'application/json');
+    }
+
+    public function updateUserProfileByAdmin(Request $request){
+        if (Auth::check()) {
+            try {
+                $user = User::find($request->maNhanVien);
+                $user->ma_nhan_vien = $request->tenDangNhap;
+                $user->username = $request->tenDangNhap;
+                $user->ho_ten = $request->tenNhanVien;
+                $user->email = $request->email;
+                $user->ma_phong_ban = $request->maPhongBan;
+                $user->ma_to_cong_tac = $request->maToCongTac;
+                $user->chuc_vu = $request->chucVu;
+                $user->dia_chi = $request->diaChi;
+                $user->dien_thoai = $request->phone;
+                $user->ngay_sinh = $request->ngaySinh;
+                $user->trang_thai = $request->trangThai;
+                $user->save();
+                return response()->json(['info' => 'success', 'Content' => 'Cập nhật thành công'], 200);
+            } catch (QueryException $e) {
+                return response()->json(['info' => 'fail', 'Content' => 'Cập nhật không thành công. Lỗi hệ thống.'], 200);
             }
         }else{
             return response()->json(['info' => 'fail', 'Content' => 'Bạn chưa đăng nhập'], 200);

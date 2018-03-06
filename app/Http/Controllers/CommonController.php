@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\MdDanhMucMoRong;
 use App\MdPhanQuyen;
+use App\MdTaiLieuMoRong;
 use App\User;
 use Illuminate\Http\Request;
 use App\MdTruSo;
@@ -85,8 +86,8 @@ class CommonController extends Controller
                             array_push($authList, $a->ma_nhom_quyen);
                         }
                         return $query->whereIn('ma_to_cong_tac',  $authList)
-                        ->where('trang_thai', 1);
-                })->get(),
+                            ->where('trang_thai', 1);
+                    })->get(),
 
                     'menuMoRong' => MdDanhMucMoRong::with(['taiLieuMoRong'=>function($query){
                         $authList = array();
@@ -95,7 +96,7 @@ class CommonController extends Controller
                         foreach ($auth as $a){
                             array_push($authList, $a->ma_nhom_quyen);
                         }
-                        return $query->whereIn('ma_tai_lieu_mo_rong',  $authList)
+                        return $query->whereIn('ma_tai_lieu_mo_rong',  $authList)->orWhere('ma_danh_muc_mo_rong', 'EXT002')
                             ->where('trang_thai', 1);
                     }])->where('trang_thai', true)->whereHas('taiLieuMoRong', function($query){
                         $authList = array();
@@ -106,7 +107,7 @@ class CommonController extends Controller
                         }
                         $query->whereIn('ma_tai_lieu_mo_rong',  $authList)
                             ->where('trang_thai', 1);
-                    })->get(),
+                    })->orWhere('ma_danh_muc_mo_rong', 'EXT002')->get(),
                 );
             }
         }else{
@@ -134,6 +135,11 @@ class CommonController extends Controller
         if (Auth::check()) {
             if (Auth::user()->is_admin)
                 return true;
+            $tlChung = MdTaiLieuMoRong::find($maQuyen);
+            if ( MdTaiLieuMoRong::find($maQuyen) != null ){
+                if (MdTaiLieuMoRong::find($maQuyen)->ma_danh_muc_mo_rong == 'EXT002')
+                    return true;
+            }
             if (MdPhanQuyen::where('ma_nhan_vien', Auth::user()->ma_nhan_vien)->where('ma_nhom_quyen', $maQuyen)->count() < 1)
                 return false;
             return true;

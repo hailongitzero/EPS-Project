@@ -88,7 +88,7 @@ Route::middleware(['auth'])->group(function (){
     Route::post('/cap-nhat-phan-quyen-user', 'AdminController@updateUserAuthority');
     Route::get('/cap-nhat-phan-quyen-user', 'AdminController@updateUserAuthority');
 
-    Route::get('/quan-ly-danh-muc', 'AdminController@gategoryManager');
+    Route::get('/quan-ly-danh-muc', 'AdminController@categoryManager');
 
     Route::post('/them-moi-danh-muc-tai-lieu-mo-rong', 'AdminController@addNewExtDocumentCategory');
     Route::get('/them-moi-danh-muc-tai-lieu-mo-rong', 'AdminController@addNewExtDocumentCategory');
@@ -108,4 +108,21 @@ Route::middleware(['auth'])->group(function (){
     Route::post('/them-moi-to', 'AdminController@addToCT');
     Route::get('/them-moi-to', 'AdminController@addToCT');
 
+    Route::get('/thong-tin-ca-nhan', 'AdminController@userInformation');
+
+    Route::post('/cap-nhat-thong-tin-ca-nhan', 'AdminController@updateUserInformation');
+    Route::get('/cap-nhat-thong-tin-ca-nhan', 'AdminController@updateUserInformation');
+
+    Route::get('/my-file', 'AdminController@userUploadList');
+
+    Route::post('user-upload-file', 'AdminController@getUserUploadFiles');
+    Route::get('user-upload-file', 'AdminController@getUserUploadFiles');
+
+    Route::get('/quan-ly-nguoi-dung', 'AdminController@userManagement');
+
+    Route::post('thong-tin-nguoi-dung', 'AdminController@getUserProfile');
+    Route::get('thong-tin-nguoi-dung', 'AdminController@getUserProfile');
+
+    Route::post('update-user-info-by-admin', 'AdminController@updateUserProfileByAdmin');
+    Route::get('update-user-info-by-admin', 'AdminController@updateUserProfileByAdmin');
 });

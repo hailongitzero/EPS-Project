@@ -1,9 +1,6 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: HaiLong
- * Date: 1/7/2018
- * Time: 10:38 PM
+
  */?>
 <div class="m-content">
     <div class="row">
@@ -29,7 +26,7 @@
                             <div class="col-md-6">
                                 <div class="form-group m-form__group">
                                     <label for="cbxDsTruSo">
-                                        Trụ sở
+                                        Nơi làm việc
                                     </label>
                                     <select class="form-control m-input m-input--air" id="cbxDsTruSo">
                                         <option value="" selected>

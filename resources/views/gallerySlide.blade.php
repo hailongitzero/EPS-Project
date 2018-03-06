@@ -1,23 +1,20 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: HaiLong
- * Date: 11/5/2017
- * Time: 3:53 PM
+
  */?>
 <!--extends master template-->
 @extends('layouts.main')
 <!--end extends master template-->
 
 <!--title site setting-->
-@section('title', isset($title) ? $title : 'EVN-GENCO 3 EPS')
+@section('title', isset($title) ? $title : 'EPS - Thư viện điện tử')
 <!--end title site setting-->
 
-@section('meta-title', isset($metaTitle) ? $metaTitle : 'EVN-GENCO 3 EPS')
+@section('meta-title', isset($metaTitle) ? $metaTitle : 'EPS - Thư viện điện tử')
 <!--end title site setting-->
 
 <!--description site setting-->
-@section('description', isset($description) ? $description : 'EVN-GENCO 3 EPS')
+@section('description', isset($description) ? $description : 'EPS - Thư viện điện tử')
 <!--end description site setting-->
 
 <!--content site section-->

@@ -1,9 +1,6 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: HaiLong
- * Date: 12/7/2017
- * Time: 10:58 PM
+
  */?>
 
 <div class="m-content">
@@ -48,7 +45,7 @@
                             <div class="col-md-6">
                                 <div class="form-group m-form__group">
                                     <label for="cbxSrchTruSo">
-                                        Trụ sở
+                                        Nơi làm việc
                                     </label>
                                     <select class="form-control m-input m-input--air" id="cbxSrchTruSo">
                                         <option value="" selected>
@@ -69,7 +66,7 @@
                                     <label for="cbxSrchPhongBan">
                                         Phòng Ban
                                     </label>
-                                    <select class="form-control m-input m-input--air" id="cbxSrchPhongBan">
+                                    <select class="form-control m-input m-input--air" id="cbxSrchPhongBan" disabled>
                                     </select>
                                 </div>
                             </div>
@@ -130,13 +127,13 @@
                         </div>
                         <div class="m-portlet__foot m-portlet__foot--fit">
                             <div class="m-form__actions">
-                                <button type="button" class="btn btn-danger" id="btnXoaQuyen">
+                                <button type="button" class="btn btn-danger" id="btnXoaQuyen" disabled>
                                     Xóa Quyền
                                 </button>
                                 <button type="button" id="btnMdThemPhanQuyen" class="btn btn-success" data-toggle="modal" data-target="#mdThemPhanQuyen">
                                     Phân Quyền
                                 </button>
-                                <button type="reset" class="btn btn-primary" id="btnUpdateAuth">
+                                <button type="reset" class="btn btn-primary" id="btnUpdateAuth" disabled>
                                     Cập Nhật
                                 </button>
                             </div>
@@ -190,7 +187,7 @@
                             <label for="exampleSelect1">
                                 Phòng Ban
                             </label>
-                            <select class="form-control m-input m-input--air" id="cbxPhongBan">
+                            <select class="form-control m-input m-input--air" id="cbxPhongBan" disabled>
                             </select>
                         </div>
                     </div>

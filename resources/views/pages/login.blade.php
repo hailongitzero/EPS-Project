@@ -1,9 +1,6 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: HaiLong
- * Date: 10/5/2017
- * Time: 3:11 PM
+
  */?>
         <!DOCTYPE html>
 <html lang="en" >
@@ -11,7 +8,7 @@
 <head>
     <meta charset="utf-8" />
     <title>
-        Metronic | Login Page - 3
+        EPS - Thư viện điện tử
     </title>
     <meta name="description" content="Latest updates and statistic charts">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -21,7 +18,7 @@
     <script src="/resources/assets/js/webfont.js"></script>
     <script>
         WebFont.load({
-            google: {"families":["Poppins:300,400,500,600,700","Roboto:300,400,500,600,700"]},
+            google: {"families":["Roboto:300,400,500,600,700","Roboto:300,400,500,600,700"]},
             active: function() {
                 sessionStorage.fonts = true;
             }
@@ -32,7 +29,7 @@
     <link href="/resources/assets/css/vendors.bundle.css" rel="stylesheet" type="text/css" />
     <link href="/resources/assets/css/style.bundle.css" rel="stylesheet" type="text/css" />
     <!--end::Base Styles -->
-    <link rel="shortcut icon" href="/resources/assets/images/logo/favicon.ico" />
+    <link rel="shortcut icon" href="/resources/assets/images/logo/favicon%20(2).ico" />
 </head>
 <!-- end::Head -->
 <!-- end::Body -->
@@ -42,15 +39,15 @@
     <div class="m-grid__item m-grid__item--fluid m-grid m-grid--hor m-login m-login--singin m-login--2 m-login-2--skin-2" id="m_login" style="background-image: url(/resources/assets/images/bg/bg-3.jpg);">
         <div class="m-grid__item m-grid__item--fluid	m-login__wrapper">
             <div class="m-login__container">
-                <div class="m-login__logo">
+                <div class="m-login__logo" style="margin-bottom: 30px">
                     <a href=#">
-                        <img src="/resources/assets/images/logo/eps-logo1.png">
+                        <img src="/resources/assets/images/logo/logo.png">
                     </a>
                 </div>
                 <div class="m-login__signin">
                     <div class="m-login__head">
-                        <h3 class="m-login__title">
-                            Đăng Nhập
+                        <h3 class="m-login__title" style="font-family:'Roboto';color: #1D4589;font-weight: bold;font-size: 35px">
+                            ĐĂNG NHẬP
                         </h3>
                         <div class="error">
                             @if ($errors->has('username'))
@@ -65,31 +62,31 @@
                             @endif
                         </div>
                     </div>
-                    <form class="m-login__form m-form"  method="POST" action="{{ route('login') }}">
+                    <form class="m-login__form m-form"   method="POST" action="{{ route('login') }}">
                         {{ csrf_field() }}
                         <div class="form-group m-form__group {{ $errors->has('username') ? ' has-error' : '' }}">
                             <input class="form-control m-input"   type="text" placeholder="Tên đăng nhập" name="username" autocomplete="off" value="{{ old('username') }}" required autofocus>
                         </div>
                         <div class="form-group m-form__group {{ $errors->has('password') ? ' has-error' : '' }}">
-                            <input class="form-control m-input m-login__form-input--last" type="password" placeholder="Password" name="password">
+                            <input class="form-control m-input m-login__form-input--last" type="password" placeholder="Mật khẩu" name="password">
                         </div>
                         <div class="row m-login__form-sub">
                             <div class="col m--align-left m-login__form-left">
-                                <label class="m-checkbox  m-checkbox--focus">
+                                <label class="m-checkbox  m-checkbox--focus" style="font-family: Roboto">
                                     <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}>
-                                    Remember me
+                                    Ghi nhớ
                                     <span></span>
                                 </label>
                             </div>
-                            <div class="col m--align-right m-login__form-right">
+                            <div class="col m--align-right m-login__form-right" style="font-family: Roboto">
                                 <a href="javascript:;" id="m_login_forget_password" class="m-link">
-                                    Forget Password ?
+                                    Quên mật khẩu ?
                                 </a>
                             </div>
                         </div>
-                        <div class="m-login__form-action">
-                            <button id="m_login_signin_submit" class="btn btn-focus m-btn m-btn--pill m-btn--custom m-btn--air m-login__btn m-login__btn--primary">
-                                Sign In
+                        <div class="m-login__form-action" style="margin-top: 10px">
+                            <button id="m_login_signin_submit" style="font-family: Roboto" class="btn btn-focus m-btn m-btn--pill m-btn--custom m-btn--air m-login__btn m-login__btn--primary">
+                                Đăng nhập
                             </button>
                         </div>
                     </form>
@@ -97,7 +94,7 @@
                 <div class="m-login__signup">
                     <div class="m-login__head">
                         <h3 class="m-login__title">
-                            Sign Up
+                            Đăng ký
                         </h3>
                         <div class="m-login__desc">
                             Enter your details to create your account:
@@ -130,7 +127,7 @@
                                 <span class="m-form__help"></span>
                             </div>
                         </div>
-                        <div class="m-login__form-action">
+                        <div class="m-login__form-action" style="margin-top: 10px">
                             <button id="m_login_signup_submit" class="btn btn-focus m-btn m-btn--pill m-btn--custom m-btn--air  m-login__btn">
                                 Sign Up
                             </button>
@@ -154,7 +151,7 @@
                         <div class="form-group m-form__group">
                             <input class="form-control m-input" type="text" placeholder="Email" name="email" id="m_email" autocomplete="off">
                         </div>
-                        <div class="m-login__form-action">
+                        <div class="m-login__form-action" style="margin-top: 10px">
                             <button id="m_login_forget_password_submit" class="btn btn-focus m-btn m-btn--pill m-btn--custom m-btn--air  m-login__btn m-login__btn--primaryr">
                                 Request
                             </button>
@@ -165,15 +162,15 @@
                         </div>
                     </form>
                 </div>
-                <div class="m-login__account">
-							<span class="m-login__account-msg">
-								Don't have an account yet ?
-							</span>
-                    &nbsp;&nbsp;
-                    <a href="javascript:;" id="m_login_signup" class="m-link m-link--light m-login__account-link">
-                        Sign Up
-                    </a>
-                </div>
+                {{--<div class="m-login__account" style="font-family: Roboto">--}}
+							{{--<span class="m-login__account-msg">--}}
+								{{--Bạn chưa có tài khoản ?--}}
+							{{--</span>--}}
+                    {{--&nbsp;&nbsp;--}}
+                    {{--<a href="javascript:;" id="m_login_signup" class="m-link m-link--light m-login__account-link">--}}
+                        {{--Đăng ký--}}
+                    {{--</a>--}}
+                {{--</div>--}}
             </div>
         </div>
     </div>

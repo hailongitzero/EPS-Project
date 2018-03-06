@@ -1,5 +1,5 @@
 /**
- * Created by HaiLong on 10/7/2017.
+
  */
 var Treeview = function() {
     var e = function() {
@@ -39,12 +39,10 @@ var Treeview = function() {
                 var noteText = $('#mTreeDanhMucMoRong').jstree().get_selected("id")[0].text;
                 var maDanhMuc = $('#'+nodeId).find('a').attr('data-content');
                 var level = $('#'+nodeId).attr('aria-level');
-                if( level > 1){
-                    $('#tbTitleSec').text(noteText);
-                    $('#maDanhMucTaiLieu').val(maDanhMuc);
-                    $('#tbTaiLieuTitle').text(noteText);
-                    $('#mdAddDocumentTitle').text(' - ' + noteText);
-                }
+                $('#tbTitleSec').text(noteText);
+                $('#maDanhMucTaiLieu').val(maDanhMuc);
+                $('#tbTaiLieuTitle').text(noteText);
+                $('#mdAddDocumentTitle').text(' - ' + noteText);
             }).jstree({
                 core: {
                     themes: {

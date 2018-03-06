@@ -26,4 +26,15 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    const CREATED_AT = 'ngay_tao';
+    const UPDATED_AT = 'ngay_cap_nhat';
+
+    public function phongBan(){
+        return $this->hasOne('App\MdPhongBan', 'ma_phong_ban', 'ma_phong_ban');
+    }
+
+    public function toCongTac(){
+        return $this->hasOne('App\MdToCongTac', 'ma_to_cong_tac', 'ma_to_cong_tac');
+    }
 }

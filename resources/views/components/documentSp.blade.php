@@ -1,10 +1,8 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: HaiLong
- * Date: 10/27/2017
- * Time: 12:30 AM
- */?>
+
+ */
+?>
 <!-- BEGIN: Subheader -->
 <div class="m-subheader ">
     <div class="d-flex align-items-center">
@@ -59,24 +57,15 @@
                 <div class="m-portlet__body">
                     <div id="mTreeDanhMucMoRong" class="tree-demo">
                         <ul>
-                            @if( isset($danhMucTaiLieu))
-                                <li class="jstree-open">
-                                    @foreach( $danhMucTaiLieu as $dm)
+                            <li data-jstree='{ "selected":true }'>
+                                @if(isset($danhMucTaiLieu))
+                                    @foreach($danhMucTaiLieu as $dm)
+                                    <a href="#" class="linkDanhMucTaiLieuMoRong" data-content="{{ $dm->ma_tai_lieu_mo_rong }}">
                                         {{ $dm->ten_tai_lieu_mo_rong }}
-                                        @if( isset($dm->danhMucTaiLieu))
-                                            <ul>
-                                                @foreach( $dm->danhMucTaiLieu as $key=>$value)
-                                                    <li data-jstree='{ "selected" : {{$key == 0 ? 'true' : ''}} }'>
-                                                        <a href="#" class="linkDanhMucTaiLieuMoRong" data-content="{{ $value->ma_danh_muc }}">
-                                                            {{ $value->ten_danh_muc }}
-                                                        </a>
-                                                    </li>
-                                                @endforeach
-                                            </ul>
-                                        @endif
+                                    </a>
                                     @endforeach
-                                </li>
-                            @endif
+                                @endif
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -166,7 +155,7 @@
                         <input type="hidden" id="maDanhMucTaiLieu" value="">
                     </div>
                     <div class="col-lg-12 mt-3">
-                        <textarea class="form-control m-input" id="moTaTaiLieu" rows="3"></textarea>
+                        <textarea class="form-control m-input" id="moTaTaiLieu" placeholder="Nhập mô tả công việc theo từng bước thực hiện" rows="3"></textarea>
                     </div>
                 </div>
             </div>

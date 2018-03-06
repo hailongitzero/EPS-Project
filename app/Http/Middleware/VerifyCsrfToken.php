@@ -18,5 +18,6 @@ class VerifyCsrfToken extends BaseVerifier
         'tra-cuu-tai-lieu',
         'thu-vien-hinh/*',
         'thu-vien-hinh',
+        'user-upload-file',
     ];
 }

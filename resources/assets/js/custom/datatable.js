@@ -1,5 +1,5 @@
 /**
- * Created by HaiLong on 10/7/2017.
+
  */
 var DatatableRemoteAjax = function() {
     var t = null;
@@ -57,12 +57,16 @@ var DatatableRemoteAjax = function() {
                     title: "Dung Lượng",
                     width: 100,
                     template: function (t) {
-                        return Math.round(t.dung_luong / 1000000, 2) + ' mb'
+                        if (t.dung_luong < 1000000){
+                            return Math.round(t.dung_luong / 1000, 2) + ' kb'
+                        }else {
+                            return Math.round(t.dung_luong / 1000000, 2) + ' mb'
+                        }
                     }
                 }, {
                     field: "tac_gia",
                     title: "Người Đăng",
-                    width: 150,
+                    // width: 150,
                     template: function(t) {
                         return t.tac_gia.ho_ten;
 
@@ -70,9 +74,13 @@ var DatatableRemoteAjax = function() {
                 }, {
                     field: "ngay_tao",
                     title: "Ngày Đăng",
-                    width: 150,
+                    // width: 100,
                     type: "date",
-                    format: "MM/DD/YYYY"
+                    format: "MM/DD/YYYY",
+                    template: function (t) {
+                        var dt = new Date(t.ngay_tao);
+                        return  dt.getDate() + '-' + (dt.getMonth() + 1) + '-' +  dt.getFullYear();
+                    }
                 }, {
                     field: "dinh_dang",
                     title: "Định Dạng",
@@ -121,7 +129,10 @@ var DatatableRemoteAjax = function() {
             e = t.getDataSourceQuery();
         $("#m_form_search").on("keyup", function(e) {
             var a = t.getDataSourceQuery();
+            var nodeId = $('#mTreeDanhMuc').jstree().get_selected("id")[0].id;
+            var maDanhMuc = $('#'+nodeId).find('a').attr('data-content');
             a.generalSearch = $(this).val().toLowerCase(), t.setDataSourceQuery(a);
+            t.setDataSourceParam('maDanhMuc', maDanhMuc),
             t.setDataSourceParam('tenTaiLieu', a), t.load();
         }).val(e.generalSearch), $("#m_form_status").on("change", function() {
             var e = t.getDataSourceQuery();
@@ -206,7 +217,11 @@ var DatatableTraCuu = function() {
                     title: "Dung Lượng",
                     width: 100,
                     template: function (t) {
-                        return Math.round(t.dung_luong / 1000000, 2) + ' mb'
+                        if (t.dung_luong < 1000000){
+                            return Math.round(t.dung_luong / 1000, 2) + ' kb'
+                        }else {
+                            return Math.round(t.dung_luong / 1000000, 2) + ' mb'
+                        }
                     }
                 }, {
                     field: "nguoi_dang",
@@ -215,7 +230,11 @@ var DatatableTraCuu = function() {
                     field: "ngay_tao",
                     title: "Ngày Đăng",
                     type: "date",
-                    format: "MM/DD/YYYY"
+                    format: "MM/DD/YYYY",
+                    template: function (t) {
+                        var dt = new Date(t.ngay_tao);
+                        return  dt.getDate() + '-' + (dt.getMonth() + 1) + '-' +  dt.getFullYear();
+                    }
                 }, {
                     field: "dinh_dang",
                     title: "Định Dạng",
@@ -336,14 +355,19 @@ var DatatableGallery = function() {
                     sortable: "asc",
                     filterable: !1,
                     template: function(t) {
-                        return t.nguoi_dang.ho_ten;
+                        return t.nguoi_dang == null || t.nguoi_dang == undefined || t.nguoi_dang == '' ? '' : t.nguoi_dang.ho_ten;
+                        // return t.nguoi_dang.ho_ten;
 
                     }
                 }, {
                     field: "ngay_tao",
                     title: "Ngày Đăng",
                     type: "date",
-                    format: "MM/DD/YYYY"
+                    format: "MM/DD/YYYY",
+                    template: function (t) {
+                        var dt = new Date(t.ngay_tao);
+                        return  dt.getDate() + '-' + (dt.getMonth() + 1) + '-' +  dt.getFullYear();
+                    }
                 }, {
                     field: "nguoi_cap_nhat",
                     title: "Người Cập Nhật",
@@ -359,7 +383,11 @@ var DatatableGallery = function() {
                     field: "ngay_cap_nhat",
                     title: "Ngày Cập Nhật",
                     type: "date",
-                    format: "MM/DD/YYYY"
+                    format: "MM/DD/YYYY",
+                    template: function (t) {
+                        var dt = new Date(t.ngay_cap_nhat);
+                        return  dt.getDate() + '-' + (dt.getMonth() + 1) + '-' +  dt.getFullYear();
+                    }
                 }, {
                     field: "Tùy Chọn",
                     width: 110,
@@ -441,7 +469,11 @@ var dtDocumentExtend = function() {
                     title: "Dung Lượng",
                     width: 100,
                     template: function (t) {
-                        return Math.round(t.dung_luong / 1000000, 2) + ' mb'
+                        if (t.dung_luong < 1000000){
+                            return Math.round(t.dung_luong / 1000, 2) + ' kb'
+                        }else {
+                            return Math.round(t.dung_luong / 1000000, 2) + ' mb'
+                        }
                     }
                 }, {
                     field: "tac_gia",
@@ -456,7 +488,11 @@ var dtDocumentExtend = function() {
                     title: "Ngày Đăng",
                     width: 150,
                     type: "date",
-                    format: "MM/DD/YYYY"
+                    format: "MM/DD/YYYY",
+                    template: function (t) {
+                        var dt = new Date(t.ngay_tao);
+                        return  dt.getDate() + '-' + (dt.getMonth() + 1) + '-' +  dt.getFullYear();
+                    }
                 }, {
                     field: "dinh_dang",
                     title: "Định Dạng",
@@ -504,7 +540,10 @@ var dtDocumentExtend = function() {
             e = t.getDataSourceQuery();
         $("#m_form_search").on("keyup", function(e) {
             var a = t.getDataSourceQuery();
+            var nodeId = $('#mTreeDanhMucMoRong').jstree().get_selected("id")[0].id;
+            var maDanhMuc = $('#'+nodeId).find('a').attr('data-content');
             a.generalSearch = $(this).val().toLowerCase(), t.setDataSourceQuery(a);
+            t.setDataSourceParam('maDanhMuc', maDanhMuc),
             t.setDataSourceParam('tenTaiLieu', a), t.load();
         }).val(e.generalSearch), $("#m_form_status").on("change", function() {
             var e = t.getDataSourceQuery();
@@ -519,11 +558,10 @@ var dtDocumentExtend = function() {
             var noteText = $('#mTreeDanhMucMoRong').jstree().get_selected("id")[0].text;
             var maDanhMuc = $('#'+nodeId).find('a').attr('data-content');
             var level = $('#'+nodeId).attr('aria-level');
-            if( level > 1){
-                t.setDataSourceParam('maDanhMuc', maDanhMuc);
-                t.load();
-                t.setDataSourceParam('maDanhMuc', '');
-            }
+
+            t.setDataSourceParam('maDanhMuc', maDanhMuc);
+            t.load();
+            t.setDataSourceParam('maDanhMuc', '');
         });
 
     };
@@ -531,6 +569,139 @@ var dtDocumentExtend = function() {
         init: function() {
             t();
         },
+    }
+}();
+
+var DatatableUserUpload = function() {
+    var t = null;
+    t = function() {
+        var t = $("#mTbUserUpload").mDatatable({
+                data: {
+                    type: "remote",
+                    source: {
+                        read: {
+                            url: window.location.origin + '/user-upload-file',
+                            method: 'GET',
+                            params: {
+                                // custom headers
+                                headers: $('meta[name="csrf-token"]').attr('content'),
+                                _token: $('meta[name="csrf-token"]').attr('content'),
+                                token: $('meta[name="csrf-token"]').attr('content'),
+                                query: {
+                                }
+                            }
+                        },
+                    },
+                    pageSize: 10,
+                    saveState: {
+                        cookie: !0,
+                        webstorage: !0
+                    },
+                    serverPaging: !0,
+                    serverFiltering: !0,
+                    serverSorting: !0
+                },
+                layout: {
+                    theme: "default",
+                    class: "",
+                    scroll: !1,
+                    footer: !1
+                },
+                sortable: !0,
+                filterable: !1,
+                pagination: !0,
+                columns: [{
+                    field: "ma_tai_lieu",
+                    title: "Mã Tài Liệu",
+                    sortable: !1,
+                    filterable: !1,
+                    width: 100,
+                    selector: !1,
+                    textAlign: "center"
+                }, {
+                    field: "ten_tai_lieu",
+                    title: "Tên Tài Liệu",
+                    sortable: "asc",
+                    filterable: !1,
+                }, {
+                    field: "dung_luong",
+                    title: "Dung Lượng",
+                    width: 100,
+                    template: function (t) {
+                        if (t.dung_luong < 1000000){
+                            return Math.round(t.dung_luong / 1000, 2) + ' kb'
+                        }else {
+                            return Math.round(t.dung_luong / 1000000, 2) + ' mb'
+                        }
+                    }
+                }, {
+                    field: "ngay_tao",
+                    title: "Ngày Đăng",
+                    type: "date",
+                    format: "MM/DD/YYYY",
+                    template: function (t) {
+                        var dt = new Date(t.ngay_tao);
+                        return  dt.getDate() + '-' + (dt.getMonth() + 1) + '-' +  dt.getFullYear();
+                    }
+                }, {
+                    field: "dinh_dang",
+                    title: "Định Dạng",
+                    width: 90,
+                    template: function(t) {
+                        var e = {
+                            'doc': {
+                                title: "<i class='fa fa-file-word-o'></i>",
+                            },
+                            'docx': {
+                                title: "<i class='fa fa-file-word-o'></i>",
+                            },
+                            'pdf': {
+                                title: "<i class='fa fa-file-pdf-o'></i>",
+                            },
+                            'ppt': {
+                                title: "<i class='fa fa-file-powerpoint-o'></i>",
+                            },
+                            'pptx': {
+                                title: "<i class='fa fa-file-powerpoint-o'></i>",
+                            },
+                            'xlsx': {
+                                title: "<i class='fa fa-file-excel-o'></i>",
+                            },
+                            'xls': {
+                                title: "<i class='fa fa-file-excel-o'></i>",
+                            },
+                            'bin': {
+                                title: "<i class='fa tfa-file-o'></i>",
+                            }
+                        };
+                        return '<span class="btn btn-success">' + e[t.dinh_dang].title + "</span>"
+                    }
+                }, {
+                    field: "Tùy Chọn",
+                    width: 110,
+                    title: "Tùy Chọn",
+                    sortable: !1,
+                    overflow: "visible",
+                    template: function(t) {
+                        return '\t\t\t\t\t\t<div class="dropdown ' + (t.getDatatable().getPageSize() - t.getIndex() <= 4 ? "dropup" : "") + '">\t\t\t\t\t\t\t<a href="#" class="btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" data-toggle="dropdown"><i class="la la-ellipsis-h"></i></a>\t\t\t\t\t\t  \t<div class="dropdown-menu dropdown-menu-right">\t\t\t\t\t\t    \t<a class="dropdown-item" href="'+window.location.origin+ '/downloadTaiLieu/' + t.ma_tai_lieu +'"><i class="fa fa-arrow-circle-o-down"></i> Tải Về</a>\t\t\t\t\t\t    \t<a class="dropdown-item" href="'+window.location.origin+ '/resources/' + t.lien_ket +'" target="_blank"><i class="fa fa-eye"></i> Xem Trước</a>\t\t\t\t\t\t    \t</div>\t\t\t\t\t\t</div>\t\t\t\t\t'
+                    }
+                }]
+            }),
+            e = t.getDataSourceQuery();
+        $("#fsTenTaiLieu").on("keyup", function(e) {
+            var a = t.getDataSourceQuery();
+            a.generalSearch = $(this).val().toLowerCase(), t.setDataSourceQuery(a);
+            t.setDataSourceParam('tenTaiLieu', a), t.load();
+        }).val(e.generalSearch)
+    };
+    return {
+        init: function() {
+            t()
+        },
+        bind: function (param, value) {
+            var table = $("#mTbDocument").fn.mDatatable();
+            console.log(table);
+        }
     }
 }();
 
@@ -551,4 +722,8 @@ jQuery(document).ready(function() {
     if($('#mTbDocumentExt').length > 0){
         dtDocumentExtend.init();
     }
+    if($('#mTbUserUpload').length > 0){
+        DatatableUserUpload.init();
+    }
+
 });

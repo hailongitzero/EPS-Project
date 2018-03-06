@@ -1,9 +1,6 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: HaiLong
- * Date: 11/5/2017
- * Time: 3:53 PM
+
  */?>
 <!-- BEGIN: Subheader -->
 <div class="m-subheader ">

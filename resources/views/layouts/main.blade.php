@@ -15,7 +15,7 @@
     <script src="/resources/assets/js/webfont.js"></script>
     <script>
         WebFont.load({
-            google: {"families":["Poppins:300,400,500,600,700","Roboto:300,400,500,600,700"]},
+            google: {"families":["Roboto:300,400,500,600,700","Roboto:300,400,500,600,700"]},
             active: function() {
                 sessionStorage.fonts = true;
             }
@@ -27,7 +27,7 @@
     <link href="/resources/assets/css/custom.css" rel="stylesheet" type="text/css" />
 
     <!--end::Base Styles -->
-    <link rel="shortcut icon" href="/resources/assets/images/logo/favicon.ico" />
+    <link rel="shortcut icon" href="/resources/assets/images/logo/favicon%20(2).ico" />
 </head>
 <!-- end::Head -->
 <!-- end::Body -->

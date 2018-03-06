@@ -63,7 +63,7 @@ class DocumentController extends CommonController
                 $danhMuc->nguoi_cap_nhat = $userId;
                 $danhMuc->save();
 
-                return response()->json(['info' => 'success', 'Content' => 'Cập nhật thành công'], 200);
+                return response()->json(['info' => 'success', 'Content' => 'Thêm mới danh mục thành công'], 200);
             } catch (QueryException $e) {
                 return response()->json(['info' => 'fail', 'Content' => 'Thêm mới không thành công. Lỗi hệ thống.'], 200);
             }
@@ -80,8 +80,9 @@ class DocumentController extends CommonController
         }
         if (isset($request->request->all()['datatable']['tenTaiLieu']['generalSearch'])){
             $tenTaiLieu = $request->request->all()['datatable']['tenTaiLieu']['generalSearch'];
-            $result ='{ "meta": { "page": 1, "pages": 1, "perpage": -1, "total": '.MdTaiLieu::with('tacGia')->where('ma_danh_muc', $maDanhMuc)->where('ten_tai_lieu', 'like', '%'.$tenTaiLieu.'%')->where('trang_thai', 1)->count().', "sort": "asc", "field": "ma_tai_lieu" }, "data":';
-            $result .= (string)MdTaiLieu::with('tacGia')->where('ma_danh_muc', $maDanhMuc)->where('ten_tai_lieu', 'like', '%'.$tenTaiLieu.'%')->where('trang_thai', 1)->get();
+            $rawResult = MdTaiLieu::with('tacGia')->where('ma_danh_muc', $maDanhMuc)->where('ten_tai_lieu', 'like', '%'.$tenTaiLieu.'%')->where('trang_thai', 1)->get();
+            $result ='{ "meta": { "page": 1, "pages": 1, "perpage": -1, "total": '.count($rawResult).', "sort": "asc", "field": "ma_tai_lieu" }, "data":';
+            $result .= json_encode($rawResult);
             $result .= '}';
         }else{
             $result ='{ "meta": { "page": 1, "pages": 1, "perpage": -1, "total": '.MdTaiLieu::where('ma_danh_muc', $maDanhMuc)->where('trang_thai', 1)->count().', "sort": "asc", "field": "ma_tai_lieu" }, "data":';
@@ -135,13 +136,13 @@ class DocumentController extends CommonController
             $extension = '';
             $fileSize = 0;
 
-            $toCongTac = MdDanhMucTaiLieu::find($maDanhMuc)->toCongTac;
-            $taiLieuMoRong = MdDanhMucTaiLieu::find($maDanhMuc)->taiLieuMoRong;
-            if( isset($toCongTac->thu_muc)){
+            if ( MdDanhMucTaiLieu::where('ma_danh_muc', $maDanhMuc)->count() ){
+                $toCongTac = MdDanhMucTaiLieu::find($maDanhMuc)->toCongTac;
                 $thuMuc = $toCongTac->thu_muc;
             }else{
-                $thuMuc = $taiLieuMoRong->thu_muc;
+                $thuMuc = $maDanhMuc;
             }
+
 
             $path .= $thuMuc;
 
@@ -202,17 +203,25 @@ class DocumentController extends CommonController
             $username = Auth::user()->ma_nhan_vien;
             $sql = 'select *, user.ho_ten as nguoi_dang from mst_tai_lieu tl, users user WHERE 1 = 1 and tl.nguoi_dang = user.ma_nhan_vien AND tl.trang_thai = 1';
             if (!Auth::user()->is_admin){
-                $sql .= ' AND tl.ma_danh_muc IN (SELECT ma_nhom_quyen FROM mst_phan_quyen where ma_nhan_vien = "'.$username.'" and trang_thai = 1)';
+                $sql .= ' AND ( tl.ma_danh_muc IN (SELECT ma_nhom_quyen FROM mst_phan_quyen where ma_nhan_vien = "'.$username.'" and trang_thai = 1)';
+                $sql .= 'OR tl.ma_danh_muc in (select ma_danh_muc from mst_danh_muc_tai_lieu where ma_to_cong_tac in (SELECT ma_nhom_quyen FROM mst_phan_quyen where ma_nhan_vien = "'.$username.'" and trang_thai = 1)))';
             }
             if (isset($request->request->all()['datatable']['tenNhanVien']['generalSearch'])){
-                $sql .= " and tl.nguoi_dang in (select ma_nhan_vien from users where ho_ten like  '%". $request->request->all()['datatable']['tenNhanVien']['generalSearch'] ."%')";
+
+                $sql .= " And tl.nguoi_dang in (select ma_nhan_vien from users where ho_ten like  '%". $request->request->all()['datatable']['tenNhanVien']['generalSearch'] ."%')";
             }
             if (isset($request->request->all()['datatable']['tenTaiLieu']['generalSearch'])){
                 $sql .= " and tl.ten_tai_lieu like  '%". $request->request->all()['datatable']['tenTaiLieu']['generalSearch'] ."%'";
             }
-            $searchResult = json_encode(DB::select(DB::raw($sql)));
-            $result ='{ "meta": { "page": 1, "pages": 1, "perpage": -1, "total": '. count($searchResult) .', "sort": "asc", "field": "ma_tai_lieu" }, "data":';
+
+            $rawResult = DB::select(DB::raw($sql));
+            $searchResult = json_encode($rawResult);
+            $result ='{ "meta": { "page": 1, "pages": 1, "perpage": -1, "total": '. count($rawResult) .', "sort": "asc", "field": "ma_tai_lieu" }, "data":';
             $result .= $searchResult . '}';
+//            $searchResult = json_encode(DB::select(DB::raw($sql)));
+//            $result ='{ "meta": { "page": 1, "pages": 1, "perpage": -1, "total": '. count((DB::select(DB::raw($sql)))) .', "sort": "asc", "field": "ma_tai_lieu" }, "data":';
+//			//$result ='{ "meta": { "page": 1, "pages": 1, "perpage": -1, "total": '. $searchResult->count() .', "sort": "asc", "field": "ma_tai_lieu" }, "data":';
+//            $result .= $searchResult . '}';
 
 //            dd($sql);
             return response($result, 200)->header('Content-Type', 'application/json');

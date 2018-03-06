@@ -1,9 +1,6 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: HaiLong
- * Date: 10/3/2017
- * Time: 11:30 PM
+
  */?>
 <!-- BEGIN: Header -->
 <header class="m-grid__item    m-header "  data-minimize-offset="200" data-minimize-mobile-offset="200" >
@@ -13,7 +10,7 @@
             <div class="m-stack__item m-brand  m-brand--skin-light ">
                 <div class="m-stack m-stack--ver m-stack--general">
                     <div class="m-stack__item m-stack__item--middle m-brand__logo">
-                        <a href="index.html" class="m-brand__logo-wrapper">
+                        <a href="{{ url('') }}" class="m-brand__logo-wrapper">
                             <img alt="" src="/resources/assets/images/logo/eps-logo-title.png"/>
                         </a>
                     </div>
@@ -49,7 +46,7 @@
                     <i class="la la-close"></i>
                 </button>
                 <div id="m_header_menu" class="m-header-menu m-aside-header-menu-mobile m-aside-header-menu-mobile--offcanvas  m-header-menu--skin-light m-header-menu--submenu-skin-light m-aside-header-menu-mobile--skin-light m-aside-header-menu-mobile--submenu-skin-light "  >
-                    <h3 class="mt-4">Thư Viện Điện Tử</h3>
+                    <h3 class="mt-4" style="color: #1D4589; font-weight: bold">THƯ VIỆN ĐIỆN TỬ</h3>
                 </div>
                 <!-- END: Horizontal Menu -->
                 <!-- BEGIN: Topbar -->
@@ -58,6 +55,7 @@
                         @if(isset($userInfo))
                             @foreach($userInfo as $uf)
                                 <ul class="m-topbar__nav m-nav m-nav--inline">
+                                    <li class="m-menu__item m-nav__item nav-username">{{ $uf->ho_ten }}</li>
                                     <li class="m-nav__item m-topbar__user-profile m-topbar__user-profile--img  m-dropdown m-dropdown--medium m-dropdown--arrow m-dropdown--header-bg-fill m-dropdown--align-right m-dropdown--mobile-full-width m-dropdown--skin-light" data-dropdown-toggle="click">
                                         <a href="{{ url('') }}" class="m-nav__link m-dropdown__toggle">
                                             <span class="m-topbar__userpic">
@@ -76,11 +74,11 @@
                                                             <img src="{{ is_null($uf->avatar) || $uf->avatar == '' ? url('resources/assets/images/users/user.png') : url($uf->avatar) }}" class="m--img-rounded m--marginless" alt=""/>
                                                         </div>
                                                         <div class="m-card-user__details">
-                                                            <span class="m-card-user__name m--font-weight-500">
+                                                            <span class="m-card-user__name m--font-weight-500 white">
                                                                 {{ $uf->ho_ten }}
                                                             </span>
-                                                            <a href="index.html" class="m-card-user__email m--font-weight-300 m-link">
-                                                                {{ $uf->email }}
+                                                            <a href="#" class="m-card-user__email m--font-weight-300 m-link white">
+                                                                {{ $uf->chuc_vu }}
                                                             </a>
                                                         </div>
                                                     </div>
@@ -94,53 +92,32 @@
                                                                 </span>
                                                             </li>
                                                             <li class="m-nav__item">
-                                                                <a href="#" class="m-nav__link">
+                                                                <a href="{{ url('thong-tin-ca-nhan') }}" class="m-nav__link">
                                                                     <i class="m-nav__link-icon flaticon-profile-1"></i>
                                                                     <span class="m-nav__link-title">
                                                                         <span class="m-nav__link-wrap">
                                                                             <span class="m-nav__link-text">
                                                                                 Thông tin cá nhân
                                                                             </span>
-                                                                            {{--<span class="m-nav__link-badge">--}}
-                                                                                {{--<span class="m-badge m-badge--success">--}}
-                                                                                    {{--2--}}
-                                                                                {{--</span>--}}
-                                                                            {{--</span>--}}
                                                                         </span>
                                                                     </span>
                                                                 </a>
                                                             </li>
                                                             <li class="m-nav__item">
-                                                                <a href="#" class="m-nav__link">
-                                                                    <i class="m-nav__link-icon flaticon-share"></i>
+                                                                <a href="mailto:{{ $uf->email }}" class="m-nav__link">
+                                                                    <i class="m-nav__link-icon flaticon-profile"></i>
                                                                     <span class="m-nav__link-text">
-                                                                        Hoạt Động
+                                                                        {{ $uf->email }}
                                                                     </span>
-                                                                </a>
-                                                            </li>
-                                                            <li class="m-nav__item">
-                                                                <a href="#" class="m-nav__link">
-                                                                    <i class="m-nav__link-icon flaticon-chat-1"></i>
-                                                                    <span class="m-nav__link-text">
-                                                                                    Tin Nhắn
-                                                                                </span>
                                                                 </a>
                                                             </li>
                                                             <li class="m-nav__separator m-nav__separator--fit"></li>
                                                             <li class="m-nav__item">
-                                                                <a href="#" class="m-nav__link">
-                                                                    <i class="m-nav__link-icon flaticon-info"></i>
+                                                                <a href="{{ url('my-file') }}" class="m-nav__link">
+                                                                    <i class="m-nav__link-icon flaticon-file"></i>
                                                                     <span class="m-nav__link-text">
-                                                                                    FAQ
-                                                                                </span>
-                                                                </a>
-                                                            </li>
-                                                            <li class="m-nav__item">
-                                                                <a href="#" class="m-nav__link">
-                                                                    <i class="m-nav__link-icon flaticon-lifebuoy"></i>
-                                                                    <span class="m-nav__link-text">
-                                                                                    Hỗ Trợ
-                                                                                </span>
+                                                                        Tài liệu đã tải lên
+                                                                    </span>
                                                                 </a>
                                                             </li>
                                                             <li class="m-nav__separator m-nav__separator--fit"></li>
