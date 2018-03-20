@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\MdDanhMucMoRong;
 use App\MdPhanQuyen;
 use App\MdTaiLieuMoRong;
+use App\MdToCongTac;
 use App\User;
 use Illuminate\Http\Request;
 use App\MdTruSo;
@@ -40,7 +41,7 @@ class CommonController extends Controller
 
     public function getMenuData(){
         if (Auth::check()) {
-            if (Auth::user()->is_admin == 1){
+            if (Auth::user()->phan_quyen == 2){
                 $menuData = array(
                     'menuPhongBan' => MdTruSo::with(['phongBan.toCongTac'=>function($query){
                         $query->where('trang_thai', 1);
@@ -55,29 +56,31 @@ class CommonController extends Controller
                         $authList = array();
                         $id =Auth::user()->ma_nhan_vien;
 
-                        $lstToCT = array();
-                        $dsToCT = MdPhanQuyen::where('ma_nhan_vien', $id)->where('trang_thai', 1)->get();
-                        foreach ($dsToCT as $ct){
-                            array_push($lstToCT, $ct->ma_nhom_quyen);
-                        }
+//                        $lstToCT = array();
+//                        $dsToCT = MdPhanQuyen::where('ma_nhan_vien', $id)->where('trang_thai', 1)->get();
+//                        foreach ($dsToCT as $ct){
+//                            array_push($lstToCT, $ct->ma_nhom_quyen);
+//                        }
+//
+//                        $auth = DB::table('mst_to_cong_tac')->select('ma_phong_ban')
+//                            ->whereIn('ma_to_cong_tac', $lstToCT)
+//                            ->distinct()
+//                            ->get();
 
-                        $auth = DB::table('mst_to_cong_tac')->select('ma_phong_ban')
-                            ->whereIn('ma_to_cong_tac', $lstToCT)
-                            ->distinct()
-                            ->get();
+                        $dsPQPhongBan = MdPhanQuyen::where('ma_nhan_vien', $id)->where('trang_thai', 1)->get();
 
-                        foreach ($auth as $a){
-                            array_push($authList, $a->ma_phong_ban);
+                        foreach ($dsPQPhongBan as $a){
+                            array_push($authList, $a->ma_nhom_quyen);
                         }
-                        $query->whereIn('ma_phong_ban', $authList);
+                        return $query->whereIn('ma_phong_ban', $authList);
                     }, 'phongBan.toCongTac'=>function($query){
                         $authList = array();
-                        $id =Auth::user()->ma_nhan_vien;
+                        $id = Auth::user()->ma_nhan_vien;
                         $auth = MdPhanQuyen::where('ma_nhan_vien', $id)->where('trang_thai', 1)->get();
                         foreach ($auth as $a){
                             array_push($authList, $a->ma_nhom_quyen);
                         }
-                        return $query->whereIn('ma_to_cong_tac',  $authList)->where('trang_thai', 1);
+                        return $query->whereIn('ma_phong_ban',  $authList)->where('trang_thai', 1);
                     }])->where('trang_thai', true)->whereHas('phongBan.toCongTac', function($query){
                         $authList = array();
                         $id =Auth::user()->ma_nhan_vien;
@@ -85,7 +88,7 @@ class CommonController extends Controller
                         foreach ($auth as $a){
                             array_push($authList, $a->ma_nhom_quyen);
                         }
-                        return $query->whereIn('ma_to_cong_tac',  $authList)
+                        return $query->whereIn('ma_phong_ban',  $authList)
                             ->where('trang_thai', 1);
                     })->get(),
 
@@ -133,15 +136,19 @@ class CommonController extends Controller
 
     public function checkAuth($maQuyen){
         if (Auth::check()) {
-            if (Auth::user()->is_admin)
+            $maPhongBan = '';
+            if (Auth::user()->phan_quyen == 2)
                 return true;
-            $tlChung = MdTaiLieuMoRong::find($maQuyen);
             if ( MdTaiLieuMoRong::find($maQuyen) != null ){
                 if (MdTaiLieuMoRong::find($maQuyen)->ma_danh_muc_mo_rong == 'EXT002')
                     return true;
             }
-            if (MdPhanQuyen::where('ma_nhan_vien', Auth::user()->ma_nhan_vien)->where('ma_nhom_quyen', $maQuyen)->count() < 1)
-                return false;
+            $toCongTac = MdToCongTac::find($maQuyen);
+            if ( count($toCongTac) > 0 ){
+                $maPhongBan = $toCongTac->ma_phong_ban;
+                if (MdPhanQuyen::where('ma_nhan_vien', Auth::user()->ma_nhan_vien)->where('ma_nhom_quyen', $maPhongBan)->count() < 1)
+                    return false;
+            }
             return true;
         }else{
             return false;

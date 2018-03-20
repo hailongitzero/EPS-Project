@@ -85,7 +85,7 @@
                             <label for="exampleSelect2">
                                 Kết Quả
                             </label>
-                            <select multiple="" class="form-control m-input" id="kqTimKiemNhanVien" style="height: 250px">
+                            <select class="form-control m-input" id="kqTimKiemNhanVien" size="10">
                             </select>
                         </div>
                     </div>
@@ -122,7 +122,7 @@
                             <label for="exampleSelect2">
                                 Quyền
                             </label>
-                            <select multiple="" class="form-control m-input" id="dsQuyenNhanVien" style="height: 250px">
+                            <select class="form-control m-input" id="dsQuyenNhanVien" size="15">
                             </select>
                         </div>
                         <div class="m-portlet__foot m-portlet__foot--fit">
@@ -173,7 +173,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-md-6 phan-quyen-to hide">
+                    <div class="col-md-12 phan-quyen-to hide">
                         <div class="form-group m-form__group">
                             <label for="exampleSelect1">
                                 Trụ Sở
@@ -182,20 +182,20 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-md-6 phan-quyen-to hide">
-                        <div class="form-group m-form__group">
-                            <label for="exampleSelect1">
-                                Phòng Ban
-                            </label>
-                            <select class="form-control m-input m-input--air" id="cbxPhongBan" disabled>
-                            </select>
-                        </div>
-                    </div>
+                    {{--<div class="col-md-6 phan-quyen-to hide">--}}
+                        {{--<div class="form-group m-form__group">--}}
+                            {{--<label for="exampleSelect1">--}}
+                                {{--Phòng Ban--}}
+                            {{--</label>--}}
+                            {{--<select class="form-control m-input m-input--air" id="cbxPhongBan" disabled>--}}
+                            {{--</select>--}}
+                        {{--</div>--}}
+                    {{--</div>--}}
                     <div class="col-lg-12 mt-3  phan-quyen-to hide">
                         <label for="exampleSelect2">
                             Quyền
                         </label>
-                        <select multiple="" class="form-control m-input" id="cbxToCongTac" style="height: 250px">
+                        <select multiple="" class="form-control m-input" id="cbxPhongBan" size="10">
                         </select>
                     </div>
                     <div class="col-md-12 phan-quyen-chung hide">
@@ -211,7 +211,7 @@
                         <label for="exampleSelect2">
                             Quyền
                         </label>
-                        <select multiple="" class="form-control m-input" id="cbxTaiLieuMoRong" style="height: 250px">
+                        <select multiple="" class="form-control m-input" id="cbxTaiLieuMoRong" size="10">
                         </select>
                     </div>
                 </div>

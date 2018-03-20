@@ -52,12 +52,12 @@ class AdminController extends CommonController
     public function getAuthListOfUser(Request $request){
         $maNhanVien = $request->maNhanVien;
 //        $to = MdToCongTac::
-        $sqlTo = 'select ma_to_cong_tac, ten_to_cong_tac from mst_to_cong_tac where ma_to_cong_tac IN (select ma_nhom_quyen from mst_phan_quyen where ma_nhan_vien = "'. $maNhanVien .'")';
+        $sqlPB = 'select ma_phong_ban, ten_phong_ban from mst_phong_ban where ma_phong_ban IN (select ma_nhom_quyen from mst_phan_quyen where ma_nhan_vien = "'. $maNhanVien .'")';
         $sqlDM = 'select ma_tai_lieu_mo_rong, ten_tai_lieu_mo_rong from mst_tai_lieu_mo_rong where ma_tai_lieu_mo_rong IN  (select ma_nhom_quyen from mst_phan_quyen where ma_nhan_vien = "'. $maNhanVien .'")';
-        $rslTo = DB::select(DB::raw($sqlTo));
+        $rslPB = DB::select(DB::raw($sqlPB));
         $rslDM = DB::select(DB::raw($sqlDM));
         $result = array(
-            'rslTo' => $rslTo,
+            'rslPB' => $rslPB,
             'rslDM' => $rslDM,
         );
         return response($result, 200)->header('Content-Type', 'application/json');
@@ -342,7 +342,7 @@ class AdminController extends CommonController
         if (Auth::check()){
             $username = Auth::user()->ma_nhan_vien;
             $sql = 'select *, user.ho_ten as nguoi_dang from mst_tai_lieu tl, users user WHERE 1 = 1 AND tl.nguoi_dang = user.ma_nhan_vien AND tl.nguoi_dang = "'.Auth::user()->ma_nhan_vien.'" AND tl.trang_thai = 1';
-//            if (!Auth::user()->is_admin){
+//            if (!Auth::user()->phan_quyen){
 //                $sql .= ' AND tl.ma_danh_muc IN (SELECT ma_nhom_quyen FROM mst_phan_quyen where ma_nhan_vien = "'.$username.'" and trang_thai = 1)';
 //            }
             if (isset($request->request->all()['datatable']['tenTaiLieu']['generalSearch'])){
@@ -398,8 +398,18 @@ class AdminController extends CommonController
                 $user->dia_chi = $request->diaChi;
                 $user->dien_thoai = $request->phone;
                 $user->ngay_sinh = $request->ngaySinh;
+                $user->phan_quyen = $request->phanQuyen;
                 $user->trang_thai = $request->trangThai;
                 $user->save();
+
+                if( MdPhanQuyen::where('ma_nhan_vien', $request->tenDangNhap)->where('ma_nhom_quyen', $request->maPhongBan)->count() < 1 && isset($request->maPhongBan)){
+                    $pq = new MdPhanQuyen();
+                    $pq->ma_nhan_vien = $request->tenDangNhap;
+                    $pq->ma_nhom_quyen = $request->maPhongBan;
+                    $pq->nguoi_tao = Auth::user()->ma_nhan_vien;
+                    $pq->nguoi_cap_nhat = Auth::user()->ma_nhan_vien;
+                    $pq->save();
+                }
                 return response()->json(['info' => 'success', 'Content' => 'Cập nhật thành công'], 200);
             } catch (QueryException $e) {
                 return response()->json(['info' => 'fail', 'Content' => 'Cập nhật không thành công. Lỗi hệ thống.'], 200);

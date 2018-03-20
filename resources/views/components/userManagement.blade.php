@@ -194,9 +194,10 @@
                                     <label for="cbxIsAdmin">
                                         Quyền
                                     </label>
-                                    <select class="form-control m-input m-input--air" id="cbxIsAdmin">
-                                        <option value="0">Người dùng</option>
-                                        <option value="1">Quản trị viên</option>
+                                    <select class="form-control m-input m-input--air" id="cbxPhanQuyen">
+                                        <option value="0">Nhân Viên</option>
+                                        <option value="1">Quản Lý</option>
+                                        <option value="2">Quản trị viên</option>
                                     </select>
                                 </div>
                             </div>

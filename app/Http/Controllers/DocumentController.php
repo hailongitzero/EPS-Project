@@ -202,7 +202,7 @@ class DocumentController extends CommonController
         if (Auth::check()){
             $username = Auth::user()->ma_nhan_vien;
             $sql = 'select *, user.ho_ten as nguoi_dang from mst_tai_lieu tl, users user WHERE 1 = 1 and tl.nguoi_dang = user.ma_nhan_vien AND tl.trang_thai = 1';
-            if (!Auth::user()->is_admin){
+            if (Auth::user()->phan_quyen != 2){
                 $sql .= ' AND ( tl.ma_danh_muc IN (SELECT ma_nhom_quyen FROM mst_phan_quyen where ma_nhan_vien = "'.$username.'" and trang_thai = 1)';
                 $sql .= 'OR tl.ma_danh_muc in (select ma_danh_muc from mst_danh_muc_tai_lieu where ma_to_cong_tac in (SELECT ma_nhom_quyen FROM mst_phan_quyen where ma_nhan_vien = "'.$username.'" and trang_thai = 1)))';
             }
@@ -260,7 +260,7 @@ class DocumentController extends CommonController
             $file = MdTaiLieu::where('ma_tai_lieu', $request->maTaiLieu)->where('nguoi_dang', $userId)->first();
             try {
                 $maTaiLieu = $request->maTaiLieu;
-                if(MdTaiLieu::where('ma_tai_lieu', $maTaiLieu)->where('nguoi_dang', $userId)->count() > 0 ){
+                if(MdTaiLieu::where('ma_tai_lieu', $maTaiLieu)->where('nguoi_dang', $userId)->count() > 0  || Auth::user()->phan_quyen != 0){
                     if (strtotime(date("Y-m-d H:i:s"))-strtotime($file->ngay_tao) > 86400){
                         return response()->json(['info' => 'fail', 'Content' => 'Bạn không thể xóa tài Liệu tồn tại quá 1 ngày.'], 200);
                     }

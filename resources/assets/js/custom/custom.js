@@ -444,10 +444,10 @@ jQuery(document).ready(function () {
             dataType: 'json',
             success: function (response) {
                 // console.log(response['rslTo']);
-                $.each(response['rslTo'], function (i, res) {
+                $.each(response['rslPB'], function (i, res) {
                     $('#dsQuyenNhanVien').append($('<option>', {
-                        value: res['ma_to_cong_tac'],
-                        text : 'Tổ - ' + res['ten_to_cong_tac']
+                        value: res['ma_phong_ban'],
+                        text : res['ten_phong_ban']
                     }));
                 });
                 $.each(response['rslDM'], function (i, res) {
@@ -606,49 +606,49 @@ jQuery(document).ready(function () {
             contentType: false,  // tell jQuery not to set contentType
             dataType: 'json',
             success: function (response) {
-                $('#cbxPhongBan').append($('<option>', {
-                    value: '0',
-                    text :'-----Chọn-----'
-                }));
+                // $('#cbxPhongBan').append($('<option>', {
+                //     value: '0',
+                //     text :'-----Chọn-----'
+                // }));
                 $.each(response, function (i, res) {
                     $('#cbxPhongBan').append($('<option>', {
                         value: res['ma_phong_ban'],
                         text : res['ten_phong_ban']
                     }));
                 });
-                $('#cbxPhongBan').removeAttr('disabled');
+                // $('#cbxPhongBan').removeAttr('disabled');
             },
             error: function (response) {
             }
         });
     });
 
-    $('#cbxPhongBan').on('change', function () {
-        $('#cbxToCongTac').empty();
-        var maPhongBan = $('#cbxPhongBan option:selected').val();
-        var data = new FormData();
-        data.append('_token', $('meta[name="csrf-token"]').attr('content'));
-        data.append('header', $('meta[name="csrf-token"]').attr('content'));
-        data.append('maPhongBan', maPhongBan);
-        $.ajax({
-            type: 'POST',
-            url: '/get-ds-to-cong-tac',
-            data: data,
-            processData: false,  // tell jQuery not to process the data
-            contentType: false,  // tell jQuery not to set contentType
-            dataType: 'json',
-            success: function (response) {
-                $.each(response, function (i, res) {
-                    $('#cbxToCongTac').append($('<option>', {
-                        value: res['ma_to_cong_tac'],
-                        text : res['ten_to_cong_tac']
-                    }));
-                });
-            },
-            error: function (response) {
-            }
-        });
-    });
+    // $('#cbxPhongBan').on('change', function () {
+    //     $('#cbxToCongTac').empty();
+    //     var maPhongBan = $('#cbxPhongBan option:selected').val();
+    //     var data = new FormData();
+    //     data.append('_token', $('meta[name="csrf-token"]').attr('content'));
+    //     data.append('header', $('meta[name="csrf-token"]').attr('content'));
+    //     data.append('maPhongBan', maPhongBan);
+    //     $.ajax({
+    //         type: 'POST',
+    //         url: '/get-ds-to-cong-tac',
+    //         data: data,
+    //         processData: false,  // tell jQuery not to process the data
+    //         contentType: false,  // tell jQuery not to set contentType
+    //         dataType: 'json',
+    //         success: function (response) {
+    //             $.each(response, function (i, res) {
+    //                 $('#cbxToCongTac').append($('<option>', {
+    //                     value: res['ma_to_cong_tac'],
+    //                     text : res['ten_to_cong_tac']
+    //                 }));
+    //             });
+    //         },
+    //         error: function (response) {
+    //         }
+    //     });
+    // });
 
     $('#cbxDanhMucMoRong').on('change', function () {
         $('#cbxTaiLieuMoRong').empty();
@@ -682,9 +682,9 @@ jQuery(document).ready(function () {
         var tenPhanQuyen = '';
         var status = true;
         if ($('#loaiPhanQuyen option:selected').val() == 1){
-            $('#cbxToCongTac option:selected').each(function () {
+            $('#cbxPhongBan option:selected').each(function () {
                 maPhanQuyen = $(this).val();
-                tenPhanQuyen = 'Tổ - ' + $(this).text();
+                tenPhanQuyen = $(this).text();
                 status = true;
                 //kiem tra xem da ton tai hay chua
                 $('#dsQuyenNhanVien option').each(function () {
@@ -1456,7 +1456,7 @@ jQuery(document).ready(function () {
                     $('#userAddress').val(res['dia_chi']);
                     $('#userPhone').val(res['dien_thoai']);
                     $('#userBirthDay').val(res['ngay_sinh']);
-                    $('#cbxIsAdmin').val(res['is_admin']);
+                    $('#cbxIsAdmin').val(res['phan_quyen']);
                     $('#cbxUserStatus').val(res['trang_thai']);
                 });
                 $('#cbxSrchPhongBanUpdate').attr("disabled", true);
@@ -1539,6 +1539,7 @@ jQuery(document).ready(function () {
         var diaChi = $('#userAddress').val();
         var phone = $('#userPhone').val();
         var ngaySinh = $('#userBirthDay').val();
+        var phanQuyen = $('#cbxPhanQuyen option:selected').val();
         var trangThai = $('#cbxUserStatus option:selected').val();
         var data = new FormData();
 
@@ -1554,6 +1555,7 @@ jQuery(document).ready(function () {
         data.append('diaChi', diaChi);
         data.append('phone', phone);
         data.append('ngaySinh', ngaySinh);
+        data.append('phanQuyen', phanQuyen);
         data.append('trangThai', trangThai);
 
         $.ajax({

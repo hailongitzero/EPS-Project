@@ -22,7 +22,7 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->string('ma_phong_ban');
             $table->string('chuc_vu');
-            $table->boolean('is_admin')->default(0);
+            $table->integer('phan_quyen', 1)->default(0);
             $table->string('dia_chi');
             $table->date('ngay_sinh');
             $table->string('avatar')->nullable();

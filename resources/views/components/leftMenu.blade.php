@@ -35,7 +35,7 @@
                 <span class="m-menu__link-text">Tra Cứu</span>
             </a>
         </li>
-        @if( \Illuminate\Support\Facades\Auth::user()->is_admin)
+        @if( \Illuminate\Support\Facades\Auth::user()->phan_quyen == 2)
             <li class="m-menu__item" aria-haspopup="true">
                 <a  href="{{ url('phan-quyen') }}" class="m-menu__link m-menu__toggle">
                     <i class="m-menu__link-icon flaticon-user-ok" style="color: #e32526"></i>
