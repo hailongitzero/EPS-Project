@@ -214,8 +214,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn m-btn--pill btn-secondary" data-dismiss="modal">Đóng Lại</button>
-                <button type="button" id="btnAddDSPhanQuyen" class="btn m-btn--pill btn-accent sbold">Thêm Quyền</button>
+                <button type="button" class="btn  btn-secondary" data-dismiss="modal">Đóng Lại</button>
+                <button type="button" id="btnAddDSPhanQuyen" class="btn  btn-accent sbold">Thêm Quyền</button>
             </div>
         </div>
         <!-- /.modal-content -->

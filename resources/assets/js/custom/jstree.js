@@ -39,10 +39,12 @@ var Treeview = function() {
                 var noteText = $('#mTreeDanhMucMoRong').jstree().get_selected("id")[0].text;
                 var maDanhMuc = $('#'+nodeId).find('a').attr('data-content');
                 var level = $('#'+nodeId).attr('aria-level');
-                $('#tbTitleSec').text(noteText);
-                $('#maDanhMucTaiLieu').val(maDanhMuc);
-                $('#tbTaiLieuTitle').text(noteText);
-                $('#mdAddDocumentTitle').text(' - ' + noteText);
+                if( level > 1) {
+                    $('#tbTitleSec').text(noteText);
+                    $('#maDanhMucTaiLieu').val(maDanhMuc);
+                    $('#tbTaiLieuTitle').text(noteText);
+                    $('#mdAddDocumentTitle').text(' - ' + noteText);
+                }
             }).jstree({
                 core: {
                     themes: {

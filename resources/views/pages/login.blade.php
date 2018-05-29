@@ -85,7 +85,7 @@
                             </div>
                         </div>
                         <div class="m-login__form-action" style="margin-top: 10px">
-                            <button id="m_login_signin_submit" style="font-family: Roboto" class="btn btn-focus m-btn m-btn--pill m-btn--custom m-btn--air m-login__btn m-login__btn--primary">
+                            <button id="m_login_signin_submit" style="font-family: Roboto" class="btn btn-focus m-btn  m-btn--custom m-btn--air m-login__btn m-login__btn--primary">
                                 Đăng nhập
                             </button>
                         </div>
@@ -128,11 +128,11 @@
                             </div>
                         </div>
                         <div class="m-login__form-action" style="margin-top: 10px">
-                            <button id="m_login_signup_submit" class="btn btn-focus m-btn m-btn--pill m-btn--custom m-btn--air  m-login__btn">
+                            <button id="m_login_signup_submit" class="btn btn-focus m-btn  m-btn--custom m-btn--air  m-login__btn">
                                 Sign Up
                             </button>
                             &nbsp;&nbsp;
-                            <button id="m_login_signup_cancel" class="btn btn-outline-focus m-btn m-btn--pill m-btn--custom  m-login__btn">
+                            <button id="m_login_signup_cancel" class="btn btn-outline-focus m-btn  m-btn--custom  m-login__btn">
                                 Cancel
                             </button>
                         </div>
@@ -152,11 +152,11 @@
                             <input class="form-control m-input" type="text" placeholder="Email" name="email" id="m_email" autocomplete="off">
                         </div>
                         <div class="m-login__form-action" style="margin-top: 10px">
-                            <button id="m_login_forget_password_submit" class="btn btn-focus m-btn m-btn--pill m-btn--custom m-btn--air  m-login__btn m-login__btn--primaryr">
+                            <button id="m_login_forget_password_submit" class="btn btn-focus m-btn  m-btn--custom m-btn--air  m-login__btn m-login__btn--primaryr">
                                 Request
                             </button>
                             &nbsp;&nbsp;
-                            <button id="m_login_forget_password_cancel" class="btn btn-outline-focus m-btn m-btn--pill m-btn--custom m-login__btn">
+                            <button id="m_login_forget_password_cancel" class="btn btn-outline-focus m-btn  m-btn--custom m-login__btn">
                                 Cancel
                             </button>
                         </div>

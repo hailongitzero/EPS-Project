@@ -184,6 +184,36 @@ jQuery(document).ready(function () {
         $(this).closest('tr').find('.moTaTaiLieu').enable().focus();
         return false;
     });
+
+    // chia sẻ tài liệu
+    $('.m-datatable__table').on('click', 'tr td .shareDocument', function () {
+        var cf = confirm('Bạn có chắc muốn chia sẻ tài liệu này?')
+        if (cf == false)
+            return;
+        $(this).closest('tr').find('.dropdown, .dropdown-menu').removeClass('show');
+        var data = new FormData();
+
+        var maTaiLieu = $(this).attr('data-content');
+
+        data.append('maTaiLieu', maTaiLieu);
+        data.append('_token', $('meta[name="csrf-token"]').attr('content'));
+        data.append('header', $('meta[name="csrf-token"]').attr('content'));
+        $.ajax({
+            type: 'POST',
+            url: '/chia-se-tai-lieu',
+            data: data,
+            processData: false,  // tell jQuery not to process the data
+            contentType: false,  // tell jQuery not to set contentType
+            dataType: 'json',
+            success: function (response) {
+                alert(response.Content);
+                inp.attr('disabled', 'disabled');
+            },
+            error: function (response) {
+                alert("Lỗi hệ thống, vui lòng thử lại.");
+            }
+        });
+    });
     
     $('#btnThemMoiGallery').on('click', function () {
         if ($('#tenGallery').val() == '' || $('#tenGallery').val() == 'undefined'){
@@ -1584,6 +1614,59 @@ jQuery(document).ready(function () {
         }
         if( $('#add-gallery-image').length > 0){
             Dropzone.forElement('#add-gallery-image').removeAllFiles(true);
+        }
+    });
+    
+    //xóa danh mục
+    $('#btnRemoveCate').on('click', function () {
+        var maDanhMuc, nodeId;
+
+        if ($('#mTreeDanhMuc').length > 0){
+            if ($('#mTreeDanhMuc').jstree().get_selected("id")[0]){
+                nodeId = $('#mTreeDanhMuc').jstree().get_selected("id")[0].id;
+            }else{
+                alert('Vui lòng chọn danh mục muốn xóa');
+            }
+        }else if ($('#mTreeDanhMucMoRong').length > 0){
+            if ($('#mTreeDanhMucMoRong').jstree().get_selected("id")[0]){
+                nodeId = $('#mTreeDanhMucMoRong').jstree().get_selected("id")[0].id;
+            }else{
+                alert('Vui lòng chọn danh mục muốn xóa');
+            }
+        }else {
+            alert('Danh mục lựa chọn không tồn tại.');
+            return
+        }
+        var level = $('#'+nodeId).attr('aria-level');
+        if( level > 1){
+            maDanhMuc = $('#'+nodeId).find('a').attr('data-content');
+            var cf = confirm('Bạn chắc chắn muốn xóa danh mục này.?');
+            if (cf == true){
+                var data = new FormData();
+
+                data.append('_token', $('meta[name="csrf-token"]').attr('content'));
+                data.append('header', $('meta[name="csrf-token"]').attr('content'));
+                data.append('maDanhMuc', maDanhMuc);
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/delete-category',
+                    data: data,
+                    processData: false,  // tell jQuery not to process the data
+                    contentType: false,  // tell jQuery not to set contentType
+                    dataType: 'json',
+                    success: function (response) {
+                        alert(response.Content);
+                        location.reload();
+                    },
+                    error: function (response) {
+                        alert('Xóa danh mục thất bại, vui lòng thử lại.');
+                    }
+                });
+                return false;
+            }
+        }else {
+            alert('Vui lòng chọn danh mục muốn xóa');
         }
     });
 });

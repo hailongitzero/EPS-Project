@@ -47,11 +47,11 @@
                                 Danh Mục Tài Liệu
                             </h3>
                         </div>
-                        <button type="button" class="btn m-btn--pill btn-primary" data-toggle="modal" data-target="#mdThemMoiDanhMuc">
-                            <span>
-                                <i class="fa fa-plus"></i>
-                            </span>
-                        </button>
+                        {{--<button type="button" class="btn  btn-primary" data-toggle="modal" data-target="#mdThemMoiDanhMuc">--}}
+                            {{--<span>--}}
+                                {{--<i class="fa fa-plus"></i>--}}
+                            {{--</span>--}}
+                        {{--</button>--}}
                     </div>
                 </div>
                 <div class="m-portlet__body">
@@ -77,6 +77,18 @@
                             @endif
                         </ul>
                     </div>
+                </div>
+                <div class="m-portlet__foot">
+                    <button type="button" class="btn  btn-primary" data-toggle="modal" data-target="#mdThemMoiDanhMuc">
+                        <span>
+                            <i class="fa fa-plus"></i>
+                        </span>
+                    </button>
+                    <button type="button" class="btn  btn-danger" id="btnRemoveCate">
+                        <span>
+                            <i class="fa fa-minus"></i>
+                        </span>
+                    </button>
                 </div>
             </div>
             <!--end::Portlet-->
@@ -118,7 +130,7 @@
                                 </div>
                             </div>
                             <div class="col-xl-4 order-1 order-xl-2 m--align-right">
-                                <a id="uploadTaiLieu" href="#" class="btn btn-primary m-btn m-btn--custom m-btn--icon m-btn--air m-btn--pill" data-toggle="modal" data-target="#mdThemMoiTaiLieu">
+                                <a id="uploadTaiLieu" href="#" class="btn btn-primary m-btn m-btn--custom m-btn--icon m-btn--air " data-toggle="modal" data-target="#mdThemMoiTaiLieu">
                                     <span>
                                         <i class="fa fa-upload"></i>
                                         <span>
@@ -169,8 +181,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn m-btn--pill btn-secondary" data-dismiss="modal">Hủy</button>
-                <button type="button" id="btnUploadTaiLieu" class="btn m-btn--pill btn-accent sbold">Tải Lên</button>
+                <button type="button" class="btn  btn-secondary" data-dismiss="modal">Hủy</button>
+                <button type="button" id="btnUploadTaiLieu" class="btn  btn-accent sbold">Tải Lên</button>
             </div>
         </div>
         <!-- /.modal-content -->
@@ -202,8 +214,8 @@
                 @endforeach
             @endif
             <div class="modal-footer">
-                <button type="button" class="btn m-btn--pill btn-secondary" data-dismiss="modal">Hủy</button>
-                <button type="button" id="btnThemMoiDanhMuc" class="btn m-btn--pill btn-primary">Thêm Mới</button>
+                <button type="button" class="btn  btn-secondary" data-dismiss="modal">Hủy</button>
+                <button type="button" id="btnThemMoiDanhMuc" class="btn  btn-primary">Thêm Mới</button>
             </div>
         </div>
         <!-- /.modal-content -->

@@ -50,7 +50,7 @@
         </div>
         <div>
             <div class="m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push" data-dropdown-toggle="hover" aria-expanded="true">
-                <a href="data-ajax.html#" class="m-portlet__nav-link btn btn-lg btn-secondary  m-btn m-btn--outline-2x m-btn--air m-btn--icon m-btn--icon-only m-btn--pill  m-dropdown__toggle">
+                <a href="data-ajax.html#" class="m-portlet__nav-link btn btn-lg btn-secondary  m-btn m-btn--outline-2x m-btn--air m-btn--icon m-btn--icon-only   m-dropdown__toggle">
                     <i class="la la-plus m--hide"></i>
                     <i class="la la-ellipsis-h"></i>
                 </a>
@@ -99,7 +99,7 @@
                                     </li>
                                     <li class="m-nav__separator m-nav__separator--fit"></li>
                                     <li class="m-nav__item">
-                                        <a href="data-ajax.html#" class="btn btn-outline-danger m-btn m-btn--pill m-btn--wide btn-sm">
+                                        <a href="data-ajax.html#" class="btn btn-outline-danger m-btn  m-btn--wide btn-sm">
                                             Submit
                                         </a>
                                     </li>
@@ -151,7 +151,7 @@
                         </ul>
                     </div>
                     <div class="alert alert-success m--margin-top-10 text-center">
-                        <button type="button" class="btn m-btn--pill btn-primary" data-toggle="modal" data-target="#mdThemMoiDanhMuc">
+                        <button type="button" class="btn  btn-primary" data-toggle="modal" data-target="#mdThemMoiDanhMuc">
                             Thêm Mới Danh Mục
                         </button>
                     </div>
@@ -243,7 +243,7 @@
                                                         </li>
                                                         <li class="m-nav__separator m-nav__separator--fit m--hide"></li>
                                                         <li class="m-nav__item m--hide">
-                                                            <a href="data-ajax.html#" class="btn btn-outline-danger m-btn m-btn--pill m-btn--wide btn-sm">
+                                                            <a href="data-ajax.html#" class="btn btn-outline-danger m-btn  m-btn--wide btn-sm">
                                                                 Submit
                                                             </a>
                                                         </li>
@@ -328,7 +328,7 @@
                                 </div>
                             </div>
                             <div class="col-xl-4 order-1 order-xl-2 m--align-right">
-                                <a href="#" class="btn btn-primary m-btn m-btn--custom m-btn--icon m-btn--air m-btn--pill" data-toggle="modal" data-target="#mdThemMoiTaiLieu">
+                                <a href="#" class="btn btn-primary m-btn m-btn--custom m-btn--icon m-btn--air " data-toggle="modal" data-target="#mdThemMoiTaiLieu">
                                                         <span>
                                                             <i class="fa fa-upload"></i>
                                                             <span>
@@ -376,8 +376,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn m-btn--pill btn-secondary" data-dismiss="modal">Hủy</button>
-                <button type="button" id="btnUploadTaiLieu" class="btn m-btn--pill btn-accent sbold">Tải Lên</button>
+                <button type="button" class="btn  btn-secondary" data-dismiss="modal">Hủy</button>
+                <button type="button" id="btnUploadTaiLieu" class="btn  btn-accent sbold">Tải Lên</button>
             </div>
         </div>
         <!-- /.modal-content -->
@@ -409,8 +409,8 @@
                 @endforeach
             @endif
             <div class="modal-footer">
-                <button type="button" class="btn m-btn--pill btn-secondary" data-dismiss="modal">Hủy</button>
-                <button type="button" id="btnThemMoiDanhMuc" class="btn m-btn--pill btn-primary">Thêm Mới</button>
+                <button type="button" class="btn  btn-secondary" data-dismiss="modal">Hủy</button>
+                <button type="button" id="btnThemMoiDanhMuc" class="btn  btn-primary">Thêm Mới</button>
             </div>
         </div>
         <!-- /.modal-content -->

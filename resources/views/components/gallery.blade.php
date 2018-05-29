@@ -53,7 +53,7 @@
                                 </div>
                             </div>
                             <div class="col-xl-4 order-1 order-xl-2 m--align-right">
-                                <a href="#" class="btn btn-primary m-btn m-btn--custom m-btn--icon m-btn--air m-btn--pill" data-toggle="modal" data-target="#mdThemMoiGallery">
+                                <a href="#" class="btn btn-primary m-btn m-btn--custom m-btn--icon m-btn--air " data-toggle="modal" data-target="#mdThemMoiGallery">
                                     <span>
                                         <i class="fa fa-upload"></i>
                                         <span>
@@ -138,8 +138,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn m-btn--pill btn-secondary" data-dismiss="modal">Hủy</button>
-                <button type="button" id="btnThemMoiGallery" class="btn m-btn--pill btn-primary">Thêm Mới</button>
+                <button type="button" class="btn  btn-secondary" data-dismiss="modal">Hủy</button>
+                <button type="button" id="btnThemMoiGallery" class="btn  btn-primary">Thêm Mới</button>
             </div>
         </div>
         <!-- /.modal-content -->
@@ -173,8 +173,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn m-btn--pill btn-secondary" data-dismiss="modal">Hủy</button>
-                <button type="button" id="btnUploadImg" class="btn m-btn--pill btn-primary">Thêm Mới</button>
+                <button type="button" class="btn  btn-secondary" data-dismiss="modal">Hủy</button>
+                <button type="button" id="btnUploadImg" class="btn  btn-primary">Thêm Mới</button>
             </div>
         </div>
         <!-- /.modal-content -->

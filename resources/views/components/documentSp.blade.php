@@ -47,28 +47,44 @@
                                 Danh Mục Tài Liệu
                             </h3>
                         </div>
-                        <button type="button" class="btn m-btn--pill btn-primary" data-toggle="modal" data-target="#mdThemMoiDanhMucMoRong">
-                            <span>
-                                <i class="fa fa-plus"></i>
-                            </span>
-                        </button>
                     </div>
                 </div>
                 <div class="m-portlet__body">
                     <div id="mTreeDanhMucMoRong" class="tree-demo">
                         <ul>
-                            <li data-jstree='{ "selected":true }'>
-                                @if(isset($danhMucTaiLieu))
-                                    @foreach($danhMucTaiLieu as $dm)
-                                    <a href="#" class="linkDanhMucTaiLieuMoRong" data-content="{{ $dm->ma_tai_lieu_mo_rong }}">
+                            @if( isset($danhMucTaiLieu))
+                                <li class="jstree-open">
+                                    @foreach( $danhMucTaiLieu as $dm)
                                         {{ $dm->ten_tai_lieu_mo_rong }}
-                                    </a>
+                                        @if( isset($dm->danhMucTaiLieu))
+                                            <ul>
+                                                @foreach( $dm->danhMucTaiLieu as $key=>$value)
+                                                    <li data-jstree='{ "selected" : {{$key == 0 ? 'true' : ''}} }'>
+                                                        <a href="#" class="linkDanhMucTaiLieuMoRong" data-content="{{ $value->ma_danh_muc }}">
+                                                            {{ $value->ten_danh_muc }}
+                                                        </a>
+                                                    </li>
+                                                @endforeach
+                                            </ul>
+                                        @endif
                                     @endforeach
-                                @endif
-                            </li>
+                                </li>
+                            @endif
                         </ul>
                     </div>
                 </div>
+            </div>
+            <div class="m-portlet__foot">
+                <button type="button" class="btn  btn-primary" data-toggle="modal" data-target="#mdThemMoiDanhMucMoRong">
+                    <span>
+                        <i class="fa fa-plus"></i>
+                    </span>
+                </button>
+                <button type="button" class="btn  btn-danger" id="btnRemoveCate">
+                    <span>
+                        <i class="fa fa-minus"></i>
+                    </span>
+                </button>
             </div>
             <!--end::Portlet-->
         </div>
@@ -109,7 +125,7 @@
                                 </div>
                             </div>
                             <div class="col-xl-4 order-1 order-xl-2 m--align-right">
-                                <a id="uploadTaiLieu"  href="#" class="btn btn-primary m-btn m-btn--custom m-btn--icon m-btn--air m-btn--pill" data-toggle="modal" data-target="#mdThemMoiTaiLieu">
+                                <a id="uploadTaiLieu"  href="#" class="btn btn-primary m-btn m-btn--custom m-btn--icon m-btn--air " data-toggle="modal" data-target="#mdThemMoiTaiLieu">
                                     <span>
                                         <i class="fa fa-upload"></i>
                                         <span>
@@ -160,8 +176,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn m-btn--pill btn-secondary" data-dismiss="modal">Hủy</button>
-                <button type="button" id="btnUploadTaiLieu" class="btn m-btn--pill btn-accent sbold">Tải Lên</button>
+                <button type="button" class="btn  btn-secondary" data-dismiss="modal">Hủy</button>
+                <button type="button" id="btnUploadTaiLieu" class="btn  btn-accent sbold">Tải Lên</button>
             </div>
         </div>
         <!-- /.modal-content -->
@@ -193,8 +209,8 @@
                 @endforeach
             @endif
             <div class="modal-footer">
-                <button type="button" class="btn m-btn--pill btn-secondary" data-dismiss="modal">Hủy</button>
-                <button type="button" id="btnThemMoiDanhMucMoRong" class="btn m-btn--pill btn-primary">Thêm Mới</button>
+                <button type="button" class="btn  btn-secondary" data-dismiss="modal">Hủy</button>
+                <button type="button" id="btnThemMoiDanhMucMoRong" class="btn  btn-primary">Thêm Mới</button>
             </div>
         </div>
         <!-- /.modal-content -->

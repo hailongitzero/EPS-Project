@@ -21,6 +21,8 @@ Route::middleware(['auth'])->group(function (){
 
     Route::get('/tai-lieu-mat/{id}', 'DocumentController@dsDanhMucMoRong');
 
+    Route::get('/tai-lieu-chia-se', 'DocumentController@shareDocument');
+
     Route::get('/thu-vien-hinh-anh/', 'GalleryController@getAllGallery');
 
     Route::get('themDanhMuc', 'DocumentController@themMoiDanhMuc');
@@ -45,6 +47,9 @@ Route::middleware(['auth'])->group(function (){
 
     Route::post('/cap-nhat-mo-ta-tai-lieu', 'DocumentController@capNhatMoTaTaiLieu');
     Route::get('cap-nhat-mo-ta-tai-lieu', 'DocumentController@capNhatMoTaTaiLieu');
+
+    Route::post('/chia-se-tai-lieu', 'DocumentController@chiaSeTaiLieu');
+    Route::get('chia-se-tai-lieu', 'DocumentController@chiaSeTaiLieu');
 
     Route::post('/thu-vien-hinh', 'GalleryController@getThuVienHinh');
     Route::get('/thu-vien-hinh', 'GalleryController@getThuVienHinh');
@@ -125,4 +130,10 @@ Route::middleware(['auth'])->group(function (){
 
     Route::post('update-user-info-by-admin', 'AdminController@updateUserProfileByAdmin');
     Route::get('update-user-info-by-admin', 'AdminController@updateUserProfileByAdmin');
+
+    Route::post('delete-category', 'DocumentController@deleteCategory');
+    Route::get('delete-category', 'DocumentController@deleteCategory');
+
+    Route::post('danh-sach-tai-lieu-chia-se', 'DocumentController@loadShareDocument');
+    Route::get('danh-sach-tai-lieu-chia-se', 'DocumentController@loadShareDocument');
 });

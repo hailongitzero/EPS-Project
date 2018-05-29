@@ -74,3 +74,17 @@ footer h4{
 .white{
     color: #ffffff !important;
 }
+
+/*custom datatable style*/
+table.m-datatable__table tr td, table.m-datatable__table tr th{
+    border: 1px solid #666666;
+}
+table.m-datatable__table tr td{
+    border-top: none;
+}
+.m-datatable.m-datatable--default>.m-datatable__table>.m-datatable__head .m-datatable__row>.m-datatable__cell{
+    padding: 5px;
+}
+.m-datatable.m-datatable--default>.m-datatable__table>.m-datatable__body .m-datatable__row>.m-datatable__cell, .m-datatable.m-datatable--default>.m-datatable__table>.m-datatable__foot .m-datatable__row>.m-datatable__cell, .m-datatable.m-datatable--default>.m-datatable__table>.m-datatable__head .m-datatable__row>.m-datatable__cell{
+    padding: 5px;
+}

@@ -16,7 +16,7 @@
                     <span class="m-subheader__daterange-title"></span>
                     <span class="m-subheader__daterange-date m--font-brand"></span>
                 </span>
-                <a href="{{ url('') }}" class="btn btn-sm btn-brand m-btn m-btn--icon m-btn--icon-only m-btn--custom m-btn--pill">
+                <a href="{{ url('') }}" class="btn btn-sm btn-brand m-btn m-btn--icon m-btn--icon-only m-btn--custom ">
                     <i class="la la-angle-down"></i>
                 </a>
             </span>
